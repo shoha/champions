@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<character>
+    <application>
+        <name>Hero Designer</name>
+        <version><![CDATA[20200630]]></version>
+    </application>
+    <name><![CDATA[Isolde Brandt State Alchemist]]></name>
+    <alternate_ids><![CDATA[]]></alternate_ids>
+    <player_name><![CDATA[Hannah]]></player_name>
+    <campaign_name><![CDATA[Lost Lands]]></campaign_name>
+    <genre><![CDATA[]]></genre>
+    <gm><![CDATA[Sippin]]></gm>
+    <height>2.00 m</height>
+    <weight>100.00 kg</weight>
+    <hair_color><![CDATA[Brown]]></hair_color>
+    <eye_color><![CDATA[Brown]]></eye_color>
+    <appearance><![CDATA[]]></appearance>
+    <background><![CDATA[]]></background>
+    <earned_exp>0</earned_exp>
+    <spent_exp>0</spent_exp>
+    <unspent_exp>0</unspent_exp>
+    <base_points>300</base_points>
+    <disad_points_allowed>50</disad_points_allowed>
+    <disad_points>50</disad_points>
+    <total_points>300</total_points>
+    <total_active_cost>704</total_active_cost>
+    <characteristic_points>129</characteristic_points>
+    <skill_points>64</skill_points>
+    <perk_points>0</perk_points>
+    <talent_points>6</talent_points>
+    <skill_perk_talent_points>70</skill_perk_talent_points>
+    <skill_perk_talent_martial_art_points>85</skill_perk_talent_martial_art_points>
+    <martial_art_points>15</martial_art_points>
+    <power_points>86</power_points>
+    <power_martial_art_points>101</power_martial_art_points>
+    <ocv>6</ocv>
+    <dcv>6</dcv>
+    <ecv>4 - 4</ecv>
+    <mental_defense_total>0</mental_defense_total>
+    <power_defense_total>0</power_defense_total>
+    <image>
+    </image>
+    <characteristics>
+        <str>
+            <val>10</val>
+            <base>10</base>
+            <cost>0</cost>
+            <active_cost>0</active_cost>
+            <total>10</total>
+            <roll>11-</roll>
+            <notes><![CDATA[HTH Damage 2d6  END [1]]]></notes>
+            <dice>2d6</dice>
+            <lift>100.0kg</lift>
+        </str>
+        <dex>
+            <val>20</val>
+            <base>10</base>
+            <cost>20</cost>
+            <active_cost>20</active_cost>
+            <total>20</total>
+            <roll>13-</roll>
+            <notes><![CDATA[]]></notes>
+        </dex>
+        <con>
+            <val>18</val>
+            <base>10</base>
+            <cost>8</cost>
+            <active_cost>8</active_cost>
+            <total>18</total>
+            <roll>13-</roll>
+            <notes><![CDATA[]]></notes>
+        </con>
+        <body>
+            <val>10</val>
+            <base>10</base>
+            <cost>0</cost>
+            <active_cost>0</active_cost>
+            <total>10</total>
+            <roll></roll>
+            <notes><![CDATA[]]></notes>
+        </body>
+        <int>
+            <val>13</val>
+            <base>10</base>
+            <cost>3</cost>
+            <active_cost>3</active_cost>
+            <total>13</total>
+            <roll>12-</roll>
+            <notes>PER Roll 12-</notes>
+        </int>
+        <ego>
+            <val>20</val>
+            <base>10</base>
+            <cost>10</cost>
+            <active_cost>10</active_cost>
+            <total>20</total>
+            <roll>13-</roll>
+            <notes><![CDATA[]]></notes>
+        </ego>
+        <pre>
+            <val>13</val>
+            <base>10</base>
+            <cost>3</cost>
+            <active_cost>3</active_cost>
+            <total>13</total>
+            <roll>12-</roll>
+            <notes><![CDATA[PRE Attack: 2 1/2d6]]></notes>
+            <dice>2 1/2d6</dice>
+        </pre>
+        <com>
+        </com>
+        <pd>
+            <val>7</val>
+            <base>2</base>
+            <cost>5</cost>
+            <active_cost>5</active_cost>
+            <total>7/14</total>
+            <notes><![CDATA[7/14 PD (0/7 rPD)]]></notes>
+            <nonresistant_total>7/14</nonresistant_total>
+            <resistant_total>0/7</resistant_total>
+        </pd>
+        <ed>
+            <val>5</val>
+            <base>2</base>
+            <cost>3</cost>
+            <active_cost>3</active_cost>
+            <total>5/8</total>
+            <notes><![CDATA[5/8 ED (0/3 rED)]]></notes>
+            <nonresistant_total>5/8</nonresistant_total>
+            <resistant_total>0/3</resistant_total>
+        </ed>
+        <spd>
+            <val>5</val>
+            <base>2.0</base>
+            <cost>30</cost>
+            <active_cost>30</active_cost>
+            <total>5</total>
+            <notes><![CDATA[Phases:  3, 5, 8, 10, 12]]></notes>
+        </spd>
+        <rec>
+            <val>8</val>
+            <base>4</base>
+            <cost>4</cost>
+            <active_cost>4</active_cost>
+            <total>8</total>
+            <notes><![CDATA[]]></notes>
+        </rec>
+        <end>
+            <val>36</val>
+            <base>20</base>
+            <cost>4</cost>
+            <active_cost>4</active_cost>
+            <total>36</total>
+            <notes><![CDATA[]]></notes>
+        </end>
+        <stun>
+            <val>26</val>
+            <base>20</base>
+            <cost>3</cost>
+            <active_cost>3</active_cost>
+            <total>26</total>
+            <notes><![CDATA[]]></notes>
+        </stun>
+        <running>
+            <val>12</val>
+            <base>12</base>
+            <cost>0</cost>
+            <active_cost>0</active_cost>
+            <total>12m</total>
+            <notes><![CDATA[END [1]]]></notes>
+        </running>
+        <swimming>
+            <val>4</val>
+            <base>4</base>
+            <cost>0</cost>
+            <active_cost>0</active_cost>
+            <total>4m</total>
+            <notes><![CDATA[END [1]]]></notes>
+        </swimming>
+        <leaping>
+            <val>4</val>
+            <base>4</base>
+            <cost>0</cost>
+            <active_cost>0</active_cost>
+            <total>4m</total>
+            <notes><![CDATA[4m forward, 2m upward]]></notes>
+            <horizontal_base>4m</horizontal_base>
+            <horizontal_total>4m</horizontal_total>
+            <vertical_base>2m</vertical_base>
+            <vertical_total>2m</vertical_total>
+        </leaping>
+        <def>
+        </def>
+        <size>
+        </size>
+    </characteristics>
+    <martial_arts>
+        <maneuvers>
+            <maneuver>
+                <cost>3</cost>
+                <base_cost>3</base_cost>
+                <active_cost>3</active_cost>
+                <name><![CDATA[Legsweep]]></name>
+                <phase>1/2</phase>
+                <ocv>+2</ocv>
+                <dcv>-1</dcv>
+                <effect>3d6 Strike, Target Falls</effect>
+                <text><![CDATA[Legsweep:  1/2 Phase, +2 OCV, -1 DCV, 3d6 Strike, Target Falls]]></text>
+            </maneuver>
+            <maneuver>
+                <cost>4</cost>
+                <base_cost>4</base_cost>
+                <active_cost>4</active_cost>
+                <name><![CDATA[Martial Block]]></name>
+                <phase>1/2</phase>
+                <ocv>+2</ocv>
+                <dcv>+2</dcv>
+                <effect>Block, Abort</effect>
+                <text><![CDATA[Martial Block:  1/2 Phase, +2 OCV, +2 DCV, Block, Abort]]></text>
+            </maneuver>
+            <maneuver>
+                <cost>4</cost>
+                <base_cost>4</base_cost>
+                <active_cost>4</active_cost>
+                <name><![CDATA[Martial Disarm]]></name>
+                <phase>1/2</phase>
+                <ocv>-1</ocv>
+                <dcv>+1</dcv>
+                <effect>Disarm; 20 STR to Disarm roll</effect>
+                <text><![CDATA[Martial Disarm:  1/2 Phase, -1 OCV, +1 DCV, Disarm; 20 STR to Disarm roll]]></text>
+            </maneuver>
+            <maneuver>
+                <cost>4</cost>
+                <base_cost>4</base_cost>
+                <active_cost>4</active_cost>
+                <name><![CDATA[Martial Dodge]]></name>
+                <phase>1/2</phase>
+                <ocv>--</ocv>
+                <dcv>+5</dcv>
+                <effect>Dodge, Affects All Attacks, Abort</effect>
+                <text><![CDATA[Martial Dodge:  1/2 Phase, -- OCV, +5 DCV, Dodge, Affects All Attacks, Abort]]></text>
+            </maneuver>
+        </maneuvers>
+    </martial_arts>
+    <combat_levels>
+        <combat_level>
+            <cost>8</cost>
+            <base_cost>8</base_cost>
+            <active_cost>8</active_cost>
+            <text><![CDATA[+4 with any single attack]]></text>
+        </combat_level>
+    </combat_levels>
+    <skills>
+        <skill>
+            <cost>7</cost>
+            <base_cost>7</base_cost>
+            <active_cost>7</active_cost>
+            <text><![CDATA[PS: Alchemist 16-]]></text>
+        </skill>
+        <skill>
+            <cost>1</cost>
+            <base_cost>1</base_cost>
+            <active_cost>1</active_cost>
+            <text><![CDATA[WF:  Blades]]></text>
+        </skill>
+        <skill>
+            <cost>8</cost>
+            <base_cost>8</base_cost>
+            <active_cost>8</active_cost>
+            <text><![CDATA[+4 with any single attack]]></text>
+        </skill>
+        <skill>
+            <cost>8</cost>
+            <base_cost>8</base_cost>
+            <active_cost>8</active_cost>
+            <text><![CDATA[Ice Weaponsmith (Swords And Daggers) 15-]]></text>
+        </skill>
+        <skill>
+            <cost>9</cost>
+            <base_cost>9</base_cost>
+            <active_cost>9</active_cost>
+            <text><![CDATA[Paramedics 15-]]></text>
+        </skill>
+        <skill>
+            <cost>5</cost>
+            <base_cost>5</base_cost>
+            <active_cost>5</active_cost>
+            <text><![CDATA[Tactics 13-]]></text>
+        </skill>
+        <skill>
+            <cost>3</cost>
+            <base_cost>3</base_cost>
+            <active_cost>3</active_cost>
+            <text><![CDATA[Acrobatics 13-]]></text>
+        </skill>
+        <skill>
+            <cost>3</cost>
+            <base_cost>3</base_cost>
+            <active_cost>3</active_cost>
+            <text><![CDATA[Breakfall 13-]]></text>
+        </skill>
+        <skill>
+            <cost>3</cost>
+            <base_cost>3</base_cost>
+            <active_cost>3</active_cost>
+            <text><![CDATA[Bribery 12-]]></text>
+        </skill>
+        <skill>
+            <cost>5</cost>
+            <base_cost>5</base_cost>
+            <active_cost>5</active_cost>
+            <text><![CDATA[Bureaucratics 13-]]></text>
+        </skill>
+        <skill>
+            <cost>3</cost>
+            <base_cost>3</base_cost>
+            <active_cost>3</active_cost>
+            <text><![CDATA[Climbing 13-]]></text>
+        </skill>
+        <skill>
+            <cost>3</cost>
+            <base_cost>3</base_cost>
+            <active_cost>3</active_cost>
+            <text><![CDATA[Conversation 12-]]></text>
+        </skill>
+        <skill>
+            <cost>3</cost>
+            <base_cost>3</base_cost>
+            <active_cost>3</active_cost>
+            <text><![CDATA[Shadowing 12-]]></text>
+        </skill>
+        <skill>
+            <cost>3</cost>
+            <base_cost>3</base_cost>
+            <active_cost>3</active_cost>
+            <text><![CDATA[Tracking 12-]]></text>
+        </skill>
+    </skills>
+    <talents>
+        <talent>
+            <cost>6</cost>
+            <base_cost>6</base_cost>
+            <active_cost>6</active_cost>
+            <text><![CDATA[Combat Luck (3 PD/3 ED)]]></text>
+        </talent>
+    </talents>
+    <powers>
+        <power>
+            <name><![CDATA[Ice Alchemy]]></name>
+            <cost>37</cost>
+            <base_cost>65</base_cost>
+            <active_cost>66</active_cost>
+            <text><![CDATA[Multipower, 65-point reserve,  (65 Active Points); all slots Requires A Roll (Skill roll; Alchemist; -1/2), Unified Power (Alchemists Circle Glove; -1/4)]]></text>
+            <end></end>
+        </power>
+        <power>
+            <list_prefix>1)  </list_prefix>
+            <name><![CDATA[Icicle Barage]]></name>
+            <cost>2f</cost>
+            <base_cost>15</base_cost>
+            <active_cost>34</active_cost>
+            <text><![CDATA[Killing Attack - Ranged 1d6, Armor Piercing (+1/4), Autofire (5 shots; +1/2), Reduced Endurance (1/2 END; +1/2) (34 Active Points); Requires A Roll (Skill roll; Alchemist; -1/2), Unified Power (Alchemists Circle Glove; -1/4)]]></text>
+            <end>1</end>
+        </power>
+        <power>
+            <list_prefix>2)  </list_prefix>
+            <name><![CDATA[Ice Column]]></name>
+            <cost>3f</cost>
+            <base_cost>30</base_cost>
+            <active_cost>45</active_cost>
+            <text><![CDATA[Blast 6d6, Indirect (Source Point is the same for every use, path is indirect, but the same with every use; source is always beneith target; +1/2) (45 Active Points); Requires A Roll (Skill roll; Alchemist; -1/2), Unified Power (Alchemists Circle Glove; -1/4), Conditional Power Power does not work in Very Uncommon Circumstances (Knock back is always straight up; -0)]]></text>
+            <end>4</end>
+        </power>
+        <power>
+            <list_prefix>3)  </list_prefix>
+            <name><![CDATA[Ice Cage]]></name>
+            <cost>2f</cost>
+            <base_cost>50</base_cost>
+            <active_cost>50</active_cost>
+            <text><![CDATA[Entangle 5d6, 5 PD/5 ED (50 Active Points); Does Not Prevent The Use Of Accessible Foci (-1), Requires A Roll (Skill roll; Alchemist; -1/2), Unified Power (Alchemists Circle Glove; -1/4)]]></text>
+            <end>5</end>
+        </power>
+        <power>
+            <list_prefix>4)  </list_prefix>
+            <name><![CDATA[Ice Wall]]></name>
+            <cost>3f</cost>
+            <base_cost>62</base_cost>
+            <active_cost>62</active_cost>
+            <text><![CDATA[Barrier 13 PD/9 ED, 14 BODY (up to 10m long, 3m tall, and 1m thick) (62 Active Points); Requires A Roll (Skill roll; Alchemist; -1/2), Unified Power (Alchemists Circle Glove; -1/4)]]></text>
+            <end>6</end>
+        </power>
+        <power>
+            <list_prefix>5)  </list_prefix>
+            <name><![CDATA[Brittlelize]]></name>
+            <cost>2f</cost>
+            <base_cost>20</base_cost>
+            <active_cost>50</active_cost>
+            <text><![CDATA[Drain PD 2d6, Characteristics (PD or PD Resistant Protection; +1/2), Delayed Return Rate (points return at the rate of 5 per Minute; +1) (50 Active Points); Conditional Power Power does not work in Common Circumstances (only versus Non Liveing Matter; -1/2), Requires A Roll (Skill roll; Alchemist; -1/2), Unified Power (Alchemists Circle Glove; -1/4)]]></text>
+            <end>5</end>
+        </power>
+        <power>
+            <list_prefix>6)  </list_prefix>
+            <name><![CDATA[Ice Suture]]></name>
+            <cost>1f</cost>
+            <base_cost>20</base_cost>
+            <active_cost>30</active_cost>
+            <text><![CDATA[Healing BODY 2d6, Usable By Other (+0), Grantor pays the END whenever the power is used, Expanded Effect STUN (+1/2) (30 Active Points); Does Not Work On Some Damage ([Common attack]; over 3 BODY; -3/4), Requires A Roll (Skill roll; -1/2), Concentration (1/2 DCV; -1/4), Unified Power (Alchemists Circle Glove; -1/4)]]></text>
+            <end>3</end>
+        </power>
+        <power>
+            <list_prefix>7)  </list_prefix>
+            <name><![CDATA[Create Ice Sword]]></name>
+            <cost>2f</cost>
+            <base_cost>62</base_cost>
+            <active_cost>31</active_cost>
+            <text><![CDATA[Custom Power (31 Active Points); Requires A Roll (Skill roll; Weponsmith; -1/2), Unified Power (Alchemists Circle Glove; -1/4)]]></text>
+            <end>3</end>
+        </power>
+        <power>
+            <name><![CDATA[Ice Sword]]></name>
+            <cost>14</cost>
+            <base_cost>25</base_cost>
+            <active_cost>31</active_cost>
+            <text><![CDATA[Multipower, 25-point reserve, all slots Usable By Other (+1/4) (31 Active Points); all slots OAF Durable (-1), Unified Power (Create Ice Sword; -1/4)]]></text>
+            <end></end>
+        </power>
+        <power>
+            <list_prefix>1)  </list_prefix>
+            <name><![CDATA[Blade]]></name>
+            <cost>1f</cost>
+            <base_cost>25</base_cost>
+            <active_cost>25</active_cost>
+            <text><![CDATA[Killing Attack - Hand-To-Hand 2d6-1 (2d6 w/STR) (25 Active Points); OAF Durable (-1), Can Be Deflected (-1/4), Unified Power (Create Ice Sword; -1/4)]]></text>
+            <end>2</end>
+        </power>
+        <power>
+            <list_prefix>2)  </list_prefix>
+            <name><![CDATA[Parry]]></name>
+            <cost>1f</cost>
+            <base_cost>20</base_cost>
+            <active_cost>20</active_cost>
+            <text><![CDATA[Deflection (20 Active Points); OAF Durable (-1), Unified Power (Create Ice Sword; -1/4)]]></text>
+            <end>2</end>
+            <notes><![CDATA[(x2 number of items)]]></notes>
+        </power>
+        <power>
+            <list_prefix>3)  </list_prefix>
+            <name><![CDATA[Hilt]]></name>
+            <cost>1f</cost>
+            <base_cost>15</base_cost>
+            <active_cost>15</active_cost>
+            <text><![CDATA[Hand-To-Hand Attack +3d6 (15 Active Points); OAF Durable (-1), Hand-To-Hand Attack (-1/4), Can Be Deflected (-1/4), Unified Power (Create Ice Sword; -1/4)]]></text>
+            <end>1</end>
+        </power>
+        <power>
+            <name><![CDATA[Alchemists Circle Glove]]></name>
+            <cost>6</cost>
+            <base_cost>13</base_cost>
+            <active_cost>13</active_cost>
+            <text><![CDATA[Power:  Alchemy 14- (13 Active Points); OIF Durable Expendable (Difficult to obtain new Focus; -3/4), Gestures (-1/4)]]></text>
+            <end></end>
+        </power>
+        <power>
+            <name><![CDATA[State Alchemist Flack Jacket]]></name>
+            <cost>11</cost>
+            <base_cost>15</base_cost>
+            <active_cost>19</active_cost>
+            <text><![CDATA[Resistant Protection (7 PD/3 ED), Hardened (+1/4) (19 Active Points); OIF Durable Expendable (Difficult to obtain new Focus; -3/4)]]></text>
+            <end>0</end>
+        </power>
+    </powers>
+    <disads>
+        <disad>
+            <cost>10</cost>
+            <text><![CDATA[Dependence:  water/moisture in the environment Powers Gain 11- Activation Roll (Very Common; 1 Hour)]]></text>
+            <notes><![CDATA[this represents her powers need for materials]]></notes>
+        </disad>
+        <disad>
+            <cost>15</cost>
+            <text><![CDATA[Psychological Complication:  Lost/Homesick (Common; Strong)]]></text>
+        </disad>
+        <disad>
+            <cost>10</cost>
+            <text><![CDATA[Distinctive Features:  Alchemist gloves (Concealable; Noticed and Recognizable; Detectable By Commonly-Used Senses)]]></text>
+        </disad>
+        <disad>
+            <cost>15</cost>
+            <text><![CDATA[Psychological Complication:  Duty/Honor (Common; Strong)]]></text>
+        </disad>
+    </disads>
+</character>
