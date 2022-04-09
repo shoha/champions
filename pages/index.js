@@ -7,6 +7,9 @@ import { MartialArts } from '../components/MartialArts'
 import { Defenses } from '../components/Defenses'
 import { Section } from '../components/Section'
 import { CombatInfo } from '../components/CombatInfo'
+import { Powers } from '../components/Powers'
+import { CombatManeuvers } from '../components/CombatManeuvers'
+import { CombatModifiers } from '../components/CombatModifiers'
 import { XMLParser } from 'fast-xml-parser'
 
 export default function Home() {
@@ -60,6 +63,23 @@ export default function Home() {
         <Section className="mb-4 mt-4" title="Combat Information">
           <CombatInfo character={character}></CombatInfo>
         </Section>
+
+        <Section className="mb-4 mt-4" title="Combat Maneuvers">
+          <CombatManeuvers character={character}></CombatManeuvers>
+        </Section>
+
+        <Section className="mb-4 mt-4" title="Combat Modifiers">
+          <CombatModifiers character={character}></CombatModifiers>
+        </Section>
+
+        {/*
+          Powers and Equipment Page
+        */}
+
+        <Section className="mb-4 mt-4" title="Powers">
+          <Powers character={character}></Powers>
+        </Section>
+
 
       </div>
     </div>
