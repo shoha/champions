@@ -2,6 +2,8 @@ import Head from 'next/head'
 import xml from '../public/isolde.xml'
 import { Characteristics } from '../components/Characteristics'
 import { Experience } from '../components/Experience'
+import { Movement } from '../components/Movement'
+import { MartialArts } from '../components/MartialArts'
 import { Section } from '../components/Section'
 import { XMLParser } from 'fast-xml-parser'
 
@@ -25,13 +27,30 @@ export default function Home() {
         <h2 className="text-2xl italic my-2">{character.campaign_name} by {character.gm}</h2>
         <hr className="border-t-4 border-black my-4"></hr>
 
-        <Section className="mb-2 mt-4" title="Characteristics">
+        {/*
+          Characteristics and Appearance Page
+        */}
+
+        <Section className="mb-4 mt-4" title="Characteristics">
           <Characteristics character={character}></Characteristics>
         </Section>
 
-        <Section className="mb-2 mt-4" title="Experience">
-          <Experience character={character}></ Experience>
+        <Section className="mb-4 mt-4" title="Experience">
+          <Experience character={character}></Experience>
         </Section>
+
+        <Section className="mb-4 mt-4" title="Movement">
+          <Movement character={character}></Movement>
+        </Section>
+
+        {/*
+          Combat Information Page
+        */}
+
+        <Section className="mb-4 mt-4" title="Martial Arts Maneuvers">
+          <MartialArts character={character}></MartialArts>
+        </Section>
+
       </div>
     </div>
   )
