@@ -1,5 +1,4 @@
 export const MartialArts = ({ character }) => {
-  console.log(character.martial_arts)
   const maneuverRows = character.martial_arts.maneuvers.maneuver.map((maneuver) => {
     return (
       <tr key={maneuver.name}>

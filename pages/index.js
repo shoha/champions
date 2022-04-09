@@ -4,7 +4,9 @@ import { Characteristics } from '../components/Characteristics'
 import { Experience } from '../components/Experience'
 import { Movement } from '../components/Movement'
 import { MartialArts } from '../components/MartialArts'
+import { Defenses } from '../components/Defenses'
 import { Section } from '../components/Section'
+import { CombatInfo } from '../components/CombatInfo'
 import { XMLParser } from 'fast-xml-parser'
 
 export default function Home() {
@@ -49,6 +51,14 @@ export default function Home() {
 
         <Section className="mb-4 mt-4" title="Martial Arts Maneuvers">
           <MartialArts character={character}></MartialArts>
+        </Section>
+
+        <Section className="mb-4 mt-4" title="Defenses">
+          <Defenses character={character}></Defenses>
+        </Section>
+
+        <Section className="mb-4 mt-4" title="Combat Information">
+          <CombatInfo character={character}></CombatInfo>
         </Section>
 
       </div>
