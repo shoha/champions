@@ -15,12 +15,12 @@ import { CombatModifiers } from '../components/CombatModifiers'
 import { Disadvantages } from '../components/Disadvantages'
 import { Appearance } from '../components/Appearance'
 import { XMLParser } from 'fast-xml-parser'
+import { Login } from '../components/Login'
 
 export default function Home() {
   const parser = new XMLParser()
   let parsedXML = parser.parse(xml)
   const character = parsedXML.character
-  console.log(parsedXML)
 
   return (
     <div>
@@ -29,6 +29,8 @@ export default function Home() {
         <meta name="description" content="Combat tracking for Champions 6E" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      <Login></Login>
 
       <div className="container mx-auto my-4">
         <h1 className="text-5xl my-2 text-">Champions Tracker</h1>
