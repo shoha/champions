@@ -1,6 +1,6 @@
 import { useFirebaseApp } from '../hooks/useFirebaseApp'
 import { getFirestore, collection as fs_collection, addDoc, query, where } from 'firebase/firestore';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { useCollectionDataOnce } from 'react-firebase-hooks/firestore';
 import { useCallback, useEffect } from 'react';
 import { useFirebaseAuth } from '../hooks/useFirebaseAuth';
 import { Select } from './Select'
@@ -17,18 +17,16 @@ export const CharacterSelect = () => {
 
   const q = query<Character>(collection, where("author_uid", "==", firebaseAuth?.currentUser?.uid || "NA"))
 
-  const [characters, loading, error] = useCollectionData(
+  const [characters, loading, error] = useCollectionDataOnce(
     q,
-    {
-      snapshotListenOptions: { includeMetadataChanges: true },
-    }
   );
 
-  useEffect(() => {
-    if (characters && characters[0] && !currentChar) {
-      setCurrentChar(characters[0])
-    }
-  }, [characters, currentChar, setCurrentChar])
+  // useEffect(() => {
+  //   if (characters?.[0] && !currentChar) {
+  //     setCurrentChar({ ...characters[0] })
+  //   }
+  // }, [characters, currentChar, setCurrentChar])
+
 
   const charOpts = characters?.map((c) => {
     return {
@@ -38,10 +36,13 @@ export const CharacterSelect = () => {
   })
 
   const onSelectChange = (evt) => {
-    const selectedChar = characters.find((c) => c.name = evt.target.value)
-    setCurrentChar(selectedChar)
+    const selectedChar = characters.find((c) => c.name == evt.target.value)
+    if (selectedChar) {
+      setCurrentChar({ ...selectedChar })
+    } else {
+      setCurrentChar(null)
+    }
   }
-
 
   return (
     <>
