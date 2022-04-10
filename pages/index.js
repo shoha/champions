@@ -7,7 +7,13 @@ import { useFirebaseAuth } from '../hooks/useFirebaseAuth'
 import { FileUploader } from '../components/FileUploader'
 
 export default function Home() {
-  const [character] = useCurrentCharacter()
+  const [currentCharInfo] = useCurrentCharacter()
+  let character = null
+
+  if (currentCharInfo) {
+    character = currentCharInfo.data
+  }
+
   const firebaseAuth = useFirebaseAuth()
 
   const head = (
@@ -26,6 +32,7 @@ export default function Home() {
         {firebaseAuth?.currentUser && (
           <FileUploader></FileUploader>
         )}
+
       </div>
     </div>
   )

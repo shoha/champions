@@ -1,6 +1,6 @@
 import { useFirebaseApp } from '../hooks/useFirebaseApp'
-import { getFirestore, collection as fs_collection, addDoc, query, where } from 'firebase/firestore';
-import { useCollectionDataOnce } from 'react-firebase-hooks/firestore';
+import { getFirestore, collection as fs_collection, addDoc, deleteDoc, query, where, doc, orderBy } from 'firebase/firestore';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useEffect } from 'react';
 import { useFirebaseAuth } from '../hooks/useFirebaseAuth';
 import { Select } from './Select'
@@ -13,19 +13,25 @@ export const CharacterSelect = () => {
   const firestore = getFirestore(firebaseApp)
   const collection = fs_collection(firestore, 'characters') as CollectionReference<Character>
   const firebaseAuth = useFirebaseAuth()
-  const [currentChar, setCurrentChar] = useCurrentCharacter()
+  const [currentCharInfo, setCurrentChar] = useCurrentCharacter()
+  const currentChar = currentCharInfo?.data
+  const currentRef = currentCharInfo?.ref
 
-  const q = query<Character>(collection, where("author_uid", "==", firebaseAuth?.currentUser?.uid || "NA"))
+  const q = query<Character>(collection, where("author_uid", "==", firebaseAuth?.currentUser?.uid || "NA"), orderBy("name", "asc"))
 
-  const [characters, loading, error] = useCollectionDataOnce(
+  const [characters, loading, error, snapshot] = useCollectionData(
     q,
   );
 
+  if (error) {
+    throw error
+  }
+
   useEffect(() => {
     if (characters?.[0] && !currentChar) {
-      setCurrentChar({ ...characters[0] })
+      setCurrentChar({ data: { ...snapshot.docs[0].data() }, ref: snapshot.docs[0].ref })
     }
-  }, [characters, currentChar, setCurrentChar])
+  }, [snapshot?.docs, currentChar, setCurrentChar])
 
   const charOpts = characters?.map((c) => {
     return {
@@ -36,20 +42,31 @@ export const CharacterSelect = () => {
   })
 
   const onSelectChange = (evt) => {
-    const selectedChar = characters.find((c) => c.name == evt.target.value)
-    if (selectedChar) {
-      setCurrentChar({ ...selectedChar })
+    const selectedDoc = snapshot.docs.find((doc) => doc.data().name == evt.target.value)
+    if (selectedDoc) {
+      setCurrentChar({ data: { ...selectedDoc.data() }, ref: selectedDoc.ref })
     } else {
-      setCurrentChar(null)
+      setCurrentChar({})
+    }
+  }
+
+  const deleteCurrentCharacter = async () => {
+    if (currentRef) {
+      const nextDoc = snapshot.docs.find((doc) => doc.ref.id != currentRef.id)
+      setCurrentChar({ data: { ...nextDoc.data() }, ref: nextDoc.ref })
+      await deleteDoc(currentCharInfo.ref)
     }
   }
 
   return (
     <>
       {characters && characters.length > 0 && (
-        <div>
-          <Select options={charOpts} onChange={onSelectChange} defaultValue={currentChar?.name}></Select>
-        </div>
+        <>
+          <div>
+            <Select options={charOpts} onChange={onSelectChange} defaultValue={currentChar?.name}></Select>
+          </div>
+          <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4' onClick={() => deleteCurrentCharacter()}>Delete Current Character</button>
+        </>
       )}
     </>
   )

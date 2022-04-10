@@ -1,16 +1,21 @@
 import { createContext, useContext, useState } from "react"
 import type { Character } from "../types/Character"
 import type { Dispatch, SetStateAction } from "react"
+import { DocumentReference } from "firebase/firestore"
 
-export const CurrentCharacterContext = createContext<[Character, Dispatch<Character>]>(null)
+interface CharacterState {
+  data: Character;
+  ref: DocumentReference<Character>;
+}
+export const CurrentCharacterContext = createContext<[CharacterState, Dispatch<CharacterState>]>(null)
 
-export const useCurrentCharacter = (): [Character, Dispatch<Character>] => {
-  const [currentCharacter, setCurrentCharacter] = useContext<[Character, Dispatch<Character>]>(CurrentCharacterContext)
+export const useCurrentCharacter = (): [CharacterState, Dispatch<CharacterState>] => {
+  const [currentCharacter, setCurrentCharacter] = useContext<[CharacterState, Dispatch<CharacterState>]>(CurrentCharacterContext)
   return [currentCharacter, setCurrentCharacter]
 }
 
 export const CurrentCharacterProvider = ({ children }) => {
-  const [currentCharacter, setCurrentCharacter]: [Character, Dispatch<Character>] = useState<Character>(null)
+  const [currentCharacter, setCurrentCharacter]: [CharacterState, Dispatch<CharacterState>] = useState<CharacterState>(null)
 
   return (
     <CurrentCharacterContext.Provider value={[currentCharacter, setCurrentCharacter]}>

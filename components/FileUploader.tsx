@@ -2,12 +2,13 @@ import { useMemo } from 'react';
 import { useFilePicker } from 'use-file-picker';
 import { Character } from '../types/Character';
 import { XMLParser } from 'fast-xml-parser'
-import { getFirestore, collection, addDoc, } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, doc, deleteDoc } from 'firebase/firestore';
 import type { CollectionReference } from 'firebase/firestore'
 import { useFirebaseApp } from '../hooks/useFirebaseApp'
 import { useFirebaseAuth } from '../hooks/useFirebaseAuth';
 import { Modal } from '../components/Modal'
 import { CharacterIntro } from './CharacterIntro';
+import { useCurrentCharacter } from '../hooks/useCurrentCharacter';
 
 export const FileUploader = () => {
   const firebaseApp = useFirebaseApp()
@@ -16,6 +17,7 @@ export const FileUploader = () => {
   const [openFileSelector, { filesContent, loading, clear }] = useFilePicker({
     accept: '.xml',
   });
+  const [_, setCurrentChar] = useCurrentCharacter()
 
   const characterToAdd: Character = useMemo<Character>(() => {
     if (!filesContent?.[0]) {
@@ -24,11 +26,13 @@ export const FileUploader = () => {
 
     const parser = new XMLParser()
     let parsedXML = parser.parse(filesContent[0].content)
-    return { ...parsedXML.character, author_uid: firebaseAuth.currentUser.uid }
+    return { ...parsedXML.character, author_uid: firebaseAuth.currentUser.uid, name: Date.now().toString() }
   }, [filesContent, firebaseAuth?.currentUser?.uid])
 
-  const persistNewCharacter = () => {
-    addDoc<Character>(col, { ...characterToAdd })
+  const persistNewCharacter = async () => {
+    const newDocRef = await addDoc<Character>(col, { ...characterToAdd })
+    setCurrentChar({ data: { ...characterToAdd }, ref: newDocRef })
+
     clear()
   }
 
