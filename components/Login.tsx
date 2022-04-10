@@ -1,7 +1,6 @@
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase/compat/app';
 import { useFirebaseApp } from '../hooks/useFirebaseApp';
-import { useEffect } from 'react';
 import { useFirebaseAuth } from '../hooks/useFirebaseAuth';
 import { useMemo } from 'react';
 

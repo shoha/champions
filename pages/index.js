@@ -4,6 +4,7 @@ import { CharacterSelect } from '../components/CharacterSelect'
 import { useCurrentCharacter } from '../hooks/useCurrentCharacter'
 import { CharacterSheet } from '../components/CharacterSheet'
 import { useFirebaseAuth } from '../hooks/useFirebaseAuth'
+import { FileUploader } from '../components/FileUploader'
 
 export default function Home() {
   const [character] = useCurrentCharacter()
@@ -18,7 +19,15 @@ export default function Home() {
   )
 
   const nav = (
-    <CharacterSelect></CharacterSelect>
+    <div>
+      <h1 className="text-5xl my-2 mb-4 text-">Champions Tracker</h1>
+      <div className="flex gap-4">
+        <CharacterSelect></CharacterSelect>
+        {firebaseAuth?.currentUser && (
+          <FileUploader></FileUploader>
+        )}
+      </div>
+    </div>
   )
 
   let body

@@ -13,6 +13,7 @@ import { CombatModifiers } from '../components/CombatModifiers'
 import { Disadvantages } from '../components/Disadvantages'
 import { Appearance } from '../components/Appearance'
 import type { Character } from "../types/Character"
+import { CharacterIntro } from '../components/CharacterIntro'
 
 interface Props {
   character: Character
@@ -22,9 +23,7 @@ export const CharacterSheet = ({ character }: Props) => {
 
   return (
     <div>
-      <h1 className="text-5xl my-2 text-">Champions Tracker</h1>
-      <h2 className="text-3xl italic my-2">{character.name}</h2>
-      <h2 className="text-2xl italic my-2">{character.campaign_name} by {character.gm}</h2>
+      <CharacterIntro character={character}></CharacterIntro>
       <hr className="border-t-4 border-black my-4"></hr>
 
       {/*

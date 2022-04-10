@@ -12,7 +12,7 @@ export const Select = ({ options, onChange, defaultValue = "placeholder" }: Sele
     return options.map((opt, i) => {
       return <option value={opt.value} key={i}>{opt.label}</option>
     })
-  }, [options, defaultValue])
+  }, [options])
 
   return (
     <select className="form-select" onChange={onChange} value={defaultValue}>

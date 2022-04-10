@@ -1,7 +1,7 @@
 import { useFirebaseApp } from '../hooks/useFirebaseApp'
 import { getFirestore, collection as fs_collection, addDoc, query, where } from 'firebase/firestore';
 import { useCollectionDataOnce } from 'react-firebase-hooks/firestore';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useFirebaseAuth } from '../hooks/useFirebaseAuth';
 import { Select } from './Select'
 import type { Character } from '../types/Character';
