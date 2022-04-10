@@ -21,17 +21,17 @@ export const CharacterSelect = () => {
     q,
   );
 
-  // useEffect(() => {
-  //   if (characters?.[0] && !currentChar) {
-  //     setCurrentChar({ ...characters[0] })
-  //   }
-  // }, [characters, currentChar, setCurrentChar])
-
+  useEffect(() => {
+    if (characters?.[0] && !currentChar) {
+      setCurrentChar({ ...characters[0] })
+    }
+  }, [characters, currentChar, setCurrentChar])
 
   const charOpts = characters?.map((c) => {
     return {
       value: c.uid,
-      label: c.name
+      label: c.name,
+      selected: c === currentChar
     }
   })
 
@@ -48,7 +48,7 @@ export const CharacterSelect = () => {
     <>
       {characters && characters.length > 0 && (
         <div>
-          <Select options={charOpts} onChange={onSelectChange}></Select>
+          <Select options={charOpts} onChange={onSelectChange} defaultValue={currentChar?.name}></Select>
         </div>
       )}
     </>
