@@ -15,6 +15,7 @@ export const Select = ({ options, onChange }: Select) => {
 
   return (
     <select className="form-select" onChange={onChange}>
+      <option>Choose a character</option>
       {opts}
     </select>
   )

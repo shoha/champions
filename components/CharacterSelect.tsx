@@ -37,14 +37,15 @@ export const CharacterSelect = () => {
     }
   })
 
-  const onSelectChange = useCallback((evt) => {
+  const onSelectChange = (evt) => {
     const selectedChar = characters.find((c) => c.name = evt.target.value)
     setCurrentChar(selectedChar)
-  }, [setCurrentChar, characters])
+  }
+
 
   return (
     <>
-      {characters && (
+      {characters && characters.length > 0 && (
         <div>
           <Select options={charOpts} onChange={onSelectChange}></Select>
         </div>
