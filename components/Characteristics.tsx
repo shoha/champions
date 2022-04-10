@@ -1,9 +1,14 @@
 import { useMemo } from 'react'
+import type { Character } from "../types/Character"
+
+interface Props {
+  character: Character
+}
 
 const attrs = ['str', 'dex', 'con', 'body', 'int', 'ego', 'pre', 'pd', 'ed', 'spd', 'rec', 'end', 'stun']
 const movements = ['leaping', 'running', 'swimming']
 
-export const Characteristics = ({ character }) => {
+export const Characteristics = ({ character }: Props) => {
   const characteristics = character.characteristics
 
   const attrRows = useMemo(() => {
@@ -22,7 +27,7 @@ export const Characteristics = ({ character }) => {
         </tr>
       )
     })
-  }, [character])
+  }, [characteristics])
 
   const movementRows = useMemo(() => {
     return movements.map((movement) => {
@@ -40,7 +45,7 @@ export const Characteristics = ({ character }) => {
         </tr>
       )
     })
-  }, [character])
+  }, [characteristics])
 
   return (
     <table className="table-auto w-full text-left">

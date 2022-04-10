@@ -1,14 +1,9 @@
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-
-// Configure Firebase.
-const config = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-};
-
-firebase.initializeApp(config);
+import { useFirebaseApp } from '../hooks/useFirebaseApp';
+import { useEffect } from 'react';
+import { useFirebaseAuth } from '../hooks/useFirebaseAuth';
+import { useMemo } from 'react';
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -21,13 +16,25 @@ const uiConfig = {
   callbacks: {
     // Avoid redirects after sign-in.
     signInSuccessWithAuthResult: (authResult) => {
+      console.log(authResult)
       return false
     },
   },
 };
 
 export const Login = () => {
+  const firebaseApp = useFirebaseApp()
+  const firebaseAuth = useFirebaseAuth()
+
+  const loggedOut = useMemo(() => {
+    return !firebaseAuth || !firebaseAuth?.currentUser
+  }, [firebaseAuth])
+
   return (
-    <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+    <>
+      {loggedOut && (
+        <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth(firebaseApp)} />
+      )}
+    </>
   )
 }

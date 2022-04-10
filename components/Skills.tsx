@@ -1,6 +1,12 @@
 import { useMemo } from "react"
+import type { Character } from "../types/Character"
 
-export const Skills = ({ character }) => {
+interface Props {
+  character: Character
+}
+
+
+export const Skills = ({ character }: Props) => {
   const skillRows = useMemo(() => {
     return character.skills.skill.map((skill, i) => {
       return (

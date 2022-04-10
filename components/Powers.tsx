@@ -1,6 +1,12 @@
 import { useMemo } from "react"
+import type { Character } from "../types/Character"
 
-export const Powers = ({ character }) => {
+interface Props {
+  character: Character
+}
+
+
+export const Powers = ({ character }: Props) => {
   const powerRows = useMemo(() => {
     return character.powers.power.map((power) => {
       return (

@@ -1,4 +1,10 @@
-export const CombatInfo = ({ character }) => {
+import type { Character } from "../types/Character"
+
+interface Props {
+  character: Character
+}
+
+export const CombatInfo = ({ character }: Props) => {
   return (
     <table className="table-auto w-full text-left">
       <tbody>
@@ -11,7 +17,6 @@ export const CombatInfo = ({ character }) => {
           <td>{character.dcv}</td>
         </tr>
       </tbody>
-
     </table>
   )
 }

@@ -1,6 +1,11 @@
 import { useMemo } from "react"
+import type { Character } from "../types/Character"
 
-export const Disadvantages = ({ character }) => {
+interface Props {
+  character: Character
+}
+
+export const Disadvantages = ({ character }: Props) => {
   const disadvantageRows = useMemo(() => {
     return character.disads.disad.map((disad, i) => {
       return (

@@ -1,4 +1,10 @@
-export const Experience = ({ character }) => {
+import type { Character } from "../types/Character"
+
+interface Props {
+  character: Character
+}
+
+export const Experience = ({ character }: Props) => {
   return (
     <table className="table-auto w-full text-left">
       <tbody>

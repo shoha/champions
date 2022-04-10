@@ -1,4 +1,10 @@
-export const Defenses = ({ character }) => {
+import type { Character } from "../types/Character"
+
+interface Props {
+  character: Character
+}
+
+export const Defenses = ({ character }: Props) => {
   return (
     <table className="table-auto w-full text-left">
       <thead>
