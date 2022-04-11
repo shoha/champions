@@ -53,39 +53,40 @@ export interface Application {
 }
 
 export interface Characteristics {
-    str: Body;
-    dex: Body;
-    con: Body;
-    body: Body;
-    int: Body;
-    ego: Body;
-    pre: Body;
+    str: Characteristic;
+    dex: Characteristic;
+    con: Characteristic;
+    body: Characteristic;
+    int: Characteristic;
+    ego: Characteristic;
+    pre: Characteristic;
     com: string;
-    pd: Body;
-    ed: Body;
-    spd: Body;
-    rec: Body;
-    end: Body;
-    stun: Body;
-    running: Body;
-    swimming: Body;
+    pd: Characteristic;
+    ed: Characteristic;
+    spd: Characteristic;
+    rec: Characteristic;
+    end: Characteristic;
+    stun: Characteristic;
+    running: Characteristic;
+    swimming: Characteristic;
     leaping: Leaping;
     def: string;
     size: string;
 }
 
-export interface Body {
+export interface Characteristic {
     val: string;
     base: string;
     cost: string;
     active_cost: string;
-    total: string;
+    total: number;
     roll?: string;
     notes: string;
     nonresistant_total?: string;
     resistant_total?: string;
     dice?: string;
     lift?: string;
+    current: number;
 }
 
 export interface Leaping {
