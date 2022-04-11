@@ -28,7 +28,7 @@ export const CharacterSelect = () => {
   }
 
   useEffect(() => {
-    if (characters?.[0] && !currentChar) {
+    if (snapshot.docs?.[0] && !currentChar) {
       setCurrentChar({ data: { ...snapshot.docs[0].data() }, ref: snapshot.docs[0].ref })
     }
   }, [snapshot?.docs, currentChar, setCurrentChar])

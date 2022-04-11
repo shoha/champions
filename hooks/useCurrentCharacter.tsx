@@ -1,11 +1,11 @@
 import { createContext, useContext, useState } from "react"
 import type { Character } from "../types/Character"
-import type { Dispatch, SetStateAction } from "react"
+import type { Dispatch } from "react"
 import { DocumentReference } from "firebase/firestore"
 
 interface CharacterState {
-  data: Character;
-  ref: DocumentReference<Character>;
+  data?: Character;
+  ref?: DocumentReference<Character>;
 }
 export const CurrentCharacterContext = createContext<[CharacterState, Dispatch<CharacterState>]>(null)
 
