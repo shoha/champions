@@ -5,14 +5,14 @@ import { XMLParser } from 'fast-xml-parser'
 import { getFirestore, collection, addDoc, doc, deleteDoc } from 'firebase/firestore';
 import type { CollectionReference } from 'firebase/firestore'
 import { useFirebaseApp } from '../hooks/useFirebaseApp'
-import { useFirebaseAuth } from '../hooks/useFirebaseAuth';
 import { Modal } from '../components/Modal'
 import { CharacterIntro } from './CharacterIntro';
 import { useCurrentCharacter } from '../hooks/useCurrentCharacter';
+import { useCurrentUser } from '../hooks/useCurrentUser';
 
 export const FileUploader = () => {
   const firebaseApp = useFirebaseApp()
-  const firebaseAuth = useFirebaseAuth()
+  const currentUser = useCurrentUser()
   const col = collection(getFirestore(firebaseApp), "characters") as CollectionReference<Character>
   const [openFileSelector, { filesContent, loading, clear }] = useFilePicker({
     accept: '.xml',
@@ -26,8 +26,8 @@ export const FileUploader = () => {
 
     const parser = new XMLParser()
     let parsedXML = parser.parse(filesContent[0].content)
-    return { ...parsedXML.character, author_uid: firebaseAuth.currentUser.uid, name: Date.now().toString() }
-  }, [filesContent, firebaseAuth?.currentUser?.uid])
+    return { ...parsedXML.character, author_uid: currentUser.uid }
+  }, [filesContent, currentUser?.uid])
 
   const persistNewCharacter = async () => {
     const newDocRef = await addDoc<Character>(col, { ...characterToAdd })

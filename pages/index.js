@@ -3,18 +3,13 @@ import { Login } from '../components/Login'
 import { CharacterSelect } from '../components/CharacterSelect'
 import { useCurrentCharacter } from '../hooks/useCurrentCharacter'
 import { CharacterSheet } from '../components/CharacterSheet'
-import { useFirebaseAuth } from '../hooks/useFirebaseAuth'
 import { FileUploader } from '../components/FileUploader'
+import { useCurrentUser } from '../hooks/useCurrentUser'
 
 export default function Home() {
   const [currentCharInfo] = useCurrentCharacter()
-  let character = null
-
-  if (currentCharInfo) {
-    character = currentCharInfo.data
-  }
-
-  const firebaseAuth = useFirebaseAuth()
+  const character = currentCharInfo?.data
+  const currentUser = useCurrentUser()
 
   const head = (
     <Head>
@@ -29,9 +24,10 @@ export default function Home() {
       <h1 className="text-5xl my-2 mb-4 text-">Champions Tracker</h1>
       <div className="flex gap-4">
         <CharacterSelect></CharacterSelect>
-        {firebaseAuth?.currentUser && (
+        {currentUser && (
           <FileUploader></FileUploader>
         )}
+        <Login></Login>
 
       </div>
     </div>
@@ -39,14 +35,8 @@ export default function Home() {
 
   let body
 
-  if (!firebaseAuth.currentUser) {
-    body = (
-      <Login></Login>
-    )
-  } else if (character) {
+  if (currentUser && character) {
     body = <CharacterSheet character={character}></CharacterSheet>
-  } else {
-    body = <div>No character available</div>
   }
 
   return (

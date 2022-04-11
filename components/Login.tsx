@@ -1,8 +1,7 @@
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase/compat/app';
 import { useFirebaseApp } from '../hooks/useFirebaseApp';
-import { useFirebaseAuth } from '../hooks/useFirebaseAuth';
-import { useMemo } from 'react';
+import { useCurrentUser } from '../hooks/useCurrentUser';
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -22,15 +21,11 @@ const uiConfig = {
 
 export const Login = () => {
   const firebaseApp = useFirebaseApp()
-  const firebaseAuth = useFirebaseAuth()
-
-  const loggedOut = useMemo(() => {
-    return !firebaseAuth || !firebaseAuth?.currentUser
-  }, [firebaseAuth])
+  const currentUser = useCurrentUser()
 
   return (
     <>
-      {loggedOut && (
+      {!currentUser && (
         <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth(firebaseApp)} />
       )}
     </>
