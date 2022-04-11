@@ -23,7 +23,7 @@ const ActiveStat = ({ character, stat, name }: ActiveStatProps) => {
       <div className="font-semibold mb-2">
         {name}<span className="font-normal italic"> (max {stat.total})</span>
       </div>
-      <div className="text-3xl mb-2">
+      <div className="text-3xl mb-2 select-none">
         {current}
       </div>
       <div className="flex gap-2 justify-center">
@@ -43,7 +43,7 @@ const ActivePhases = ({ character }: ActivePhasesProps) => {
   console.log(phases)
   const dots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((i) => {
     return (
-      <div key={i} className={`text-white rounded-lg p-4 flex-0 text-center w-14 ${phases.indexOf(i.toString()) > -1 ? "bg-green-500" : "bg-gray-500"}`}>
+      <div key={i} className={`text-white rounded-lg p-4 flex-0 text-center w-14 select-none ${phases.indexOf(i.toString()) > -1 ? "bg-green-500" : "bg-gray-500"}`}>
         {i}
       </div>
     )
