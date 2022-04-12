@@ -1,0 +1,56 @@
+import Image from "next/image"
+import { useState } from "react"
+import { Button } from "./Button"
+
+const diceImages = [
+  "/dice/dice-six-faces-one.svg",
+  "/dice/dice-six-faces-two.svg",
+  "/dice/dice-six-faces-three.svg",
+  "/dice/dice-six-faces-four.svg",
+  "/dice/dice-six-faces-five.svg",
+  "/dice/dice-six-faces-six.svg",
+]
+
+interface DiceProps {
+  number: number
+}
+
+const Dice = ({ number }: DiceProps) => {
+  return (
+    <Image src={diceImages[number - 1]} width={25} height={25} alt={`A dice showing ${number}`}></Image >
+  )
+}
+
+const DICE_SIDES = 6;
+
+const roll = (count: number = 1, setDice) => {
+  const dice = []
+
+  for (let i = 0; i < count; i++) {
+    const result = Math.ceil(Math.random() * DICE_SIDES)
+    dice.push(<Dice number={result} key={i}></Dice>)
+  }
+
+  setDice(dice)
+}
+
+interface Props { }
+
+export const DiceRoller = ({ }: Props) => {
+  const [dice, setDice] = useState<JSX.Element[]>([])
+  const [numDice, setNumDice] = useState<number>(3)
+
+  return (
+    <div>
+      <div className="flex gap-2 ">
+        <Button color="blue" onClick={() => { roll(numDice, setDice) }}>Roll</Button>
+        <Button color="red" onClick={() => { setNumDice(Math.max(numDice - 1, 1)) }}>-</Button>
+        <div className="text-md self-center">{numDice}</div>
+        <Button color="green" onClick={() => { setNumDice(Math.max(numDice + 1, 1)) }}>+</Button>
+      </div>
+      <div className="flex gap-2 mt-2" >
+        {dice}
+      </div>
+    </div>
+  )
+}

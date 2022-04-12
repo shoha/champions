@@ -2,6 +2,7 @@ import { setDoc } from "firebase/firestore";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { DocumentReference } from "firebase/firestore";
 import type { Character, Characteristic } from "../types/Character";
+import { Button } from "./Button";
 
 interface ActiveStatProps {
   character: Character;
@@ -12,7 +13,7 @@ interface ActiveStatProps {
 
 const ActiveStat = ({ character, characterRef, name }: ActiveStatProps) => {
   const statBlock = character.characteristics[name]
-  const defaultValue = character.current[name].value || statBlock.total
+  const defaultValue = character.current?.[name]?.value || statBlock.total
   const [current, updateCurrent] = useState<number>(defaultValue)
 
   const increment = useCallback(() => {
@@ -37,7 +38,7 @@ const ActiveStat = ({ character, characterRef, name }: ActiveStatProps) => {
     } as Character, { merge: true })
 
     return
-  }, [current, characterRef])
+  }, [current, characterRef, name])
 
   return (
     <div className="text-center">
@@ -48,8 +49,8 @@ const ActiveStat = ({ character, characterRef, name }: ActiveStatProps) => {
         {current}
       </div>
       <div className="flex gap-2 justify-center">
-        <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4' onClick={() => decrement()}>-</button>
-        <button className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4' onClick={() => increment()}>+</button>
+        <Button onClick={() => decrement()} color="red">-</Button>
+        <Button onClick={() => increment()} color="green">+</Button>
       </div>
     </div>
   )

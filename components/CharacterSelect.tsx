@@ -7,6 +7,7 @@ import type { Character } from '../types/Character';
 import type { CollectionReference } from 'firebase/firestore';
 import { useCurrentCharacter } from '../hooks/useCurrentCharacter';
 import { useCurrentUser } from '../hooks/useCurrentUser';
+import { Button } from './Button';
 
 export const CharacterSelect = () => {
   const firebaseApp = useFirebaseApp()
@@ -69,9 +70,10 @@ export const CharacterSelect = () => {
           <div>
             <Select options={charOpts} onChange={onSelectChange} defaultValue={currentChar?.name}></Select>
           </div>
-          <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4' onClick={() => deleteCurrentCharacter()}>Delete Current Character</button>
+          <Button color="red" onClick={() => deleteCurrentCharacter()}>Delete Current Character</Button>
         </>
-      )}
+      )
+      }
     </>
   )
 }

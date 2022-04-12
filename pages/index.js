@@ -5,6 +5,7 @@ import { useCurrentCharacter } from '../hooks/useCurrentCharacter'
 import { CharacterSheet } from '../components/CharacterSheet'
 import { FileUploader } from '../components/FileUploader'
 import { useCurrentUser } from '../hooks/useCurrentUser'
+import { DiceRoller } from '../components/DiceRoller'
 
 export default function Home() {
   const [currentCharInfo] = useCurrentCharacter()
@@ -29,7 +30,6 @@ export default function Home() {
           <FileUploader></FileUploader>
         )}
         <Login></Login>
-
       </div>
     </div>
   )
@@ -44,6 +44,9 @@ export default function Home() {
     <div className="container mx-auto px-4 my-4">
       {head}
       {nav}
+      <div className="mt-4">
+        <DiceRoller></DiceRoller>
+      </div>
       {body}
     </div>
   )

@@ -2,13 +2,14 @@ import { useMemo } from 'react';
 import { useFilePicker } from 'use-file-picker';
 import { Character } from '../types/Character';
 import { XMLParser } from 'fast-xml-parser'
-import { getFirestore, collection, addDoc, doc, deleteDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import type { CollectionReference } from 'firebase/firestore'
 import { useFirebaseApp } from '../hooks/useFirebaseApp'
 import { Modal } from '../components/Modal'
 import { CharacterIntro } from './CharacterIntro';
 import { useCurrentCharacter } from '../hooks/useCurrentCharacter';
 import { useCurrentUser } from '../hooks/useCurrentUser';
+import { Button } from './Button';
 
 export const FileUploader = () => {
   const firebaseApp = useFirebaseApp()
@@ -42,7 +43,7 @@ export const FileUploader = () => {
 
   return (
     <>
-      <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4' onClick={() => openFileSelector()}>Upload XML</button>
+      <Button color="blue" onClick={() => openFileSelector()}>Upload XML</Button>
       {characterToAdd && (
         <Modal title={"Confirm Upload"} onConfirm={persistNewCharacter} onCancel={cancelPersist}>
           <CharacterIntro character={characterToAdd}></CharacterIntro>

@@ -1,3 +1,5 @@
+import { Button } from "./Button";
+
 interface Props {
   title: string;
   children?: any;
@@ -24,10 +26,10 @@ export const Modal = ({ title, children, onConfirm, onCancel }: Props) => {
             </div>
             <div className="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
               {onConfirm && (
-                <button onClick={onConfirm} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Go for it!</button>
+                <Button onClick={onConfirm}>Go for it</Button>
               )}
               {onCancel && (
-                <button onClick={onCancel} type="button" className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Never mind!</button>
+                <Button onClick={onCancel} color="red">Never mind</Button>
               )}
             </div>
           </div>
