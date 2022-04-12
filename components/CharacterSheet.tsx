@@ -15,12 +15,14 @@ import { Appearance } from '../components/Appearance'
 import type { Character } from "../types/Character"
 import { CharacterIntro } from '../components/CharacterIntro'
 import { CombatTracker } from '../components/CombatTracker'
+import type { DocumentReference } from "firebase/firestore";
 
 interface Props {
   character: Character
+  characterRef?: DocumentReference<Character>;
 }
 
-export const CharacterSheet = ({ character }: Props) => {
+export const CharacterSheet = ({ character, characterRef }: Props) => {
 
   return (
     <div>
@@ -28,7 +30,7 @@ export const CharacterSheet = ({ character }: Props) => {
       <hr className="border-t-4 border-black my-4"></hr>
 
       <Section className="mb-4 mt-4" title="Combat Tracker">
-        <CombatTracker character={character}></CombatTracker>
+        <CombatTracker character={character} characterRef={characterRef}></CombatTracker>
       </Section>
 
       {/*

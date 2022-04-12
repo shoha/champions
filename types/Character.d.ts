@@ -45,6 +45,14 @@ export interface Character implements DocumentData {
     powers: Powers;
     disads: Disads;
     uid: string;
+    current: Current;
+}
+
+export interface Current {
+    end: Characteristic;
+    body: Characteristic;
+    stun: Characteristic;
+    [key: string]: any;
 }
 
 export interface Application {

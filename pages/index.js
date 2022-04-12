@@ -9,6 +9,7 @@ import { useCurrentUser } from '../hooks/useCurrentUser'
 export default function Home() {
   const [currentCharInfo] = useCurrentCharacter()
   const character = currentCharInfo?.data
+  const characterRef = currentCharInfo?.ref
   const currentUser = useCurrentUser()
 
   const head = (
@@ -36,7 +37,7 @@ export default function Home() {
   let body
 
   if (currentUser && character) {
-    body = <CharacterSheet character={character}></CharacterSheet>
+    body = <CharacterSheet character={character} characterRef={characterRef}></CharacterSheet>
   }
 
   return (
