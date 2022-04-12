@@ -1,6 +1,7 @@
 import Image from "next/image"
 import { useState } from "react"
 import { Button } from "./Button"
+import toast from 'react-hot-toast'
 
 const diceImages = [
   "/dice/dice-six-faces-one.svg",
@@ -31,6 +32,8 @@ const roll = (count: number = 1, setDice) => {
     dice.push(<Dice number={result} key={i}></Dice>)
   }
 
+  toast(<div>{dice}</div>)
+
   setDice(dice)
 }
 
@@ -45,11 +48,8 @@ export const DiceRoller = ({ }: Props) => {
       <div className="flex gap-2 ">
         <Button color="blue" onClick={() => { roll(numDice, setDice) }}>Roll</Button>
         <Button color="red" onClick={() => { setNumDice(Math.max(numDice - 1, 1)) }}>-</Button>
-        <div className="text-md self-center">{numDice}</div>
+        <div className="text-md self-center select-none">{numDice}</div>
         <Button color="green" onClick={() => { setNumDice(Math.max(numDice + 1, 1)) }}>+</Button>
-      </div>
-      <div className="flex gap-2 mt-2" >
-        {dice}
       </div>
     </div>
   )

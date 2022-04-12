@@ -6,6 +6,7 @@ import { CharacterSheet } from '../components/CharacterSheet'
 import { FileUploader } from '../components/FileUploader'
 import { useCurrentUser } from '../hooks/useCurrentUser'
 import { DiceRoller } from '../components/DiceRoller'
+import { RollHistory } from '../components/RollHistory'
 
 export default function Home() {
   const [currentCharInfo] = useCurrentCharacter()
@@ -46,6 +47,7 @@ export default function Home() {
       {nav}
       <div className="mt-4">
         <DiceRoller></DiceRoller>
+        <RollHistory></RollHistory>
       </div>
       {body}
     </div>
