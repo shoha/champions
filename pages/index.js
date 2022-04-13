@@ -7,12 +7,14 @@ import { FileUploader } from '../components/FileUploader'
 import { useCurrentUser } from '../hooks/useCurrentUser'
 import { DiceRoller } from '../components/DiceRoller'
 import { RollHistory } from '../components/RollHistory'
+import { useState } from 'react'
 
 export default function Home() {
   const [currentCharInfo] = useCurrentCharacter()
   const character = currentCharInfo?.data
   const characterRef = currentCharInfo?.ref
   const currentUser = useCurrentUser()
+  const [showHistory, setShowHistory] = useState(false)
 
   const head = (
     <Head>
@@ -42,14 +44,19 @@ export default function Home() {
   }
 
   return (
-    <div className="container mx-auto px-4 my-4">
-      {head}
-      {nav}
-      <div className="mt-4">
-        <DiceRoller></DiceRoller>
-        <RollHistory></RollHistory>
+    <>
+      <div className="container mx-auto px-4 my-4">
+        {head}
+        {nav}
+        <div className="mt-4">
+          <DiceRoller setShowHistory={setShowHistory} showHistory={showHistory}></DiceRoller>
+        </div>
+        {body}
       </div>
-      {body}
-    </div>
+
+      {showHistory &&
+        <RollHistory></RollHistory>
+      }
+    </>
   )
 }

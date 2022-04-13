@@ -37,9 +37,12 @@ const roll = (count: number = 1, setDice) => {
   setDice(dice)
 }
 
-interface Props { }
+interface Props {
+  showHistory: boolean;
+  setShowHistory: (boolean) => void;
+}
 
-export const DiceRoller = ({ }: Props) => {
+export const DiceRoller = ({ setShowHistory, showHistory }: Props) => {
   const [dice, setDice] = useState<JSX.Element[]>([])
   const [numDice, setNumDice] = useState<number>(3)
 
@@ -51,6 +54,7 @@ export const DiceRoller = ({ }: Props) => {
         <div className="text-md self-center select-none">{numDice}</div>
         <Button color="green" onClick={() => { setNumDice(Math.max(numDice + 1, 1)) }}>+</Button>
       </div>
+      <Button color="blue" onClick={() => { setShowHistory(!showHistory) }}>Toggle History</Button>
     </div>
   )
 }
