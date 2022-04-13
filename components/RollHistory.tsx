@@ -54,20 +54,17 @@ export const RollHistory = () => {
     setAllToasts([...mergedToasts])
   }, [toasts, allToasts, setAllToasts])
 
-  const showHistory = allToasts.length > 0
-
   return (
-    showHistory && (
-      <div className="fixed top-0 right-0 p-4 h-full bg-teal-50 w-52">
-        < div className="mt-2 text-md italic font-semibold" >
-          History
-        </div >
-        <div className="mt-2 flex gap-2 flex-col">
-          {
-            allToasts.map((t, i) => <HistoryItem key={i} toast={t}></HistoryItem>)
-          }
-        </div>
+    <div className="fixed top-0 right-0 p-4 h-full bg-gray-50 w-52 border-l-2 shadow-lg">
+      < div className="mt-2 text-lg font-bold" >
+        History
       </div >
-    )
+      <hr className="border-t-2 border-black"></hr>
+      <div className="mt-2 flex gap-2 flex-col">
+        {
+          [...allToasts].reverse().map((t, i) => <HistoryItem key={i} toast={t}></HistoryItem>)
+        }
+      </div>
+    </div >
   )
 }

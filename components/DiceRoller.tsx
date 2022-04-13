@@ -54,7 +54,7 @@ export const DiceRoller = ({ setShowHistory, showHistory }: Props) => {
         <div className="text-md self-center select-none">{numDice}</div>
         <Button color="green" onClick={() => { setNumDice(Math.max(numDice + 1, 1)) }}>+</Button>
       </div>
-      <Button color="blue" onClick={() => { setShowHistory(!showHistory) }}>Toggle History</Button>
+      <Button className="mt-2" color="blue" onClick={() => { setShowHistory(!showHistory) }}>Toggle History</Button>
     </div>
   )
 }
