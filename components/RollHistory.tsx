@@ -1,5 +1,7 @@
 import { resolveValue } from "react-hot-toast";
 import { useRollHistory } from "../hooks/useRollHistory";
+import { useSpring, useTransition, animated, config } from 'react-spring'
+import { useMemo } from "react";
 
 const Message = ({ toast }) => {
   return (
@@ -41,18 +43,42 @@ const HistoryItem = ({ toast }) => {
   );
 };
 
-export const RollHistory = () => {
+interface Props {
+  shown: boolean
+}
+
+export const RollHistory = ({ shown }: Props) => {
   const toasts = useRollHistory();
+  const toastsReversed = useMemo(() => {
+    return [...toasts].reverse()
+  }, [toasts])
+
+  const drawerSpringProps = useSpring({
+    right: shown ? 0 : -200,
+    config: config.stiff
+  })
+
+  const transitions = useTransition(toastsReversed, {
+    from: { opacity: 0, y: 0 },
+    enter: { opacity: 1, y: 10 },
+    leave: { opacity: 0, y: -10 },
+    update: { opacity: 1, y: 10 },
+    delay: 100,
+    config: config.stiff,
+  })
+
 
   return (
-    <div className="fixed top-0 right-0 p-4 h-full bg-gray-50 w-52 border-l-2 shadow-lg">
+    <animated.div className="fixed top-0 p-4 h-full bg-gray-50 w-52 border-l-2 shadow-lg" style={{ ...drawerSpringProps }}>
       <div className="mt-2 text-lg font-bold">History</div>
       <hr className="border-t-2 border-black"></hr>
       <div className="mt-2 flex gap-2 flex-col">
-        {[...toasts].reverse().map((t, i) => (
-          <HistoryItem key={i} toast={t}></HistoryItem>
+        {transitions((style, item) => (
+          <animated.div style={{ ...style, transform: style.y.to((y) => `translate3d(0,${style.y.get()}px,0)`) }}>
+            <HistoryItem toast={item}></HistoryItem>
+          </animated.div>
         ))}
       </div>
-    </div>
+    </animated.div >
   );
 };

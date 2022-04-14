@@ -54,9 +54,7 @@ export default function Home() {
         {body}
       </div>
 
-      {showHistory &&
-        <RollHistory></RollHistory>
-      }
+      <RollHistory shown={showHistory}></RollHistory>
     </>
   )
 }

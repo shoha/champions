@@ -17,6 +17,7 @@
     "react-firebase-hooks": "^5.0.3",
     "react-firebaseui": "^6.0.0",
     "react-hot-toast": "^2.2.0",
+    "react-spring": "^9.4.4",
     "use-file-picker": "^1.4.2"
   },
   "devDependencies": {
