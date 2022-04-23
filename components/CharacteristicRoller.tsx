@@ -4,7 +4,7 @@ import type { DiceToastRenderer } from "../utils/diceToasts";
 import { Characteristic } from "../types/Character";
 import { Button } from "./Button";
 import { useMemo } from "react";
-import { Check, Cancel } from "iconoir-react";
+import { Check, Cancel, HexagonDice } from "iconoir-react";
 
 interface Props {
   label: string;
@@ -59,8 +59,10 @@ export const CharacteristicRoller = ({ label, characteristic }: Props) => {
         onClick={() => {
           roll({ count: 3, numSides: 6 });
         }}
+        className="bg-transparent hover:bg-transparent flex items-center text-black font-normal gap-x-2 px-0"
       >
-        {characteristic.total}
+        {characteristic.val}
+        <HexagonDice color="black"></HexagonDice>
       </Button>
     </div>
   );

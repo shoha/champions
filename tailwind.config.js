@@ -12,6 +12,7 @@ module.exports = {
   safelist: [
     {
       pattern: /bg-.*-/,
+      variants: ["hover"],
     },
   ],
 };

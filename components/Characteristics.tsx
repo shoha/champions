@@ -22,6 +22,7 @@ const attrs = [
   "stun",
 ];
 const movements = ["leaping", "running", "swimming"];
+const rollable = ["str", "dex", "con", "int", "ego", "pre"];
 
 export const Characteristics = ({ character }: Props) => {
   const characteristics = character.characteristics;
@@ -33,10 +34,14 @@ export const Characteristics = ({ character }: Props) => {
       return (
         <tr className="table-row" key={attr}>
           <td>
-            <CharacteristicRoller
-              label={attr}
-              characteristic={attrData}
-            ></CharacteristicRoller>
+            {rollable.includes(attr) ? (
+              <CharacteristicRoller
+                label={attr}
+                characteristic={attrData}
+              ></CharacteristicRoller>
+            ) : (
+              attrData.val
+            )}
           </td>
           <td className="uppercase">{attr}</td>
           <td>{attrData.base}</td>
