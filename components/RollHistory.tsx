@@ -1,6 +1,6 @@
 import { resolveValue } from "react-hot-toast";
 import { useRollHistory } from "../hooks/useRollHistory";
-import { useSpring, useTransition, animated, config } from 'react-spring'
+import { useSpring, useTransition, animated, config } from "react-spring";
 import { useMemo } from "react";
 
 const Message = ({ toast }) => {
@@ -44,35 +44,39 @@ const HistoryItem = ({ toast }) => {
 };
 
 interface Props {
-  shown: boolean
+  shown: boolean;
 }
 
 export const RollHistory = ({ shown }: Props) => {
-  const refMap = useMemo(() => new WeakMap(), [])
-  console.log(refMap)
+  const refMap = useMemo(() => new WeakMap(), []);
   const toasts = useRollHistory();
   const toastsReversed = useMemo(() => {
-    return [...toasts].reverse()
-  }, [toasts])
+    return [...toasts].reverse();
+  }, [toasts]);
 
   const drawerSpringProps = useSpring({
     right: shown ? 0 : -200,
-    config: config.stiff
-  })
+    config: config.stiff,
+  });
 
   const transitions = useTransition(toastsReversed, {
     from: { opacity: 0, height: 0 },
-    enter: item => async (next) => {
-      await next({ opacity: 1, height: refMap.get(item).offsetHeight })
+    enter: (item) => async (next) => {
+      await next({ opacity: 1, height: refMap.get(item).offsetHeight });
     },
     leave: { opacity: 0 },
     update: { opacity: 1 },
     config: config.stiff,
-    keys: (item) => { return item.id }
-  })
+    keys: (item) => {
+      return item.id;
+    },
+  });
 
   return (
-    <animated.div className="fixed top-0 p-4 h-full bg-gray-50 w-52 border-l-2 shadow-lg" style={{ ...drawerSpringProps }}>
+    <animated.div
+      className="fixed top-0 p-4 h-full bg-gray-50 w-52 border-l-2 shadow-lg"
+      style={{ ...drawerSpringProps }}
+    >
       <div className="mt-2 text-lg font-bold">History</div>
       <hr className="border-t-2 border-black"></hr>
       <div className="mt-2 flex gap-2 flex-col">
@@ -84,6 +88,6 @@ export const RollHistory = ({ shown }: Props) => {
           </animated.div>
         ))}
       </div>
-    </animated.div >
+    </animated.div>
   );
 };

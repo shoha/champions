@@ -12,63 +12,75 @@ interface ActiveStatProps {
 }
 
 const ActiveStat = ({ character, characterRef, name }: ActiveStatProps) => {
-  const statBlock = character.characteristics[name]
-  const defaultValue = character.current?.[name]?.value || statBlock.total
-  const [current, updateCurrent] = useState<number>(defaultValue)
+  const statBlock = character.characteristics[name];
+  const defaultValue = character.current?.[name]?.value || statBlock.total;
+  const [current, updateCurrent] = useState<number>(defaultValue);
 
   const increment = useCallback(() => {
-    updateCurrent(current + 1)
-  }, [current, updateCurrent])
+    updateCurrent(current + 1);
+  }, [current, updateCurrent]);
 
   const decrement = useCallback(() => {
-    updateCurrent(current - 1)
-  }, [current, updateCurrent])
+    updateCurrent(current - 1);
+  }, [current, updateCurrent]);
 
   useEffect(() => {
     if (!characterRef) {
-      return
+      return;
     }
 
-    setDoc(characterRef, {
-      current: {
-        [name]: {
-          value: current
-        }
-      }
-    } as Character, { merge: true })
+    setDoc(
+      characterRef,
+      {
+        current: {
+          [name]: {
+            value: current,
+          },
+        },
+      } as Character,
+      { merge: true }
+    );
 
-    return
-  }, [current, characterRef, name])
+    return;
+  }, [current, characterRef, name]);
 
   return (
     <div className="text-center">
       <div className="font-semibold mb-2">
-        <span className="uppercase">{name}</span><span className="font-normal italic"> (max {statBlock.total})</span>
+        <span className="uppercase">{name}</span>
+        <span className="font-normal italic"> (max {statBlock.total})</span>
       </div>
-      <div className="text-3xl mb-2 select-none">
-        {current}
-      </div>
+      <div className="text-3xl mb-2 select-none">{current}</div>
       <div className="flex gap-2 justify-center">
-        <Button onClick={() => decrement()} color="red">-</Button>
-        <Button onClick={() => increment()} color="green">+</Button>
+        <Button onClick={() => decrement()} color="red">
+          -
+        </Button>
+        <Button onClick={() => increment()} color="green">
+          +
+        </Button>
       </div>
     </div>
-  )
-}
+  );
+};
 
 interface ActivePhasesProps {
   character: Character;
 }
 
 const ActivePhases = ({ character }: ActivePhasesProps) => {
-  const phases = character.characteristics.spd.notes.match(/(\d+)/g)
+  const phases = character.characteristics.spd.notes.match(/(\d+)/g);
   const dots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((i) => {
     return (
-      <div key={i} className={`text-white rounded-lg p-4 flex-0 text-center w-14 select-none ${phases.indexOf(i.toString()) > -1 ? "bg-green-500" : "bg-gray-500"}`}>
+      <div
+        key={i}
+        className={`text-white rounded-lg p-4 flex-0 text-center w-14 select-none ${
+          phases.indexOf(i.toString()) > -1 ? "bg-green-500" : "bg-gray-500"
+        }`}
+      >
         {i}
       </div>
-    )
-  })
+    );
+  });
 
   return (
     <div>
@@ -77,14 +89,13 @@ const ActivePhases = ({ character }: ActivePhasesProps) => {
         {dots}
       </div>
     </div>
-  )
-}
+  );
+};
 
 interface Props {
   character: Character;
   characterRef?: DocumentReference<Character>;
 }
-
 
 export const CombatTracker = ({ character, characterRef }: Props) => {
   return (
@@ -92,10 +103,25 @@ export const CombatTracker = ({ character, characterRef }: Props) => {
       <ActivePhases character={character}></ActivePhases>
 
       <div className="flex ml-auto gap-4">
-        <ActiveStat name="end" stat={character.characteristics.end} character={character} characterRef={characterRef}></ActiveStat>
-        <ActiveStat name="stun" stat={character.characteristics.stun} character={character} characterRef={characterRef}></ActiveStat>
-        <ActiveStat name="body" stat={character.characteristics.body} character={character} characterRef={characterRef}></ActiveStat>
+        <ActiveStat
+          name="end"
+          stat={character.characteristics.end}
+          character={character}
+          characterRef={characterRef}
+        ></ActiveStat>
+        <ActiveStat
+          name="stun"
+          stat={character.characteristics.stun}
+          character={character}
+          characterRef={characterRef}
+        ></ActiveStat>
+        <ActiveStat
+          name="body"
+          stat={character.characteristics.body}
+          character={character}
+          characterRef={characterRef}
+        ></ActiveStat>
       </div>
     </div>
-  )
-}
+  );
+};

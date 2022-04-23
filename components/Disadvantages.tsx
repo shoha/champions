@@ -1,8 +1,8 @@
-import { useMemo } from "react"
-import type { Character } from "../types/Character"
+import { useMemo } from "react";
+import type { Character } from "../types/Character";
 
 interface Props {
-  character: Character
+  character: Character;
 }
 
 export const Disadvantages = ({ character }: Props) => {
@@ -13,15 +13,15 @@ export const Disadvantages = ({ character }: Props) => {
           <td>{disad.cost}</td>
           <td>{disad.text}</td>
         </tr>
-      )
-    })
-  }, [character])
+      );
+    });
+  }, [character]);
 
   const totalCost = useMemo(() => {
     return character.disads.disad.reduce((memo, disad) => {
-      return memo + parseInt(disad.cost)
-    }, 0)
-  }, [character])
+      return memo + parseInt(disad.cost);
+    }, 0);
+  }, [character]);
 
   return (
     <table className="table-auto w-full text-left">
@@ -39,5 +39,5 @@ export const Disadvantages = ({ character }: Props) => {
         </tr>
       </tbody>
     </table>
-  )
-}
+  );
+};

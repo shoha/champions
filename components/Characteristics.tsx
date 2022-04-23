@@ -1,24 +1,43 @@
-import { useMemo } from 'react'
-import type { Character, Characteristic } from "../types/Character"
-import { CharacteristicRoller } from './CharacteristicRoller'
+import { useMemo } from "react";
+import type { Character, Characteristic } from "../types/Character";
+import { CharacteristicRoller } from "./CharacteristicRoller";
 
 interface Props {
-  character: Character
+  character: Character;
 }
 
-const attrs = ['str', 'dex', 'con', 'body', 'int', 'ego', 'pre', 'pd', 'ed', 'spd', 'rec', 'end', 'stun']
-const movements = ['leaping', 'running', 'swimming']
+const attrs = [
+  "str",
+  "dex",
+  "con",
+  "body",
+  "int",
+  "ego",
+  "pre",
+  "pd",
+  "ed",
+  "spd",
+  "rec",
+  "end",
+  "stun",
+];
+const movements = ["leaping", "running", "swimming"];
 
 export const Characteristics = ({ character }: Props) => {
-  const characteristics = character.characteristics
+  const characteristics = character.characteristics;
 
   const attrRows = useMemo(() => {
     return attrs.map((attr) => {
-      const attrData: Characteristic = characteristics[attr] || {}
+      const attrData: Characteristic = characteristics[attr] || {};
 
       return (
         <tr className="table-row" key={attr}>
-          <td><CharacteristicRoller label={attr} characteristic={attrData}></CharacteristicRoller></td>
+          <td>
+            <CharacteristicRoller
+              label={attr}
+              characteristic={attrData}
+            ></CharacteristicRoller>
+          </td>
           <td className="uppercase">{attr}</td>
           <td>{attrData.base}</td>
           <td>{attrData.cost}</td>
@@ -26,13 +45,13 @@ export const Characteristics = ({ character }: Props) => {
           <td>{attrData.roll}</td>
           <td>{attrData.notes}</td>
         </tr>
-      )
-    })
-  }, [characteristics])
+      );
+    });
+  }, [characteristics]);
 
   const movementRows = useMemo(() => {
     return movements.map((movement) => {
-      const movementData = characteristics[movement] || {}
+      const movementData = characteristics[movement] || {};
 
       return (
         <tr className="table-row" key={movement}>
@@ -44,14 +63,14 @@ export const Characteristics = ({ character }: Props) => {
           <td></td>
           <td></td>
         </tr>
-      )
-    })
-  }, [characteristics])
+      );
+    });
+  }, [characteristics]);
 
   return (
     <table className="table-auto w-full text-left">
       <thead>
-        <tr >
+        <tr>
           <th>Val</th>
           <th>Char</th>
           <th>Base</th>
@@ -66,5 +85,5 @@ export const Characteristics = ({ character }: Props) => {
         {movementRows}
       </tbody>
     </table>
-  )
-}
+  );
+};

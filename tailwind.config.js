@@ -5,15 +5,13 @@ module.exports = {
   ],
   theme: {
     extend: {
-      backgroundColor: ['even'],
+      backgroundColor: ["even"],
     },
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-  ],
+  plugins: [require("@tailwindcss/forms")],
   safelist: [
     {
-      pattern: /bg-.*-/
-    }
-  ]
-}
+      pattern: /bg-.*-/,
+    },
+  ],
+};

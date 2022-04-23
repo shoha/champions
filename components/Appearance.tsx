@@ -1,7 +1,7 @@
-import type { Character } from "../types/Character"
+import type { Character } from "../types/Character";
 
 interface Props {
-  character: Character
+  character: Character;
 }
 
 export const Appearance = ({ character }: Props) => {
@@ -26,9 +26,15 @@ export const Appearance = ({ character }: Props) => {
         </tr>
         <tr>
           <td className="font-bold">Description</td>
-          <td>{character.appearance ? character.appearance : (<span className="italic">None provided</span>)}</td>
+          <td>
+            {character.appearance ? (
+              character.appearance
+            ) : (
+              <span className="italic">None provided</span>
+            )}
+          </td>
         </tr>
       </tbody>
     </table>
-  )
-}
+  );
+};

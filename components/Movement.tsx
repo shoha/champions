@@ -1,7 +1,7 @@
-import type { Character } from "../types/Character"
+import type { Character } from "../types/Character";
 
 interface Props {
-  character: Character
+  character: Character;
 }
 
 export const Movement = ({ character }: Props) => {
@@ -15,39 +15,22 @@ export const Movement = ({ character }: Props) => {
       </thead>
       <tbody>
         <tr>
-          <td>
-            Run:
-          </td>
-          <td>
-            {character.characteristics.running.total}
-          </td>
+          <td>Run:</td>
+          <td>{character.characteristics.running.total}</td>
         </tr>
         <tr>
-          <td>
-            Swim:
-          </td>
-          <td>
-            {character.characteristics.swimming.total}
-          </td>
+          <td>Swim:</td>
+          <td>{character.characteristics.swimming.total}</td>
         </tr>
         <tr>
-          <td>
-            H. Leap:
-          </td>
-          <td>
-            {character.characteristics.leaping.horizontal_total}
-          </td>
+          <td>H. Leap:</td>
+          <td>{character.characteristics.leaping.horizontal_total}</td>
         </tr>
         <tr>
-          <td>
-            V. Leap:
-          </td>
-          <td>
-
-            {character.characteristics.leaping.vertical_total}
-          </td>
+          <td>V. Leap:</td>
+          <td>{character.characteristics.leaping.vertical_total}</td>
         </tr>
       </tbody>
     </table>
-  )
-}
+  );
+};

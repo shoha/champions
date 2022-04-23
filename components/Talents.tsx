@@ -1,8 +1,8 @@
-import { useMemo } from "react"
-import type { Character } from "../types/Character"
+import { useMemo } from "react";
+import type { Character } from "../types/Character";
 
 interface Props {
-  character: Character
+  character: Character;
 }
 
 export const Talents = ({ character }: Props) => {
@@ -14,27 +14,27 @@ export const Talents = ({ character }: Props) => {
             <td>{talent.cost}</td>
             <td>{talent.text}</td>
           </tr>
-        )
-      })
+        );
+      });
     } else {
-      return [(
+      return [
         <tr key={0}>
           <td>{character.talents.talent.cost}</td>
           <td>{character.talents.talent.text}</td>
-        </tr>
-      )]
+        </tr>,
+      ];
     }
-  }, [character])
+  }, [character]);
 
   const totalCost = useMemo(() => {
     if (Array.isArray(character.talents.talent)) {
       return character.talents.talent.reduce((memo, talent) => {
-        return memo + parseInt(talent.cost)
-      }, 0)
+        return memo + parseInt(talent.cost);
+      }, 0);
     } else {
-      return parseInt(character.talents.talent.cost)
+      return parseInt(character.talents.talent.cost);
     }
-  }, [character])
+  }, [character]);
 
   return (
     <table className="table-auto w-full text-left">
@@ -52,5 +52,5 @@ export const Talents = ({ character }: Props) => {
         </tr>
       </tbody>
     </table>
-  )
-}
+  );
+};

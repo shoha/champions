@@ -1,7 +1,7 @@
-import type { Character } from "../types/Character"
+import type { Character } from "../types/Character";
 
 interface Props {
-  character: Character
+  character: Character;
 }
 
 export const CombatManeuvers = ({ character }: Props) => {
@@ -124,5 +124,5 @@ export const CombatManeuvers = ({ character }: Props) => {
         </tr>
       </tbody>
     </table>
-  )
-}
+  );
+};

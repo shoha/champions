@@ -1,10 +1,9 @@
-import { useMemo } from "react"
-import type { Character } from "../types/Character"
+import { useMemo } from "react";
+import type { Character } from "../types/Character";
 
 interface Props {
-  character: Character
+  character: Character;
 }
-
 
 export const Powers = ({ character }: Props) => {
   const powerRows = useMemo(() => {
@@ -12,18 +11,24 @@ export const Powers = ({ character }: Props) => {
       return (
         <tr key={power.name}>
           <td>{power.cost}</td>
-          <td className={power.list_prefix ? 'pl-8' : ''}><span className="italic font-semibold">{power.list_prefix ? `\t${power.list_prefix} ` : ''}{power.name}</span>: {power.text}</td>
+          <td className={power.list_prefix ? "pl-8" : ""}>
+            <span className="italic font-semibold">
+              {power.list_prefix ? `\t${power.list_prefix} ` : ""}
+              {power.name}
+            </span>
+            : {power.text}
+          </td>
           <td>{power.end}</td>
         </tr>
-      )
-    })
-  }, [character])
+      );
+    });
+  }, [character]);
 
   const totalCost = useMemo(() => {
     return character.powers.power.reduce((memo, power) => {
-      return memo + parseInt(power.cost)
-    }, 0)
-  }, [character])
+      return memo + parseInt(power.cost);
+    }, 0);
+  }, [character]);
 
   return (
     <table className="table-auto w-full text-left">
@@ -42,5 +47,5 @@ export const Powers = ({ character }: Props) => {
         </tr>
       </tbody>
     </table>
-  )
-}
+  );
+};

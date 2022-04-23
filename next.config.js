@@ -4,11 +4,11 @@ const nextConfig = {
   webpack: (config, options) => {
     config.module.rules.push({
       test: /\.xml/,
-      use: 'raw-loader',
-    })
+      use: "raw-loader",
+    });
 
-    return config
+    return config;
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

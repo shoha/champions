@@ -1,36 +1,38 @@
-import { Characteristics } from '../components/Characteristics'
-import { Experience } from '../components/Experience'
-import { Movement } from '../components/Movement'
-import { MartialArts } from '../components/MartialArts'
-import { Defenses } from '../components/Defenses'
-import { Section } from '../components/Section'
-import { CombatInfo } from '../components/CombatInfo'
-import { Powers } from '../components/Powers'
-import { Skills } from '../components/Skills'
-import { Talents } from '../components/Talents'
-import { CombatManeuvers } from '../components/CombatManeuvers'
-import { CombatModifiers } from '../components/CombatModifiers'
-import { Disadvantages } from '../components/Disadvantages'
-import { Appearance } from '../components/Appearance'
-import type { Character } from "../types/Character"
-import { CharacterIntro } from '../components/CharacterIntro'
-import { CombatTracker } from '../components/CombatTracker'
+import { Characteristics } from "../components/Characteristics";
+import { Experience } from "../components/Experience";
+import { Movement } from "../components/Movement";
+import { MartialArts } from "../components/MartialArts";
+import { Defenses } from "../components/Defenses";
+import { Section } from "../components/Section";
+import { CombatInfo } from "../components/CombatInfo";
+import { Powers } from "../components/Powers";
+import { Skills } from "../components/Skills";
+import { Talents } from "../components/Talents";
+import { CombatManeuvers } from "../components/CombatManeuvers";
+import { CombatModifiers } from "../components/CombatModifiers";
+import { Disadvantages } from "../components/Disadvantages";
+import { Appearance } from "../components/Appearance";
+import type { Character } from "../types/Character";
+import { CharacterIntro } from "../components/CharacterIntro";
+import { CombatTracker } from "../components/CombatTracker";
 import type { DocumentReference } from "firebase/firestore";
 
 interface Props {
-  character: Character
+  character: Character;
   characterRef?: DocumentReference<Character>;
 }
 
 export const CharacterSheet = ({ character, characterRef }: Props) => {
-
   return (
     <div>
       <CharacterIntro character={character}></CharacterIntro>
       <hr className="border-t-4 border-black my-4"></hr>
 
       <Section className="mb-4 mt-4" title="Combat Tracker">
-        <CombatTracker character={character} characterRef={characterRef}></CombatTracker>
+        <CombatTracker
+          character={character}
+          characterRef={characterRef}
+        ></CombatTracker>
       </Section>
 
       {/*
@@ -100,7 +102,6 @@ export const CharacterSheet = ({ character, characterRef }: Props) => {
       <Section className="mb-4 mt-4" title="Disadvantages">
         <Disadvantages character={character}></Disadvantages>
       </Section>
-
     </div>
-  )
-}
+  );
+};
