@@ -48,6 +48,8 @@ interface Props {
 }
 
 export const RollHistory = ({ shown }: Props) => {
+  const refMap = useMemo(() => new WeakMap(), [])
+  console.log(refMap)
   const toasts = useRollHistory();
   const toastsReversed = useMemo(() => {
     return [...toasts].reverse()
@@ -59,14 +61,15 @@ export const RollHistory = ({ shown }: Props) => {
   })
 
   const transitions = useTransition(toastsReversed, {
-    from: { opacity: 0, y: 0 },
-    enter: { opacity: 1, y: 10 },
-    leave: { opacity: 0, y: -10 },
-    update: { opacity: 1, y: 10 },
-    delay: 100,
+    from: { opacity: 0, height: 0 },
+    enter: item => async (next) => {
+      await next({ opacity: 1, height: refMap.get(item).offsetHeight })
+    },
+    leave: { opacity: 0 },
+    update: { opacity: 1 },
     config: config.stiff,
+    keys: (item) => { return item.id }
   })
-
 
   return (
     <animated.div className="fixed top-0 p-4 h-full bg-gray-50 w-52 border-l-2 shadow-lg" style={{ ...drawerSpringProps }}>
@@ -74,8 +77,10 @@ export const RollHistory = ({ shown }: Props) => {
       <hr className="border-t-2 border-black"></hr>
       <div className="mt-2 flex gap-2 flex-col">
         {transitions((style, item) => (
-          <animated.div style={{ ...style, transform: style.y.to((y) => `translate3d(0,${style.y.get()}px,0)`) }}>
-            <HistoryItem toast={item}></HistoryItem>
+          <animated.div style={{ ...style }}>
+            <div ref={(ref: HTMLDivElement) => ref && refMap.set(item, ref)}>
+              <HistoryItem toast={item}></HistoryItem>
+            </div>
           </animated.div>
         ))}
       </div>
