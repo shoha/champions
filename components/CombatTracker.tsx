@@ -1,5 +1,5 @@
 import { setDoc } from "firebase/firestore";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { DocumentReference } from "firebase/firestore";
 import type { Character, Characteristic } from "../types/Character";
 import { Button } from "./Button";

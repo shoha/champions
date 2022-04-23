@@ -46,6 +46,7 @@ export interface Character {
   disads: Disads;
   uid: string;
   current?: Current;
+  rollHistory?: any[];
 }
 
 export interface Current {
