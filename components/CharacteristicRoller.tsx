@@ -4,7 +4,7 @@ import type { DiceToastRenderer } from "../utils/diceToasts";
 import { Characteristic } from "../types/Character";
 import { Button } from "./Button";
 import { useMemo } from "react";
-import { Plus, Minus } from "iconoir-react";
+import { Check, Cancel } from "iconoir-react";
 
 interface Props {
   label: string;
@@ -30,15 +30,15 @@ export const CharacteristicRoller = ({ label, characteristic }: Props) => {
             <h1 className="uppercase text-lg font-semibold">{label}</h1>
             <div className={`ml-auto`}>
               {checkRoll(characteristic, results) ? (
-                <Plus
+                <Check
                   className="bg-green-500 rounded-full"
                   color="white"
-                ></Plus>
+                ></Check>
               ) : (
-                <Minus
+                <Cancel
                   className="bg-red-500 rounded-full"
                   color="white"
-                ></Minus>
+                ></Cancel>
               )}
             </div>
           </div>
