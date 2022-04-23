@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
-import type { Character } from "../types/Character"
+import type { Character, Characteristic } from "../types/Character"
+import { CharacteristicRoller } from './CharacteristicRoller'
 
 interface Props {
   character: Character
@@ -13,11 +14,11 @@ export const Characteristics = ({ character }: Props) => {
 
   const attrRows = useMemo(() => {
     return attrs.map((attr) => {
-      const attrData = characteristics[attr] || {}
+      const attrData: Characteristic = characteristics[attr] || {}
 
       return (
         <tr className="table-row" key={attr}>
-          <td>{attrData.val}</td>
+          <td><CharacteristicRoller label={attr} characteristic={attrData}></CharacteristicRoller></td>
           <td className="uppercase">{attr}</td>
           <td>{attrData.base}</td>
           <td>{attrData.cost}</td>

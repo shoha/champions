@@ -1751,6 +1751,11 @@ http-parser-js@>=0.5.1:
   resolved "https://registry.yarnpkg.com/http-parser-js/-/http-parser-js-0.5.6.tgz#2e02406ab2df8af8a7abfba62e0da01c62b95afd"
   integrity sha512-vDlkRPDJn93swjcjqMSaGSPABbIarsr1TLAui/gLDXzV5VsJNdXNzMYDyNBLQkjWQCJ1uizu8T2oDMhmGt0PRA==
 
+iconoir-react@^4.8.1:
+  version "4.8.1"
+  resolved "https://registry.yarnpkg.com/iconoir-react/-/iconoir-react-4.8.1.tgz#d00565f288e5ea4c1f1cc2b61c36ae90ef243231"
+  integrity sha512-tCbEnw4XvLMfwG/mkjTntvBjOjqY+1W9alIABj7+DyiXfl+PhcEqLk1ZRDRiOpeJnYnMjtyz3tiEp14JsW5vMg==
+
 ignore@^5.2.0:
   version "5.2.0"
   resolved "https://registry.npmjs.org/ignore/-/ignore-5.2.0.tgz"

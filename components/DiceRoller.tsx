@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react"
 import { Button } from "./Button"
-import { basicTransformFn, useDice } from "../hooks/useDice"
+import { useDice } from "../hooks/useDice"
 
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 
 export const DiceRoller = ({ setShowHistory, showHistory }: Props) => {
   const [numDice, setNumDice] = useState<number>(3)
-  const roll = useDice({ transformFn: basicTransformFn })
+  const roll = useDice()
 
   const triggerRoll = useCallback(() => {
     const result = roll({ count: numDice });

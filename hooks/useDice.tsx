@@ -1,28 +1,5 @@
-import Image from "next/image"
 import toast from 'react-hot-toast'
-
-const diceImages = [
-  "/dice/dice-six-faces-one.svg",
-  "/dice/dice-six-faces-two.svg",
-  "/dice/dice-six-faces-three.svg",
-  "/dice/dice-six-faces-four.svg",
-  "/dice/dice-six-faces-five.svg",
-  "/dice/dice-six-faces-six.svg",
-]
-
-interface DiceProps {
-  number: number
-}
-
-const Dice = ({ number }: DiceProps) => {
-  return (
-    <Image src={diceImages[number - 1]} width={25} height={25} alt={`A dice showing ${number}`}></Image >
-  )
-}
-
-export const basicTransformFn = (result, index) => {
-  return <Dice number={result}></Dice>
-}
+import { basicToastRender } from '../utils/diceToasts';
 
 type DiceFaceCount = 6
 
@@ -31,7 +8,7 @@ interface RollProps {
   numSides?: DiceFaceCount;
 }
 
-type RollFn = (props: RollProps) => number[]
+type RollFn = (props?: RollProps) => number[]
 
 const roll: RollFn = ({ count = 1, numSides = 6 }) => {
   const dice: number[] = []
@@ -45,16 +22,20 @@ const roll: RollFn = ({ count = 1, numSides = 6 }) => {
 }
 
 interface UseDiceProps {
-  transformFn?: (roll: number, index: number) => any
   sendToast?: boolean
+  renderToast?: (results: number[], sides: number, ...rest: any[]) => any
 }
 
-export const useDice = ({ transformFn = (r) => r, sendToast = true }: UseDiceProps) => {
-  return (props: RollProps): any => {
-    const result = roll(props).map(transformFn)
+export const useDice = (useProps: UseDiceProps = {}) => {
+  const { sendToast = true, renderToast = basicToastRender, } = useProps;
+
+  return (props?: RollProps): number[] => {
+    const results = roll({ ...props })
 
     if (sendToast) {
-      toast(<div>{result}</div>)
+      toast(renderToast(results, props.numSides))
     }
+
+    return results
   }
 }
