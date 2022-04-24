@@ -32,8 +32,6 @@ export const MartialArts = ({ character }: Props) => {
     );
   });
 
-  console.log(maneuverRows);
-
   return (
     <table className="table-auto w-full text-left">
       <thead>
