@@ -1,27 +1,40 @@
 import { useMemo } from "react";
 import type { Character } from "../types/Character";
+import { SkillHelper } from "../utils/character";
+import { coalesceArray } from "../utils/misc";
 
 interface Props {
   character: Character;
 }
 
+// TODO: Figure out how to compute skill rolls
+// TODO: Fix cost computation for ADDERs
+
 export const Skills = ({ character }: Props) => {
+  const skills = coalesceArray(character.SKILLS.SKILL);
+
   const skillRows = useMemo(() => {
-    return character.skills.skill.map((skill, i) => {
+    return skills.map((skill, i) => {
+      const skillHelper = new SkillHelper(character, skill);
+
       return (
         <tr key={i}>
-          <td>{skill.cost}</td>
-          <td>{skill.text}</td>
+          <td>{skill.BASECOST + skill.LEVELS}</td>
+          <td>
+            {skill.ALIAS}
+            {skill.INPUT && `: ${skill.INPUT}`}
+          </td>
+          <td>{skillHelper.getRoll()}</td>
         </tr>
       );
     });
-  }, [character]);
+  }, [skills, character]);
 
   const totalCost = useMemo(() => {
-    return character.skills.skill.reduce((memo, skill) => {
-      return memo + parseInt(skill.cost);
+    return skills.reduce((memo, skill) => {
+      return memo + skill.BASECOST;
     }, 0);
-  }, [character]);
+  }, [skills]);
 
   return (
     <table className="table-auto w-full text-left">
@@ -29,6 +42,7 @@ export const Skills = ({ character }: Props) => {
         <tr>
           <th>Cost</th>
           <th>Skill</th>
+          <th>Roll</th>
         </tr>
       </thead>
       <tbody>

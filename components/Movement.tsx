@@ -1,10 +1,19 @@
 import type { Character } from "../types/Character";
+import { CharacteristicHelper } from "../utils/character";
 
 interface Props {
   character: Character;
 }
 
 export const Movement = ({ character }: Props) => {
+  const runHelper = new CharacteristicHelper(character.CHARACTERISTICS.RUNNING);
+  const swimHelper = new CharacteristicHelper(
+    character.CHARACTERISTICS.SWIMMING
+  );
+  const leapHelper = new CharacteristicHelper(
+    character.CHARACTERISTICS.LEAPING
+  );
+
   return (
     <table className="table-auto w-full text-left">
       <thead>
@@ -16,19 +25,19 @@ export const Movement = ({ character }: Props) => {
       <tbody>
         <tr>
           <td>Run:</td>
-          <td>{character.characteristics.running.total}</td>
+          <td>{runHelper.totalValue()}m</td>
         </tr>
         <tr>
           <td>Swim:</td>
-          <td>{character.characteristics.swimming.total}</td>
+          <td>{swimHelper.totalValue()}m</td>
         </tr>
         <tr>
           <td>H. Leap:</td>
-          <td>{character.characteristics.leaping.horizontal_total}</td>
+          <td>{leapHelper.totalValue()}m</td>
         </tr>
         <tr>
           <td>V. Leap:</td>
-          <td>{character.characteristics.leaping.vertical_total}</td>
+          <td>{leapHelper.totalValue() / 2}m</td>
         </tr>
       </tbody>
     </table>

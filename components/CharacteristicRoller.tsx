@@ -5,6 +5,7 @@ import { Characteristic } from "../types/Character";
 import { Button } from "./Button";
 import { useMemo } from "react";
 import { Check, Cancel, HexagonDice } from "iconoir-react";
+import { CharacteristicHelper } from "../utils/character";
 
 interface Props {
   label: string;
@@ -12,16 +13,20 @@ interface Props {
 }
 
 const checkRoll = (
-  characteristic: Characteristic,
+  charHelper: CharacteristicHelper,
   results: number[]
 ): boolean => {
   const check = results.reduce((memo, r) => memo + r, 0);
-  const threshold = parseInt(characteristic.roll);
+  const threshold = parseInt(charHelper.roll());
 
   return check <= threshold;
 };
 
 export const CharacteristicRoller = ({ label, characteristic }: Props) => {
+  const charHelper = useMemo(() => {
+    return new CharacteristicHelper(characteristic);
+  }, [characteristic]);
+
   const characteristicToastRenderer: DiceToastRenderer = useMemo(() => {
     const CharacteristicToast = (results, sides) => {
       return (
@@ -29,7 +34,7 @@ export const CharacteristicRoller = ({ label, characteristic }: Props) => {
           <div className="flex items-center">
             <h1 className="uppercase text-lg font-semibold">{label}</h1>
             <div className={`ml-auto`}>
-              {checkRoll(characteristic, results) ? (
+              {checkRoll(charHelper, results) ? (
                 <Check
                   className="bg-green-500 rounded-full"
                   color="white"
@@ -49,7 +54,7 @@ export const CharacteristicRoller = ({ label, characteristic }: Props) => {
     };
 
     return CharacteristicToast;
-  }, [label, characteristic]);
+  }, [label, charHelper]);
 
   const roll = useDice({ renderToast: characteristicToastRenderer });
 
@@ -61,7 +66,7 @@ export const CharacteristicRoller = ({ label, characteristic }: Props) => {
         }}
         className="bg-transparent hover:bg-transparent flex items-center text-black font-normal gap-x-2 px-0"
       >
-        {characteristic.val}
+        {charHelper.totalValue()}
         <HexagonDice color="black"></HexagonDice>
       </Button>
     </div>

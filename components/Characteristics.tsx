@@ -1,70 +1,71 @@
 import { useMemo } from "react";
-import type { Character, Characteristic } from "../types/Character";
+import {
+  Character,
+  Characteristic,
+  CharacteristicLabel,
+  Movement,
+  MovementLabel,
+} from "../types/Character";
+import { CharacteristicHelper } from "../utils/character";
 import { CharacteristicRoller } from "./CharacteristicRoller";
 
 interface Props {
   character: Character;
 }
 
-const attrs = [
-  "str",
-  "dex",
-  "con",
-  "body",
-  "int",
-  "ego",
-  "pre",
-  "pd",
-  "ed",
-  "spd",
-  "rec",
-  "end",
-  "stun",
+const rollable = [
+  CharacteristicLabel.STR,
+  CharacteristicLabel.DEX,
+  CharacteristicLabel.CON,
+  CharacteristicLabel.INT,
+  CharacteristicLabel.EGO,
+  CharacteristicLabel.PRE,
 ];
-const movements = ["leaping", "running", "swimming"];
-const rollable = ["str", "dex", "con", "int", "ego", "pre"];
 
 export const Characteristics = ({ character }: Props) => {
-  const characteristics = character.characteristics;
+  const characteristics = character.CHARACTERISTICS;
 
   const attrRows = useMemo(() => {
-    return attrs.map((attr) => {
-      const attrData: Characteristic = characteristics[attr] || {};
+    return Object.values(CharacteristicLabel).map((attr) => {
+      const attrData: Characteristic = characteristics[attr];
+      const charHelper = new CharacteristicHelper(attrData);
+      const isRollable = rollable.includes(attr);
 
       return (
-        <tr className="table-row" key={attr}>
+        <tr className="table-row" key={attrData.ID}>
           <td>
-            {rollable.includes(attr) ? (
+            {isRollable ? (
               <CharacteristicRoller
                 label={attr}
                 characteristic={attrData}
               ></CharacteristicRoller>
             ) : (
-              attrData.val
+              charHelper.totalValue()
             )}
           </td>
           <td className="uppercase">{attr}</td>
-          <td>{attrData.base}</td>
-          <td>{attrData.cost}</td>
-          <td>{attrData.total}</td>
-          <td>{attrData.roll}</td>
-          <td>{attrData.notes}</td>
+          <td>{charHelper.totalCost()}</td>
+          <td>{charHelper.totalValue()}</td>
+          <td>{isRollable && charHelper.roll()}</td>
+          <td>{attrData.NOTES || charHelper.supplementalNote()}</td>
         </tr>
       );
     });
   }, [characteristics]);
 
   const movementRows = useMemo(() => {
-    return movements.map((movement) => {
-      const movementData = characteristics[movement] || {};
+    return Object.values(MovementLabel).map((movement) => {
+      const movementData: Movement = characteristics[movement];
+      const charHelper = new CharacteristicHelper(movementData);
 
       return (
-        <tr className="table-row" key={movement}>
-          <td>{movementData.val}</td>
+        <tr className="table-row" key={movementData.ID}>
+          <td>{charHelper.totalValue()}</td>
           <td className="uppercase">{movement}</td>
-          <td>{movementData.base}</td>
-          <td>{movementData.cost}</td>
-          <td>{movementData.total}</td>
+          <td>{charHelper.totalCost()}</td>
+          <td>{`${charHelper.totalValue()}m/${
+            charHelper.totalValue() * 2
+          }m`}</td>
           <td></td>
           <td></td>
         </tr>
@@ -78,17 +79,13 @@ export const Characteristics = ({ character }: Props) => {
         <tr>
           <th>Val</th>
           <th>Char</th>
-          <th>Base</th>
           <th>Points</th>
           <th>Total</th>
           <th>Roll</th>
           <th>Notes</th>
         </tr>
       </thead>
-      <tbody>
-        {attrRows}
-        {movementRows}
-      </tbody>
+      <tbody>{attrRows}</tbody>
     </table>
   );
 };
