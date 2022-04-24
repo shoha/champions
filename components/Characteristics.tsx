@@ -32,7 +32,7 @@ export const Characteristics = ({ character }: Props) => {
       const isRollable = rollable.includes(attr);
 
       return (
-        <tr className="table-row" key={attr}>
+        <tr className="table-row" key={attrData.ID}>
           <td>
             {isRollable ? (
               <CharacteristicRoller
@@ -59,7 +59,7 @@ export const Characteristics = ({ character }: Props) => {
       const charHelper = new CharacteristicHelper(movementData);
 
       return (
-        <tr className="table-row" key={movement}>
+        <tr className="table-row" key={movementData.ID}>
           <td>{charHelper.totalValue()}</td>
           <td className="uppercase">{movement}</td>
           <td>{charHelper.totalCost()}</td>

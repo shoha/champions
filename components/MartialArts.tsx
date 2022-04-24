@@ -20,7 +20,7 @@ export const MartialArts = ({ character }: Props) => {
     const maneuverHelper = new CharacteristicHelper(maneuver);
 
     return (
-      <tr key={maneuver.ALIAS}>
+      <tr key={maneuver.ID}>
         <td>{maneuver.DISPLAY}</td>
         <td>{maneuver.PHASE}</td>
         <td>{maneuver.OCV}</td>

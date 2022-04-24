@@ -1,5 +1,10 @@
-import { useMemo } from "react";
-import type { Character } from "../types/Character";
+import { memo, useMemo } from "react";
+import type {
+  Character,
+  Multipower,
+  Power,
+  VariablePowerPool,
+} from "../types/Character";
 import { coalesceArray } from "../utils/misc";
 
 interface Props {
@@ -14,19 +19,20 @@ export const Powers = ({ character }: Props) => {
     const multipowers = coalesceArray(character.POWERS.MULTIPOWER);
     const vpps = coalesceArray(character.POWERS.VPP);
 
-    return [...powers, ...multipowers, ...vpps];
+    return [...powers, ...multipowers, ...vpps]
+      .filter((p) => !!p)
+      .sort((a, b) => a.POSITION - b.POSITION);
   }, [character]);
+
+  console.log(allPowers);
 
   const powerRows = useMemo(() => {
     return allPowers.map((power) => {
       return (
-        <tr key={power.NAME}>
+        <tr key={power.ID}>
           <td>{power.BASECOST}</td>
-          <td className={power.LEVELS > 0 ? "pl-8" : ""}>
-            <span className="italic font-semibold">
-              {power.LEVELS > 0 ? `\t${power.LEVELS}) ` : ""}
-              {power.NAME}
-            </span>
+          <td className={!!power.PARENTID ? "pl-8" : ""}>
+            <span className="italic font-semibold">{power.NAME}</span>
           </td>
           <td></td>
         </tr>
@@ -38,7 +44,7 @@ export const Powers = ({ character }: Props) => {
     return allPowers.reduce((memo, power) => {
       return memo + power.BASECOST;
     }, 0);
-  }, [character]);
+  }, [allPowers]);
 
   return (
     <table className="table-auto w-full text-left">
