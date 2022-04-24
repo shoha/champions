@@ -1,6 +1,6 @@
 import type { DocumentData } from "firebase/firestore";
 
-export interface Character {
+export interface CharacterDEP {
   application: Application;
   name: string;
   alternate_ids: string;

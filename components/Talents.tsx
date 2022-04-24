@@ -7,32 +7,32 @@ interface Props {
 
 export const Talents = ({ character }: Props) => {
   const talentRows = useMemo(() => {
-    if (Array.isArray(character.talents.talent)) {
-      return character.talents.talent.map((talent, i) => {
+    if (Array.isArray(character.TALENTS.TALENT)) {
+      return character.TALENTS.TALENT.map((talent, i) => {
         return (
           <tr key={i}>
-            <td>{talent.cost}</td>
-            <td>{talent.text}</td>
+            <td>{talent.BASECOST}</td>
+            <td>{talent.ALIAS}</td>
           </tr>
         );
       });
     } else {
       return [
         <tr key={0}>
-          <td>{character.talents.talent.cost}</td>
-          <td>{character.talents.talent.text}</td>
+          <td>{character.TALENTS.TALENT.BASECOST}</td>
+          <td>{character.TALENTS.TALENT.ALIAS}</td>
         </tr>,
       ];
     }
   }, [character]);
 
   const totalCost = useMemo(() => {
-    if (Array.isArray(character.talents.talent)) {
-      return character.talents.talent.reduce((memo, talent) => {
-        return memo + parseInt(talent.cost);
+    if (Array.isArray(character.TALENTS.TALENT)) {
+      return character.TALENTS.TALENT.reduce((memo, talent) => {
+        return memo + talent.BASECOST;
       }, 0);
     } else {
-      return parseInt(character.talents.talent.cost);
+      return character.TALENTS.TALENT.BASECOST;
     }
   }, [character]);
 

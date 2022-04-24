@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useFilePicker } from "use-file-picker";
-import { Character } from "../types/Character";
+import { ParsedCharacter, Character } from "../types/Character";
 import { XMLParser } from "fast-xml-parser";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import type { CollectionReference } from "firebase/firestore";
@@ -11,6 +11,12 @@ import { useCurrentCharacter } from "../hooks/useCurrentCharacter";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import { Button } from "./Button";
 
+const parserOptions = {
+  ignoreAttributes: false,
+  attributeNamePrefix: "",
+  parseAttributeValue: true,
+};
+
 export const FileUploader = () => {
   const firebaseApp = useFirebaseApp();
   const currentUser = useCurrentUser();
@@ -19,7 +25,7 @@ export const FileUploader = () => {
     "characters"
   ) as CollectionReference<Character>;
   const [openFileSelector, { filesContent, loading, clear }] = useFilePicker({
-    accept: ".xml",
+    accept: ".hdc",
   });
   const [_, setCurrentChar] = useCurrentCharacter();
 
@@ -28,9 +34,12 @@ export const FileUploader = () => {
       return null;
     }
 
-    const parser = new XMLParser();
-    let parsedXML = parser.parse(filesContent[0].content);
-    return { ...parsedXML.character, author_uid: currentUser.uid };
+    const parser = new XMLParser(parserOptions);
+    let parsedXML = parser.parse(filesContent[0].content) as ParsedCharacter;
+
+    console.log(parsedXML);
+
+    return { ...parsedXML.CHARACTER, author_uid: currentUser.uid };
   }, [filesContent, currentUser?.uid]);
 
   const persistNewCharacter = async () => {

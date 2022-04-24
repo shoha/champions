@@ -7,19 +7,19 @@ interface Props {
 
 export const Disadvantages = ({ character }: Props) => {
   const disadvantageRows = useMemo(() => {
-    return character.disads.disad.map((disad, i) => {
+    return character.DISADVANTAGES.DISAD.map((disad, i) => {
       return (
         <tr key={i}>
-          <td>{disad.cost}</td>
-          <td>{disad.text}</td>
+          <td>{disad.BASECOST}</td>
+          <td>{disad.ALIAS}</td>
         </tr>
       );
     });
   }, [character]);
 
   const totalCost = useMemo(() => {
-    return character.disads.disad.reduce((memo, disad) => {
-      return memo + parseInt(disad.cost);
+    return character.DISADVANTAGES.DISAD.reduce((memo, disad) => {
+      return memo + disad.BASECOST;
     }, 0);
   }, [character]);
 

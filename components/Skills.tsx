@@ -6,20 +6,24 @@ interface Props {
 }
 
 export const Skills = ({ character }: Props) => {
+  const skills = Array.isArray(character.SKILLS.SKILL)
+    ? character.SKILLS.SKILL
+    : [character.SKILLS.SKILL];
+
   const skillRows = useMemo(() => {
-    return character.skills.skill.map((skill, i) => {
+    return skills.map((skill, i) => {
       return (
         <tr key={i}>
-          <td>{skill.cost}</td>
-          <td>{skill.text}</td>
+          <td>{skill.BASECOST}</td>
+          <td>{skill.ALIAS}</td>
         </tr>
       );
     });
   }, [character]);
 
   const totalCost = useMemo(() => {
-    return character.skills.skill.reduce((memo, skill) => {
-      return memo + parseInt(skill.cost);
+    return skills.reduce((memo, skill) => {
+      return memo + skill.BASECOST;
     }, 0);
   }, [character]);
 
