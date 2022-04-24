@@ -1,10 +1,5 @@
-import { memo, useMemo } from "react";
-import type {
-  Character,
-  Multipower,
-  Power,
-  VariablePowerPool,
-} from "../types/Character";
+import { useMemo } from "react";
+import type { Character } from "../types/Character";
 import { coalesceArray } from "../utils/misc";
 
 interface Props {
@@ -23,8 +18,6 @@ export const Powers = ({ character }: Props) => {
       .filter((p) => !!p)
       .sort((a, b) => a.POSITION - b.POSITION);
   }, [character]);
-
-  console.log(allPowers);
 
   const powerRows = useMemo(() => {
     return allPowers.map((power) => {

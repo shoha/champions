@@ -29,6 +29,10 @@ const ActiveStat = ({ character, characterRef, name }: ActiveStatProps) => {
   }, [current, updateCurrent]);
 
   useEffect(() => {
+    updateCurrent(defaultValue);
+  }, [character, updateCurrent, defaultValue]);
+
+  useEffect(() => {
     if (!characterRef) {
       return;
     }
