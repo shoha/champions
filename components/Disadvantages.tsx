@@ -1,12 +1,25 @@
 import { useMemo } from "react";
-import type { Character } from "../types/Character";
+import type { Character, Characteristic } from "../types/Character";
 import { coalesceArray } from "../utils/misc";
+
+const adderCost = (parent: Characteristic) => {
+  if (!parent?.ADDER) {
+    console.log(parent);
+    return 0;
+  }
+
+  const adders = coalesceArray(parent.ADDER);
+
+  const inc = adders.reduce((memo, adder) => {
+    return memo + adder.BASECOST + adderCost(adder.ADDER);
+  }, 0);
+
+  return inc;
+};
 
 interface Props {
   character: Character;
 }
-
-// TODO: ADDRs for cost (I think you sum up the ADDR costs) and text
 
 export const Disadvantages = ({ character }: Props) => {
   const disadvantages = coalesceArray(character.DISADVANTAGES.DISAD);
@@ -15,7 +28,7 @@ export const Disadvantages = ({ character }: Props) => {
     return disadvantages.map((disad, i) => {
       return (
         <tr key={i}>
-          <td>{disad.BASECOST}</td>
+          <td>{disad.BASECOST + adderCost(disad)}</td>
           <td>
             <div>
               {disad.ALIAS}
@@ -35,7 +48,7 @@ export const Disadvantages = ({ character }: Props) => {
 
   const totalCost = useMemo(() => {
     return disadvantages.reduce((memo, disad) => {
-      return memo + disad.BASECOST;
+      return memo + disad.BASECOST + adderCost(disad);
     }, 0);
   }, [disadvantages]);
 
