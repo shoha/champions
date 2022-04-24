@@ -3,6 +3,8 @@ import type { Character } from "../types/Character";
 import { CharacteristicHelper } from "../utils/character";
 import { coalesceArray } from "../utils/misc";
 
+const EMPTY_STATE = <div>No perks available.</div>;
+
 const adderCost = (perkHelper: CharacteristicHelper) => {
   return perkHelper
     .adders()
@@ -26,32 +28,34 @@ interface Props {
 }
 
 export const Perks = ({ character }: Props) => {
-  const perkRows = useMemo(() => {
-    const perks = coalesceArray(character.PERKS.PERK);
+  const perks = coalesceArray(character.PERKS.PERK);
 
+  const perkRows = useMemo(() => {
     return perks.map((perk) => {
       const perkHelper = new CharacteristicHelper(perk);
       return (
         <tr key={perk.ID}>
           {/* TODO: Fix cost */}
-          <td>{perk.BASECOST + perk.LEVELS + adderCost(perkHelper)}</td>
+          <td className="align-top">
+            {perk.BASECOST + perk.LEVELS + adderCost(perkHelper)}
+          </td>
           <td>
             {perk.NAME}: {perk.ALIAS} {adderText(perkHelper)}
           </td>
         </tr>
       );
     });
-  }, [character]);
+  }, [perks]);
 
   const totalCost = useMemo(() => {
-    if (Array.isArray(character.PERKS.PERK)) {
-      return character.PERKS.PERK.reduce((memo, perk) => {
-        return memo + perk.BASECOST;
-      }, 0);
-    } else {
-      return character.PERKS.PERK.BASECOST;
-    }
-  }, [character]);
+    return perks.reduce((memo, perk) => {
+      return memo + perk.BASECOST;
+    }, 0);
+  }, [perks]);
+
+  if (perks.length === 0) {
+    return EMPTY_STATE;
+  }
 
   return (
     <table className="table-auto w-full text-left">

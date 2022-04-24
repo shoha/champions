@@ -7,6 +7,8 @@ interface Props {
   character: Character;
 }
 
+const EMPTY_STATE = <div>No perks available.</div>;
+
 const modifierText = (powerHelper: CharacteristicHelper) => {
   if (!("MODIFIER" in powerHelper.characteristic)) {
     return <></>;
@@ -89,6 +91,10 @@ export const Powers = ({ character }: Props) => {
       return memo + power.BASECOST;
     }, 0);
   }, [allPowers]);
+
+  if (allPowers.length === 0) {
+    return EMPTY_STATE;
+  }
 
   return (
     <table className="table-auto w-full text-left">

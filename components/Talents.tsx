@@ -2,6 +2,8 @@ import { useMemo } from "react";
 import type { Character } from "../types/Character";
 import { coalesceArray } from "../utils/misc";
 
+const EMPTY_STATE = <div>No perks available.</div>;
+
 interface Props {
   character: Character;
 }
@@ -9,27 +11,28 @@ interface Props {
 // TODO: Figure out where cost comes from for talents
 
 export const Talents = ({ character }: Props) => {
+  const talents = coalesceArray(character.TALENTS.TALENT);
+
   const talentRows = useMemo(() => {
-    const talents = coalesceArray(character.TALENTS.TALENT);
     return talents.map((talent, i) => {
       return (
         <tr key={i}>
-          <td>{talent.BASECOST}</td>
+          <td className="align-top">{talent.BASECOST}</td>
           <td>{talent.ALIAS}</td>
         </tr>
       );
     });
-  }, [character]);
+  }, [talents]);
 
   const totalCost = useMemo(() => {
-    if (Array.isArray(character.TALENTS.TALENT)) {
-      return character.TALENTS.TALENT.reduce((memo, talent) => {
-        return memo + talent.BASECOST;
-      }, 0);
-    } else {
-      return character.TALENTS.TALENT.BASECOST;
-    }
-  }, [character]);
+    return talents.reduce((memo, talent) => {
+      return memo + talent.BASECOST;
+    }, 0);
+  }, [talents]);
+
+  if (talents.length === 0) {
+    return EMPTY_STATE;
+  }
 
   return (
     <table className="table-auto w-full text-left">

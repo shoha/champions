@@ -1,3 +1,10 @@
 export function coalesceArray<Type>(input: Type | Type[]): Type[] {
-  return Array.isArray(input) ? input : [input];
+  console.log(input);
+  if (!input) {
+    return [];
+  } else if (Array.isArray(input)) {
+    return input;
+  } else {
+    return [input];
+  }
 }
