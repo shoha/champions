@@ -1,40 +1,33 @@
 import { useDice } from "../hooks/useDice";
 import { basicToastRender } from "../utils/diceToasts";
 import type { DiceToastRenderer } from "../utils/diceToasts";
-import { Characteristic } from "../types/Character";
 import { Button } from "./Button";
 import { useMemo } from "react";
 import { Check, Cancel, HexagonDice } from "iconoir-react";
-import { CharacteristicHelper } from "../utils/character";
+import { SkillHelper } from "../utils/character";
 
-interface Props {
-  label: string;
-  characteristic: Characteristic;
+interface SkillProps {
+  skillHelper: SkillHelper;
 }
 
-const checkRoll = (
-  charHelper: CharacteristicHelper,
-  results: number[]
-): boolean => {
+const checkRoll = (skillHelper: SkillHelper, results: number[]): boolean => {
   const check = results.reduce((memo, r) => memo + r, 0);
-  const threshold = parseInt(charHelper.roll());
+  const threshold = parseInt(skillHelper.roll());
 
   return check <= threshold;
 };
 
-export const CharacteristicRoller = ({ label, characteristic }: Props) => {
-  const charHelper = useMemo(() => {
-    return new CharacteristicHelper(characteristic);
-  }, [characteristic]);
-
-  const characteristicToastRenderer: DiceToastRenderer = useMemo(() => {
-    const CharacteristicToast = (results, sides) => {
+export const SkillRoller = ({ skillHelper }: SkillProps) => {
+  const skillToastRenderer: DiceToastRenderer = useMemo(() => {
+    const SkillToast = (results, sides) => {
       return (
         <div>
-          <div className="flex items-center">
-            <h1 className="uppercase text-lg font-semibold">{label}</h1>
+          <div className="flex items-center gap-x-2">
+            <h1 className="uppercase text-lg font-semibold">
+              {skillHelper.displayText()}
+            </h1>
             <div className={`ml-auto`}>
-              {checkRoll(charHelper, results) ? (
+              {checkRoll(skillHelper, results) ? (
                 <Check
                   className="bg-green-500 rounded-full"
                   color="white"
@@ -53,10 +46,10 @@ export const CharacteristicRoller = ({ label, characteristic }: Props) => {
       );
     };
 
-    return CharacteristicToast;
-  }, [label, charHelper]);
+    return SkillToast;
+  }, [skillHelper]);
 
-  const roll = useDice({ renderToast: characteristicToastRenderer });
+  const roll = useDice({ renderToast: skillToastRenderer });
 
   return (
     <div>
@@ -66,7 +59,7 @@ export const CharacteristicRoller = ({ label, characteristic }: Props) => {
         }}
         className="bg-transparent hover:bg-transparent flex items-center text-black font-normal gap-x-2 px-0"
       >
-        {charHelper.roll()}
+        {skillHelper.roll()}
         <HexagonDice color="black"></HexagonDice>
       </Button>
     </div>

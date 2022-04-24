@@ -250,11 +250,29 @@ export class CharacteristicHelper {
     return allAdders;
   }
 
+  _strengthData(): StrengthTableRow {
+    if (this.characteristic.XMLID !== CharacteristicLabel.STR) {
+      return null;
+    }
+
+    const keys = Object.keys(STRENGTH_TABLE);
+
+    const greaterIndex = Object.keys(STRENGTH_TABLE).findIndex(
+      (key) => parseInt(key) > this.totalValue()
+    );
+
+    return STRENGTH_TABLE[keys[greaterIndex - 1]];
+  }
+
   supplementalNote(): string {
     switch (this.characteristic.XMLID) {
       case CharacteristicLabel.STR: {
-        const strengthEntry = STRENGTH_TABLE[this.totalValue()];
-        return `Lift: ${strengthEntry.lift}kg; Throw: ${strengthEntry.throw}m; Damage: ${strengthEntry.damage}`;
+        const strengthEntry = this._strengthData();
+        if (strengthEntry) {
+          return `Lift: ${strengthEntry.lift}kg; Throw: ${strengthEntry.throw}m; Damage: ${strengthEntry.damage}`;
+        } else {
+          return "";
+        }
       }
       case CharacteristicLabel.DEX: {
         return "";
@@ -281,7 +299,13 @@ export class SkillHelper {
     this.skill = skill;
   }
 
-  getRoll(): string {
+  displayText(): string {
+    return `${this.skill.ALIAS}${
+      this.skill.INPUT ? `: ${this.skill.INPUT}` : ""
+    }`;
+  }
+
+  roll(): string {
     const skillStat = this.skill.CHARACTERISTIC;
 
     if (!(skillStat in CharacteristicLabel)) {

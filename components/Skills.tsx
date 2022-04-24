@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import type { Character } from "../types/Character";
 import { SkillHelper } from "../utils/character";
 import { coalesceArray } from "../utils/misc";
+import { SkillRoller } from "../components/SkillRoller";
 
 interface Props {
   character: Character;
@@ -16,15 +17,19 @@ export const Skills = ({ character }: Props) => {
   const skillRows = useMemo(() => {
     return skills.map((skill, i) => {
       const skillHelper = new SkillHelper(character, skill);
+      const isRollable = !!skillHelper.roll();
 
       return (
         <tr key={i}>
           <td>{skill.BASECOST + skill.LEVELS}</td>
+          <td>{skillHelper.displayText()}</td>
           <td>
-            {skill.ALIAS}
-            {skill.INPUT && `: ${skill.INPUT}`}
+            {isRollable ? (
+              <SkillRoller skillHelper={skillHelper}></SkillRoller>
+            ) : (
+              skillHelper.roll()
+            )}
           </td>
-          <td>{skillHelper.getRoll()}</td>
         </tr>
       );
     });

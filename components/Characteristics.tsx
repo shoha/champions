@@ -33,6 +33,10 @@ export const Characteristics = ({ character }: Props) => {
 
       return (
         <tr className="table-row" key={attrData.ID}>
+          <td>{charHelper.totalValue()}</td>
+          <td className="uppercase">{attr}</td>
+          <td>{charHelper.totalCost()}</td>
+          <td>{charHelper.totalValue()}</td>
           <td>
             {isRollable ? (
               <CharacteristicRoller
@@ -43,10 +47,6 @@ export const Characteristics = ({ character }: Props) => {
               charHelper.totalValue()
             )}
           </td>
-          <td className="uppercase">{attr}</td>
-          <td>{charHelper.totalCost()}</td>
-          <td>{charHelper.totalValue()}</td>
-          <td>{isRollable && charHelper.roll()}</td>
           <td>{attrData.NOTES || charHelper.supplementalNote()}</td>
         </tr>
       );

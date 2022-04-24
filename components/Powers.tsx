@@ -19,7 +19,7 @@ const modifierText = (powerHelper: CharacteristicHelper) => {
   return modifiers.map((modifier) => {
     const modifierHelper = new CharacteristicHelper(modifier);
     return (
-      <>
+      <div key={modifier.ID}>
         <div key={modifier.ID} className="flex gap-x-2 pl-4">
           <div>
             {modifier.ALIAS}
@@ -31,7 +31,7 @@ const modifierText = (powerHelper: CharacteristicHelper) => {
         <div className="pl-8">
           <div className="">{adderText(modifierHelper)}</div>
         </div>
-      </>
+      </div>
     );
   });
 };
@@ -44,7 +44,6 @@ const adderCost = (perkHelper: CharacteristicHelper) => {
 
 const adderText = (perkHelper: CharacteristicHelper) => {
   return perkHelper.adders().map((adder) => {
-    const isChild = adder.POSITION === -1;
     return (
       <div key={adder.ID}>
         {/* TODO: Where does +1/+1d6 stuff come from? */}
