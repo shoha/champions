@@ -5,6 +5,8 @@ interface Props {
   character: Character;
 }
 
+// TODO: Figure out where cost comes from for talents
+
 export const Talents = ({ character }: Props) => {
   const talentRows = useMemo(() => {
     if (Array.isArray(character.TALENTS.TALENT)) {

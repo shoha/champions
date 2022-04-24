@@ -1,32 +1,42 @@
 import { useMemo } from "react";
 import type { Character } from "../types/Character";
+import { coalesceArray } from "../utils/misc";
 
 interface Props {
   character: Character;
 }
 
+// TODO: Text and associate nested by ID
+
 export const Powers = ({ character }: Props) => {
+  const allPowers = useMemo(() => {
+    const powers = coalesceArray(character.POWERS.POWER);
+    const multipowers = coalesceArray(character.POWERS.MULTIPOWER);
+    const vpps = coalesceArray(character.POWERS.VPP);
+
+    return [...powers, ...multipowers, ...vpps];
+  }, [character]);
+
   const powerRows = useMemo(() => {
-    return character.powers.power.map((power) => {
+    return allPowers.map((power) => {
       return (
-        <tr key={power.name}>
-          <td>{power.cost}</td>
-          <td className={power.list_prefix ? "pl-8" : ""}>
+        <tr key={power.NAME}>
+          <td>{power.BASECOST}</td>
+          <td className={power.LEVELS > 0 ? "pl-8" : ""}>
             <span className="italic font-semibold">
-              {power.list_prefix ? `\t${power.list_prefix} ` : ""}
-              {power.name}
+              {power.LEVELS > 0 ? `\t${power.LEVELS}) ` : ""}
+              {power.NAME}
             </span>
-            : {power.text}
           </td>
-          <td>{power.end}</td>
+          <td></td>
         </tr>
       );
     });
-  }, [character]);
+  }, [allPowers]);
 
   const totalCost = useMemo(() => {
-    return character.powers.power.reduce((memo, power) => {
-      return memo + parseInt(power.cost);
+    return allPowers.reduce((memo, power) => {
+      return memo + power.BASECOST;
     }, 0);
   }, [character]);
 

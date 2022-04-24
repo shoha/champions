@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import type { Character } from "../types/Character";
 import { SkillHelper } from "../utils/character";
+import { coalesceArray } from "../utils/misc";
 
 interface Props {
   character: Character;
@@ -10,9 +11,7 @@ interface Props {
 // TODO: Fix cost computation for ADDERs
 
 export const Skills = ({ character }: Props) => {
-  const skills = Array.isArray(character.SKILLS.SKILL)
-    ? character.SKILLS.SKILL
-    : [character.SKILLS.SKILL];
+  const skills = coalesceArray(character.SKILLS.SKILL);
 
   const skillRows = useMemo(() => {
     return skills.map((skill, i) => {
@@ -29,13 +28,13 @@ export const Skills = ({ character }: Props) => {
         </tr>
       );
     });
-  }, [character]);
+  }, [skills, character]);
 
   const totalCost = useMemo(() => {
     return skills.reduce((memo, skill) => {
       return memo + skill.BASECOST;
     }, 0);
-  }, [character]);
+  }, [skills]);
 
   return (
     <table className="table-auto w-full text-left">

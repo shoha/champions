@@ -23,7 +23,9 @@ const checkRoll = (
 };
 
 export const CharacteristicRoller = ({ label, characteristic }: Props) => {
-  const charHelper = new CharacteristicHelper(characteristic);
+  const charHelper = useMemo(() => {
+    return new CharacteristicHelper(characteristic);
+  }, [characteristic]);
 
   const characteristicToastRenderer: DiceToastRenderer = useMemo(() => {
     const CharacteristicToast = (results, sides) => {
@@ -52,7 +54,7 @@ export const CharacteristicRoller = ({ label, characteristic }: Props) => {
     };
 
     return CharacteristicToast;
-  }, [label, characteristic]);
+  }, [label, charHelper]);
 
   const roll = useDice({ renderToast: characteristicToastRenderer });
 

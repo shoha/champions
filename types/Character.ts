@@ -139,6 +139,7 @@ export interface Characteristic {
   SHOW_ALIAS: HDBool;
   XMLID: string;
   INPUT: string;
+  ID: number;
 }
 
 export interface Movement extends Characteristic {}
@@ -188,10 +189,23 @@ export interface Talents {
 // Martial Arts
 //
 
-export interface MartialArt extends Characteristic {}
+export interface Maneuver extends Characteristic {
+  EFFECT: string;
+  OCV: string;
+  DCV: string;
+  PHASE: string;
+  ADDSTR: HDBool;
+  ACTIVECOST: number;
+  DAMAGETYPE: number;
+  MAXSTR: number;
+  STRMULT: number;
+  USEWEAPON: HDBool;
+  WEAPONEFFECT: string;
+  DISPLAY: string;
+}
 
 export type MartialArts = {
-  MARTIALARTS: MartialArt | MartialArt[];
+  MANEUVER: Maneuver | Maneuver[];
 };
 
 //
@@ -214,7 +228,13 @@ export interface Power extends Characteristic {
   MODIFIER: Modifier | Modifier[];
 }
 
-export type Powers = (Power | Multipower | VariablePowerPool)[];
+// export type Powers = (Power | Multipower | VariablePowerPool)[];
+export interface Powers {
+  POWER: Power | Power[];
+  MULTIPOWER: Multipower | Multipower[];
+  VPP: VariablePowerPool | VariablePowerPool[];
+  //TODO: Skill too?
+}
 
 //
 // Disadvantage

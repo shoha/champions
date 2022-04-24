@@ -69,8 +69,6 @@ export const useDiceHistory = (): [DiceRoll[], Dispatch<DiceRoll[]>] => {
       return;
     }
 
-    console.log(diceHistory);
-
     setDoc(
       currentCharacterRef,
       {

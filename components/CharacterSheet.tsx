@@ -8,7 +8,6 @@ import { CombatInfo } from "../components/CombatInfo";
 import { Powers } from "../components/Powers";
 import { Skills } from "../components/Skills";
 import { Talents } from "../components/Talents";
-import { CombatManeuvers } from "../components/CombatManeuvers";
 import { CombatModifiers } from "../components/CombatModifiers";
 import { Disadvantages } from "../components/Disadvantages";
 import { Appearance } from "../components/Appearance";
@@ -59,9 +58,9 @@ export const CharacterSheet = ({ character, characterRef }: Props) => {
           Combat Information Page
         */}
 
-      {/* <Section className="mb-4 mt-4" title="Martial Arts Maneuvers">
+      <Section className="mb-4 mt-4" title="Martial Arts Maneuvers">
         <MartialArts character={character}></MartialArts>
-      </Section> */}
+      </Section>
 
       <Section className="mb-4 mt-4" title="Defenses">
         <Defenses character={character}></Defenses>
@@ -69,10 +68,6 @@ export const CharacterSheet = ({ character, characterRef }: Props) => {
 
       <Section className="mb-4 mt-4" title="Combat Information">
         <CombatInfo character={character}></CombatInfo>
-      </Section>
-
-      <Section className="mb-4 mt-4" title="Combat Maneuvers">
-        <CombatManeuvers character={character}></CombatManeuvers>
       </Section>
 
       <Section className="mb-4 mt-4" title="Combat Modifiers">
@@ -83,9 +78,9 @@ export const CharacterSheet = ({ character, characterRef }: Props) => {
           Powers and Equipment Page
         */}
 
-      {/* <Section className="mb-4 mt-4" title="Powers">
+      <Section className="mb-4 mt-4" title="Powers">
         <Powers character={character}></Powers>
-      </Section> */}
+      </Section>
 
       {/*
           Skills, Perks, Talents & Disadvantages Page
@@ -95,13 +90,13 @@ export const CharacterSheet = ({ character, characterRef }: Props) => {
         <Skills character={character}></Skills>
       </Section>
 
-      {/* <Section className="mb-4 mt-4" title="Talents">
+      <Section className="mb-4 mt-4" title="Talents">
         <Talents character={character}></Talents>
-      </Section> */}
+      </Section>
 
-      {/* <Section className="mb-4 mt-4" title="Disadvantages">
+      <Section className="mb-4 mt-4" title="Disadvantages">
         <Disadvantages character={character}></Disadvantages>
-      </Section> */}
+      </Section>
     </div>
   );
 };
