@@ -3,6 +3,7 @@ import {
   Characteristic,
   CharacteristicLabel,
   CombinedLabel,
+  Skill,
 } from "../types/Character";
 
 interface StrengthTableRow {
@@ -240,5 +241,30 @@ export class CharacteristicHelper {
         return "";
       }
     }
+  }
+}
+
+export class SkillHelper {
+  character: Character;
+  skill: Skill;
+
+  constructor(character: Character, skill: Skill) {
+    this.character = character;
+    this.skill = skill;
+  }
+
+  getRoll(): string {
+    const skillStat = this.skill.CHARACTERISTIC;
+
+    if (!(skillStat in CharacteristicLabel)) {
+      return "";
+    }
+
+    const charHelper = new CharacteristicHelper(
+      this.character.CHARACTERISTICS[skillStat]
+    );
+
+    // TODO: add skill levels to roll
+    return charHelper.getRoll();
   }
 }

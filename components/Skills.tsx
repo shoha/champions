@@ -1,9 +1,13 @@
 import { useMemo } from "react";
 import type { Character } from "../types/Character";
+import { SkillHelper } from "../utils/character";
 
 interface Props {
   character: Character;
 }
+
+// TODO: Figure out how to compute skill rolls
+// TODO: Fix cost computation for ADDERs
 
 export const Skills = ({ character }: Props) => {
   const skills = Array.isArray(character.SKILLS.SKILL)
@@ -12,10 +16,16 @@ export const Skills = ({ character }: Props) => {
 
   const skillRows = useMemo(() => {
     return skills.map((skill, i) => {
+      const skillHelper = new SkillHelper(character, skill);
+
       return (
         <tr key={i}>
-          <td>{skill.BASECOST}</td>
-          <td>{skill.ALIAS}</td>
+          <td>{skill.BASECOST + skill.LEVELS}</td>
+          <td>
+            {skill.ALIAS}
+            {skill.INPUT && `: ${skill.INPUT}`}
+          </td>
+          <td>{skillHelper.getRoll()}</td>
         </tr>
       );
     });
@@ -33,6 +43,7 @@ export const Skills = ({ character }: Props) => {
         <tr>
           <th>Cost</th>
           <th>Skill</th>
+          <th>Roll</th>
         </tr>
       </thead>
       <tbody>

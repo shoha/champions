@@ -91,9 +91,9 @@ export const CharacterSheet = ({ character, characterRef }: Props) => {
           Skills, Perks, Talents & Disadvantages Page
         */}
 
-      {/* <Section className="mb-4 mt-4" title="Skills">
+      <Section className="mb-4 mt-4" title="Skills">
         <Skills character={character}></Skills>
-      </Section> */}
+      </Section>
 
       {/* <Section className="mb-4 mt-4" title="Talents">
         <Talents character={character}></Talents>
