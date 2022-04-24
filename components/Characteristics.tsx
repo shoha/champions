@@ -46,8 +46,8 @@ export const Characteristics = ({ character }: Props) => {
           <td className="uppercase">{attr}</td>
           <td>{charHelper.totalCost()}</td>
           <td>{charHelper.totalValue()}</td>
-          <td>{isRollable && charHelper.getRoll()}</td>
-          <td>{attrData.NOTES || charHelper.getSupplementalNote()}</td>
+          <td>{isRollable && charHelper.roll()}</td>
+          <td>{attrData.NOTES || charHelper.supplementalNote()}</td>
         </tr>
       );
     });

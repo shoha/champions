@@ -1,20 +1,21 @@
 import { useMemo } from "react";
-import type { Character, Characteristic } from "../types/Character";
+import type { Character } from "../types/Character";
+import { CharacteristicHelper } from "../utils/character";
 import { coalesceArray } from "../utils/misc";
 
-const adderCost = (parent: Characteristic) => {
-  if (!parent?.ADDER) {
-    console.log(parent);
-    return 0;
-  }
+const adderCost = (disadHelper: CharacteristicHelper) => {
+  return disadHelper.adders().reduce((memo, adder) => memo + adder.BASECOST, 0);
+};
 
-  const adders = coalesceArray(parent.ADDER);
-
-  const inc = adders.reduce((memo, adder) => {
-    return memo + adder.BASECOST + adderCost(adder.ADDER);
-  }, 0);
-
-  return inc;
+const adderText = (disadHelper: CharacteristicHelper) => {
+  return disadHelper.adders().map((adder) => {
+    const isChild = adder.POSITION === -1;
+    return (
+      <div key={adder.ID} className={`${isChild && "pl-8 italic text-sm"}`}>
+        {adder.ALIAS}: {adder.OPTION_ALIAS}
+      </div>
+    );
+  });
 };
 
 interface Props {
@@ -26,14 +27,17 @@ export const Disadvantages = ({ character }: Props) => {
 
   const disadvantageRows = useMemo(() => {
     return disadvantages.map((disad, i) => {
+      const disadHelper = new CharacteristicHelper(disad);
+      const adderRows = adderText(disadHelper);
       return (
         <tr key={i}>
-          <td>{disad.BASECOST + adderCost(disad)}</td>
+          <td>{disad.BASECOST + adderCost(disadHelper)}</td>
           <td>
             <div>
               {disad.ALIAS}
               {disad.INPUT && `: ${disad.INPUT}`}
             </div>
+            <div>{adderRows}</div>
             {disad.NOTES && (
               <div className="pl-4">
                 <span className="font-bold italic">Notes: </span>
@@ -48,7 +52,8 @@ export const Disadvantages = ({ character }: Props) => {
 
   const totalCost = useMemo(() => {
     return disadvantages.reduce((memo, disad) => {
-      return memo + disad.BASECOST + adderCost(disad);
+      const disadHelper = new CharacteristicHelper(disad);
+      return memo + disad.BASECOST + adderCost(disadHelper);
     }, 0);
   }, [disadvantages]);
 

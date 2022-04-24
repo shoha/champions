@@ -17,7 +17,7 @@ const checkRoll = (
   results: number[]
 ): boolean => {
   const check = results.reduce((memo, r) => memo + r, 0);
-  const threshold = parseInt(charHelper.getRoll());
+  const threshold = parseInt(charHelper.roll());
 
   return check <= threshold;
 };

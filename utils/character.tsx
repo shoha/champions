@@ -1,10 +1,12 @@
 import {
+  Adder,
   Character,
   Characteristic,
   CharacteristicLabel,
   CombinedLabel,
   Skill,
 } from "../types/Character";
+import { coalesceArray } from "./misc";
 
 interface StrengthTableRow {
   lift: number; // weight in kg
@@ -218,11 +220,34 @@ export class CharacteristicHelper {
   }
 
   // Compute the roll value for a given characteristic
-  getRoll(): string {
+  roll(): string {
     return `${9 + Math.round(this.totalValue() / 5)}-`;
   }
 
-  getSupplementalNote(): string {
+  adders(): Adder[] {
+    if (!this.characteristic.ADDER) {
+      return [];
+    }
+
+    const adders = coalesceArray(this.characteristic.ADDER);
+
+    const adderQ: Adder[] = [...adders];
+    const allAdders: Adder[] = [];
+
+    while (adderQ.length > 0) {
+      const adder = adderQ.shift();
+      allAdders.push(adder);
+
+      if (adder.ADDER) {
+        const newAdders = coalesceArray(adder.ADDER);
+        adderQ.push(...newAdders);
+      }
+    }
+
+    return allAdders;
+  }
+
+  supplementalNote(): string {
     switch (this.characteristic.XMLID) {
       case CharacteristicLabel.STR: {
         const strengthEntry = STRENGTH_TABLE[this.totalValue()];
@@ -265,6 +290,6 @@ export class SkillHelper {
     );
 
     // TODO: add skill levels to roll
-    return charHelper.getRoll();
+    return charHelper.roll();
   }
 }
