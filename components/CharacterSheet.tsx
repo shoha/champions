@@ -15,6 +15,7 @@ import type { Character } from "../types/Character";
 import { CharacterIntro } from "../components/CharacterIntro";
 import { CombatTracker } from "../components/CombatTracker";
 import type { DocumentReference } from "firebase/firestore";
+import { Perks } from "./Perks";
 
 interface Props {
   character: Character;
@@ -92,6 +93,10 @@ export const CharacterSheet = ({ character, characterRef }: Props) => {
 
       <Section className="mb-4 mt-4" title="Talents">
         <Talents character={character}></Talents>
+      </Section>
+
+      <Section className="mb-4 mt-4" title="Perks">
+        <Perks character={character}></Perks>
       </Section>
 
       <Section className="mb-4 mt-4" title="Disadvantages">

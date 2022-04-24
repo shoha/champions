@@ -251,3 +251,5 @@ export interface Disadvantages {
 //
 
 export interface Equipment {}
+
+export type GenericCharacteristic = Characteristic | Power;

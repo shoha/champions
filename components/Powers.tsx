@@ -1,12 +1,56 @@
 import { useMemo } from "react";
 import type { Character } from "../types/Character";
 import { coalesceArray } from "../utils/misc";
+import { CharacteristicHelper } from "../utils/character";
 
 interface Props {
   character: Character;
 }
 
-// TODO: Text and associate nested by ID
+const modifierText = (powerHelper: CharacteristicHelper) => {
+  if (!("MODIFIER" in powerHelper.characteristic)) {
+    return <></>;
+  }
+
+  const modifiers = coalesceArray(powerHelper.characteristic.MODIFIER);
+
+  return modifiers.map((modifier) => {
+    const modifierHelper = new CharacteristicHelper(modifier);
+    return (
+      <>
+        <div key={modifier.ID} className="flex gap-x-2 pl-4">
+          <div>
+            {modifier.ALIAS}
+            {modifier.COMMENTS && ` (${modifier.COMMENTS})`}
+            {modifier.OPTION_ALIAS && ": "}
+          </div>
+          {modifier.OPTION_ALIAS && <div>{modifier.OPTION_ALIAS}</div>}
+        </div>
+        <div className="pl-8">
+          <div className="">{adderText(modifierHelper)}</div>
+        </div>
+      </>
+    );
+  });
+};
+
+const adderCost = (perkHelper: CharacteristicHelper) => {
+  return perkHelper
+    .adders()
+    .reduce((memo, adder) => memo + adder.BASECOST + adder.LEVELS, 0);
+};
+
+const adderText = (perkHelper: CharacteristicHelper) => {
+  return perkHelper.adders().map((adder) => {
+    const isChild = adder.POSITION === -1;
+    return (
+      <div key={adder.ID}>
+        {/* TODO: Where does +1/+1d6 stuff come from? */}
+        {adder.ALIAS}: {adder.OPTION_ALIAS}
+      </div>
+    );
+  });
+};
 
 export const Powers = ({ character }: Props) => {
   const allPowers = useMemo(() => {
@@ -21,13 +65,20 @@ export const Powers = ({ character }: Props) => {
 
   const powerRows = useMemo(() => {
     return allPowers.map((power) => {
+      const powerHelper = new CharacteristicHelper(power);
       return (
         <tr key={power.ID}>
-          <td>{power.BASECOST}</td>
-          <td className={!!power.PARENTID ? "pl-8" : ""}>
-            <span className="italic font-semibold">{power.NAME}</span>
+          <td className="align-top">
+            {power.BASECOST + adderCost(powerHelper)}
           </td>
-          <td></td>
+          <td className={!!power.PARENTID ? "pl-8" : ""}>
+            <span className="italic font-semibold">
+              {power.ALIAS}
+              {power.NAME && `: ${power.NAME}`}
+            </span>
+            <div>{modifierText(powerHelper)}</div>
+          </td>
+          <td className="align-top">??</td>
         </tr>
       );
     });

@@ -4,6 +4,9 @@ import {
   Characteristic,
   CharacteristicLabel,
   CombinedLabel,
+  GenericCharacteristic,
+  Modifier,
+  Power,
   Skill,
 } from "../types/Character";
 import { coalesceArray } from "./misc";
@@ -201,9 +204,9 @@ export class CharacterHelper {
 }
 
 export class CharacteristicHelper {
-  characteristic: Characteristic;
+  characteristic: GenericCharacteristic;
 
-  constructor(characteristic: Characteristic) {
+  constructor(characteristic: GenericCharacteristic) {
     this.characteristic = characteristic;
   }
 

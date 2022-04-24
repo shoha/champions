@@ -31,7 +31,9 @@ export const Disadvantages = ({ character }: Props) => {
       const adderRows = adderText(disadHelper);
       return (
         <tr key={i}>
-          <td>{disad.BASECOST + adderCost(disadHelper)}</td>
+          <td className="align-top">
+            {disad.BASECOST + adderCost(disadHelper)}
+          </td>
           <td>
             <div>
               {disad.ALIAS}

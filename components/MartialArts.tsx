@@ -7,9 +7,11 @@ interface Props {
 
 // TODO: Find where damage comes from
 
+const emptyState = <div>No maneuvers availble.</div>;
+
 export const MartialArts = ({ character }: Props) => {
   if (!character.MARTIALARTS) {
-    return <></>;
+    return emptyState;
   }
 
   const maneuvers = Array.isArray(character.MARTIALARTS.MANEUVER)
@@ -30,6 +32,8 @@ export const MartialArts = ({ character }: Props) => {
     );
   });
 
+  console.log(maneuverRows);
+
   return (
     <table className="table-auto w-full text-left">
       <thead>
@@ -41,7 +45,7 @@ export const MartialArts = ({ character }: Props) => {
           <th>Effect</th>
         </tr>
       </thead>
-      <tbody>{maneuverRows}</tbody>
+      <tbody>{maneuverRows.length > 0 ? maneuverRows : emptyState}</tbody>
     </table>
   );
 };

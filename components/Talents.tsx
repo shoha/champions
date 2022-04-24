@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import type { Character } from "../types/Character";
+import { coalesceArray } from "../utils/misc";
 
 interface Props {
   character: Character;
@@ -9,23 +10,15 @@ interface Props {
 
 export const Talents = ({ character }: Props) => {
   const talentRows = useMemo(() => {
-    if (Array.isArray(character.TALENTS.TALENT)) {
-      return character.TALENTS.TALENT.map((talent, i) => {
-        return (
-          <tr key={i}>
-            <td>{talent.BASECOST}</td>
-            <td>{talent.ALIAS}</td>
-          </tr>
-        );
-      });
-    } else {
-      return [
-        <tr key={0}>
-          <td>{character.TALENTS.TALENT.BASECOST}</td>
-          <td>{character.TALENTS.TALENT.ALIAS}</td>
-        </tr>,
-      ];
-    }
+    const talents = coalesceArray(character.TALENTS.TALENT);
+    return talents.map((talent, i) => {
+      return (
+        <tr key={i}>
+          <td>{talent.BASECOST}</td>
+          <td>{talent.ALIAS}</td>
+        </tr>
+      );
+    });
   }, [character]);
 
   const totalCost = useMemo(() => {
