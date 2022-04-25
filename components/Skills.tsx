@@ -8,7 +8,6 @@ interface Props {
   character: Character;
 }
 
-// TODO: Figure out how to compute skill rolls
 // TODO: Fix cost computation for ADDERs
 
 export const Skills = ({ character }: Props) => {
@@ -21,7 +20,7 @@ export const Skills = ({ character }: Props) => {
 
       return (
         <tr key={i}>
-          <td>{skill.BASECOST + skill.LEVELS}</td>
+          <td>{skillHelper.totalCost()}</td>
           <td>{skillHelper.displayText()}</td>
           <td>
             {isRollable ? (
@@ -37,7 +36,8 @@ export const Skills = ({ character }: Props) => {
 
   const totalCost = useMemo(() => {
     return skills.reduce((memo, skill) => {
-      return memo + skill.BASECOST;
+      const skillHelper = new SkillHelper(character, skill);
+      return memo + skillHelper.totalCost();
     }, 0);
   }, [skills]);
 

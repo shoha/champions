@@ -49,7 +49,8 @@ export const Perks = ({ character }: Props) => {
 
   const totalCost = useMemo(() => {
     return perks.reduce((memo, perk) => {
-      return memo + perk.BASECOST;
+      const perkHelper = new CharacteristicHelper(perk);
+      return memo + perk.BASECOST + perk.LEVELS + adderCost(perkHelper);
     }, 0);
   }, [perks]);
 
@@ -69,7 +70,7 @@ export const Perks = ({ character }: Props) => {
         {perkRows}
         <tr className="text-lg font-bold">
           <td>{totalCost}</td>
-          <td>Total talents Cost</td>
+          <td>Total perks Cost</td>
         </tr>
       </tbody>
     </table>

@@ -1,12 +1,9 @@
 import {
   Adder,
   Character,
-  Characteristic,
   CharacteristicLabel,
   CombinedLabel,
   GenericCharacteristic,
-  Modifier,
-  Power,
   Skill,
 } from "../types/Character";
 import { coalesceArray } from "./misc";
@@ -290,6 +287,7 @@ export class CharacteristicHelper {
   }
 }
 
+// TODO: Verify against skill tables on pg 230
 export class SkillHelper {
   character: Character;
   skill: Skill;
@@ -300,9 +298,36 @@ export class SkillHelper {
   }
 
   displayText(): string {
+    const adderText = this.adders()
+      .map((adder) => adder.ALIAS)
+      .join("; ");
     return `${this.skill.ALIAS}${
       this.skill.INPUT ? `: ${this.skill.INPUT}` : ""
-    }`;
+    }${adderText ? ` (${adderText})` : ""}`;
+  }
+
+  adders(): Adder[] {
+    const charHelper = new CharacteristicHelper(this.skill);
+    return charHelper.adders();
+  }
+
+  totalCost(): number {
+    const adderCosts = this.adders().reduce((memo, adder) => {
+      return memo + adder.BASECOST;
+    }, 0);
+
+    if (this.skill.XMLID === "KNOWLEDGE_SKILL") {
+      return this.skill.BASECOST + this.skill.LEVELS;
+    }
+
+    // Explicitly set base cost to 3 from 0 because it might be busted in file
+    if (this.skill.XMLID === "SURVIVAL") {
+      return 3 + this.skill.LEVELS * 2;
+    }
+
+    // TODO: Why is navigation weird
+
+    return this.skill.BASECOST + this.skill.LEVELS * 2 + adderCosts;
   }
 
   roll(): string {
@@ -316,7 +341,16 @@ export class SkillHelper {
       this.character.CHARACTERISTICS[skillStat]
     );
 
-    // TODO: add skill levels to roll
-    return charHelper.roll();
+    const roll = charHelper.roll();
+
+    if (
+      [CharacteristicLabel.INT, CharacteristicLabel.DEX].includes(
+        this.skill.CHARACTERISTIC
+      )
+    ) {
+      return `${parseInt(roll) + this.skill.LEVELS}-`;
+    } else {
+      return roll;
+    }
   }
 }
