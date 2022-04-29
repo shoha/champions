@@ -3,6 +3,8 @@ import { useToastHistory } from "../hooks/useToastHistory";
 import { useSpring, useTransition, animated, config } from "react-spring";
 import { useMemo } from "react";
 
+const MAX_Z = 99999;
+
 const Message = ({ toast }) => {
   return (
     <div
@@ -75,7 +77,7 @@ export const RollHistory = ({ shown }: Props) => {
   return (
     <animated.div
       className="fixed top-0 p-4 h-full bg-gray-50 w-52 border-l-2 shadow-lg"
-      style={{ ...drawerSpringProps }}
+      style={{ ...drawerSpringProps, zIndex: MAX_Z }}
     >
       <div className="mt-2 text-lg font-bold">History</div>
       <hr className="border-t-2 border-black"></hr>
