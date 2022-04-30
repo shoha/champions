@@ -1,9 +1,8 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
 import { exec } from "child_process";
+import { promisify } from "util";
 
-export default function handler(req, res) {
-  const date = exec("date", (error, stdout, stderr) => {
-    res.status(200).json(stdout);
-  });
+export default async function handler(req, res) {
+  const execPr = promisify(exec);
+  const results = await execPr("./java/jdk-18.0.1/bin/java -version");
+  res.status(200).json(results);
 }
