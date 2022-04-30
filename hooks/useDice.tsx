@@ -42,7 +42,7 @@ export const useDice = (useProps: UseDiceProps = {}) => {
     const results = roll({ ...props });
 
     if (sendToast) {
-      toast(renderToast(results, props.numSides));
+      toast(renderToast(results, props.numSides), { duration: 60000 });
     }
 
     setDiceHistory([

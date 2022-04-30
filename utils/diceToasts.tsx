@@ -16,12 +16,15 @@ const Dice = ({ number, sides = 6 }: DiceProps) => {
   );
 };
 
+export const makeCloseable = (renderer) => {};
+
 export type DiceToastRenderer = (
   results: number[],
   sides: number
 ) => JSX.Element;
 
 export const basicToastRender: DiceToastRenderer = (results, sides) => {
+  const t: any = {};
   const dice = results.map((r, i) => (
     <Dice number={r} sides={sides} key={i}></Dice>
   ));

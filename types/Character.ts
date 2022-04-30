@@ -105,6 +105,29 @@ export enum MovementLabel {
   LEAPING = "LEAPING",
 }
 
+export enum AllLables {
+  STR = "STR",
+  DEX = "DEX",
+  CON = "CON",
+  INT = "INT",
+  EGO = "EGO",
+  PRE = "PRE",
+  SPD = "SPD",
+  REC = "REC",
+  END = "END",
+  BODY = "BODY",
+  STUN = "STUN",
+  OCV = "OCV",
+  DCV = "DCV",
+  DMCV = "DMCV",
+  OMCV = "OMCV",
+  ED = "ED",
+  PD = "PD",
+  RUNNING = "RUNNING",
+  SWIMMING = "SWIMMING",
+  LEAPING = "LEAPING",
+}
+
 export type CombinedLabel =
   | CharacteristicLabel
   | CombatValueLabel
@@ -226,6 +249,7 @@ export interface Power extends Characteristic {
   USESTANDARDEFFECT: HDBool;
   QUANTITY: number;
   MODIFIER: Modifier | Modifier[];
+  POWER: Powers;
 }
 
 // export type Powers = (Power | Multipower | VariablePowerPool)[];

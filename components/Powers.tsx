@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import type { Character } from "../types/Character";
+import { AllLables, Character, CharacteristicLabel } from "../types/Character";
 import { coalesceArray } from "../utils/misc";
-import { CharacteristicHelper } from "../utils/character";
+import { CharacteristicHelper, PowerHelper } from "../utils/character";
 
 interface Props {
   character: Character;
@@ -58,28 +58,38 @@ export const Powers = ({ character }: Props) => {
     const powers = coalesceArray(character.POWERS.POWER);
     const multipowers = coalesceArray(character.POWERS.MULTIPOWER);
     const vpps = coalesceArray(character.POWERS.VPP);
+    const characteristics = Object.keys(character.POWERS).reduce(
+      (memo, key) => {
+        const power = character.POWERS[key];
+        if (power.XMLID in AllLables) {
+          memo.push(power);
+        }
 
-    return [...powers, ...multipowers, ...vpps]
+        return memo;
+      },
+      []
+    );
+
+    return [...powers, ...multipowers, ...vpps, ...characteristics]
       .filter((p) => !!p)
       .sort((a, b) => a.POSITION - b.POSITION);
   }, [character]);
 
   const powerRows = useMemo(() => {
     return allPowers.map((power) => {
-      const powerHelper = new CharacteristicHelper(power);
+      const powerCharHelper = new CharacteristicHelper(power);
+      const powerHelper = new PowerHelper(power);
       return (
         <tr key={power.ID}>
-          <td className="align-top">
-            {power.BASECOST + adderCost(powerHelper)}
-          </td>
+          <td className="align-top">{powerHelper.realCost()}</td>
           <td className={!!power.PARENTID ? "pl-8" : ""}>
             <span className="italic font-semibold">
               {power.ALIAS}
               {power.NAME && `: ${power.NAME}`}
             </span>
-            <div>{modifierText(powerHelper)}</div>
+            <div>{modifierText(powerCharHelper)}</div>
           </td>
-          <td className="align-top">??</td>
+          <td className="align-top">{powerHelper.end()}</td>
         </tr>
       );
     });
@@ -87,7 +97,14 @@ export const Powers = ({ character }: Props) => {
 
   const totalCost = useMemo(() => {
     return allPowers.reduce((memo, power) => {
-      return memo + power.BASECOST;
+      const powerHelper = new PowerHelper(power);
+      const realCost = powerHelper.realCost();
+
+      if (typeof realCost === "string") {
+        return memo + parseInt(realCost);
+      } else {
+        return memo + realCost;
+      }
     }, 0);
   }, [allPowers]);
 

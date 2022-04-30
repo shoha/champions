@@ -39,7 +39,7 @@ export const Skills = ({ character }: Props) => {
       const skillHelper = new SkillHelper(character, skill);
       return memo + skillHelper.totalCost();
     }, 0);
-  }, [skills]);
+  }, [skills, character]);
 
   return (
     <table className="table-auto w-full text-left">

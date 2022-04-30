@@ -5,6 +5,10 @@ import {
   CombinedLabel,
   GenericCharacteristic,
   Skill,
+  Power,
+  Characteristic,
+  DefenseLabel,
+  AllLables,
 } from "../types/Character";
 import { coalesceArray } from "./misc";
 
@@ -184,6 +188,8 @@ export const COMBAT_PHASE_MAP = {
   12: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
 };
 
+const BASE_CHARACTERISTIC_COST = 10;
+
 export class CharacterHelper {
   character: Character;
 
@@ -210,7 +216,8 @@ export class CharacteristicHelper {
   // Compute the total cost of a characteristic
   totalCost(): number {
     return (
-      10 + this.characteristic.LEVELS * COST_TABLE[this.characteristic.XMLID]
+      BASE_CHARACTERISTIC_COST +
+      this.characteristic.LEVELS * COST_TABLE[this.characteristic.XMLID]
     );
   }
 
@@ -351,6 +358,167 @@ export class SkillHelper {
       return `${parseInt(roll) + this.skill.LEVELS}-`;
     } else {
       return roll;
+    }
+  }
+}
+
+const REQUIRES_A_ROLL_OPTION_MODIFIERS_TABLE = {
+  7: 1,
+  8: 0.75,
+  9: 0.5,
+  10: 0.25,
+  11: 0,
+  12: -0.25,
+  13: -0.5,
+  14: -0.75,
+};
+
+export class PowerHelper {
+  power: Power;
+  charHelper: CharacteristicHelper;
+
+  constructor(power: Power) {
+    this.power = power;
+    this.charHelper = new CharacteristicHelper(this.power);
+  }
+
+  advantages(): [] {
+    return [];
+  }
+
+  activePoints(): number {
+    if (this.power.XMLID in AllLables) {
+      const charHelper = new CharacteristicHelper(this.power);
+
+      return charHelper.totalCost() - BASE_CHARACTERISTIC_COST;
+    }
+
+    if (this.power.LEVELS > 0) {
+      return this.power.LEVELS;
+    }
+
+    const adderCosts = this.adders().reduce((memo, adder) => {
+      return memo + adder.BASECOST;
+    }, 0);
+
+    // TODO: What do advantages look like?
+    const advantagesCosts = this.advantages().reduce((memo, adv) => {
+      return memo;
+    }, 0);
+
+    return Math.round(
+      (this.power.BASECOST + adderCosts) * (1 + advantagesCosts)
+    );
+  }
+
+  adders(): Adder[] {
+    return this.charHelper.adders();
+  }
+
+  displayText(): string {
+    const adderText = this.adders()
+      .map((adder) => adder.ALIAS)
+      .join("; ");
+    return `${this.power.ALIAS}${
+      this.power.INPUT ? `: ${this.power.INPUT}` : ""
+    }${adderText ? ` (${adderText})` : ""}`;
+  }
+
+  // See pg 95 of manual
+  realCost(): number | string {
+    if (this.power.ALIAS === "Variable Power Pool") {
+      return this.power.LEVELS;
+    }
+
+    // Part of multipower, so compute fixed or variable slots
+    // TODO: Fix cost
+    if (this.power.ULTRA_SLOT === "Yes") {
+      return `${Math.max(1, Math.round(this.activePoints() / 10))}f`;
+    }
+
+    if (this.power.XMLID in AllLables) {
+      const powerCost = this.activePoints();
+      const modifiersCost = coalesceArray(this.power.MODIFIER).reduce(
+        (memo, mod) => {
+          const modHelper = new CharacteristicHelper(mod);
+          const adderCosts = modHelper.adders().reduce((memo, adder) => {
+            return memo + adder.BASECOST;
+          }, 0);
+
+          return memo + Math.abs(mod.BASECOST + adderCosts);
+        },
+        0
+      );
+
+      return Math.round(powerCost / (1 + modifiersCost));
+    }
+
+    if (this.power.ALIAS === "Compound Power") {
+      const cost = Object.keys(this.power).reduce((memo, key) => {
+        if (key.match(/POWER/)) {
+          const powerHelper = new PowerHelper(this.power[key] as Power);
+          const realCost = powerHelper.realCost();
+
+          if (typeof realCost === "string") {
+            return memo;
+          }
+
+          return memo + realCost;
+        }
+
+        if (key in CharacteristicLabel || key in DefenseLabel) {
+          const powerHelper = new PowerHelper(this.power[key] as Power);
+          const realCost = powerHelper.realCost();
+
+          if (typeof realCost === "string") {
+            return memo;
+          }
+
+          return memo + realCost;
+        }
+
+        return memo;
+      }, 0);
+
+      return cost;
+    }
+
+    const modifiersCost = coalesceArray(this.power.MODIFIER).reduce(
+      (memo, mod) => {
+        // Table on pg 115 of manual
+        const ROLL_TYPE_MODIFIER = 0.5;
+
+        const modHelper = new CharacteristicHelper(mod);
+        const adderCosts = modHelper.adders().reduce((memo, adder) => {
+          return memo + adder.BASECOST;
+        }, 0);
+
+        if (mod.XMLID === "REQUIRESASKILLROLL") {
+          return (
+            memo +
+            Math.abs(
+              mod.BASECOST +
+                (-adderCosts + ROLL_TYPE_MODIFIER) *
+                  REQUIRES_A_ROLL_OPTION_MODIFIERS_TABLE[mod.OPTION]
+            )
+          );
+        } else {
+          return memo + Math.abs(mod.BASECOST + adderCosts);
+        }
+      },
+      0
+    );
+
+    return Math.round(this.activePoints() / (1 + modifiersCost));
+  }
+
+  end(): number {
+    const realCost = this.realCost();
+
+    if (typeof realCost === "string") {
+      return 0;
+    } else {
+      return Math.round(realCost / 10);
     }
   }
 }
