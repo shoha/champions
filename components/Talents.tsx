@@ -1,38 +1,40 @@
 import { useMemo } from "react";
 import type { Character } from "../types/Character";
-import { coalesceArray } from "../utils/misc";
-
-const EMPTY_STATE = <div>No perks available.</div>;
 
 interface Props {
   character: Character;
 }
 
-// TODO: Figure out where cost comes from for talents
-
 export const Talents = ({ character }: Props) => {
-  const talents = coalesceArray(character.TALENTS.TALENT);
-
   const talentRows = useMemo(() => {
-    return talents.map((talent, i) => {
-      return (
-        <tr key={i}>
-          <td className="align-top">{talent.BASECOST}</td>
-          <td>{talent.ALIAS}</td>
-        </tr>
-      );
-    });
-  }, [talents]);
+    if (Array.isArray(character.talents.talent)) {
+      return character.talents.talent.map((talent, i) => {
+        return (
+          <tr key={i}>
+            <td>{talent.cost}</td>
+            <td>{talent.text}</td>
+          </tr>
+        );
+      });
+    } else {
+      return [
+        <tr key={0}>
+          <td>{character.talents.talent.cost}</td>
+          <td>{character.talents.talent.text}</td>
+        </tr>,
+      ];
+    }
+  }, [character]);
 
   const totalCost = useMemo(() => {
-    return talents.reduce((memo, talent) => {
-      return memo + talent.BASECOST;
-    }, 0);
-  }, [talents]);
-
-  if (talents.length === 0) {
-    return EMPTY_STATE;
-  }
+    if (Array.isArray(character.talents.talent)) {
+      return character.talents.talent.reduce((memo, talent) => {
+        return memo + parseInt(talent.cost);
+      }, 0);
+    } else {
+      return parseInt(character.talents.talent.cost);
+    }
+  }, [character]);
 
   return (
     <table className="table-auto w-full text-left">

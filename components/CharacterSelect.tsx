@@ -2,9 +2,11 @@ import { useFirebaseApp } from "../hooks/useFirebaseApp";
 import {
   getFirestore,
   collection as fs_collection,
+  addDoc,
   deleteDoc,
   query,
   where,
+  doc,
   orderBy,
 } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
@@ -31,7 +33,7 @@ export const CharacterSelect = () => {
   const q = query<Character>(
     collection,
     where("author_uid", "==", currentUser?.uid || "NA"),
-    orderBy("CHARACTER_INFO.CHARACTER_NAME", "asc")
+    orderBy("name", "asc")
   );
 
   const [characters, loading, error, snapshot] = useCollectionData(q);
@@ -52,14 +54,14 @@ export const CharacterSelect = () => {
   const charOpts = characters?.map((c) => {
     return {
       value: c.uid,
-      label: c.CHARACTER_INFO.CHARACTER_NAME,
+      label: c.name,
       selected: c === currentChar,
     };
   });
 
   const onSelectChange = (evt) => {
     const selectedDoc = snapshot.docs.find(
-      (doc) => doc.data().CHARACTER_INFO.CHARACTER_NAME == evt.target.value
+      (doc) => doc.data().name == evt.target.value
     );
     if (selectedDoc) {
       setCurrentChar({ data: { ...selectedDoc.data() }, ref: selectedDoc.ref });
@@ -88,7 +90,7 @@ export const CharacterSelect = () => {
             <Select
               options={charOpts}
               onChange={onSelectChange}
-              defaultValue={currentChar?.CHARACTER_INFO?.CHARACTER_NAME}
+              defaultValue={currentChar?.name}
             ></Select>
           </div>
           <Button color="red" onClick={() => deleteCurrentCharacter()}>

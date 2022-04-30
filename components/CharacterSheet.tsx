@@ -8,6 +8,7 @@ import { CombatInfo } from "../components/CombatInfo";
 import { Powers } from "../components/Powers";
 import { Skills } from "../components/Skills";
 import { Talents } from "../components/Talents";
+import { CombatManeuvers } from "../components/CombatManeuvers";
 import { CombatModifiers } from "../components/CombatModifiers";
 import { Disadvantages } from "../components/Disadvantages";
 import { Appearance } from "../components/Appearance";
@@ -15,7 +16,6 @@ import type { Character } from "../types/Character";
 import { CharacterIntro } from "../components/CharacterIntro";
 import { CombatTracker } from "../components/CombatTracker";
 import type { DocumentReference } from "firebase/firestore";
-import { Perks } from "./Perks";
 
 interface Props {
   character: Character;
@@ -71,6 +71,10 @@ export const CharacterSheet = ({ character, characterRef }: Props) => {
         <CombatInfo character={character}></CombatInfo>
       </Section>
 
+      <Section className="mb-4 mt-4" title="Combat Maneuvers">
+        <CombatManeuvers character={character}></CombatManeuvers>
+      </Section>
+
       <Section className="mb-4 mt-4" title="Combat Modifiers">
         <CombatModifiers character={character}></CombatModifiers>
       </Section>
@@ -93,10 +97,6 @@ export const CharacterSheet = ({ character, characterRef }: Props) => {
 
       <Section className="mb-4 mt-4" title="Talents">
         <Talents character={character}></Talents>
-      </Section>
-
-      <Section className="mb-4 mt-4" title="Perks">
-        <Perks character={character}></Perks>
       </Section>
 
       <Section className="mb-4 mt-4" title="Disadvantages">

@@ -1,10 +1,10 @@
-import { useToasterStore } from "react-hot-toast";
+import { useToasterStore, resolveValue, ToastBar } from "react-hot-toast";
 import type { Toast } from "react-hot-toast";
 import { useEffect } from "react";
 
 const allToasts: Toast[] = [];
 
-export const useToastHistory = () => {
+export const useRollHistory = () => {
   const { toasts } = useToasterStore();
 
   useEffect(() => {

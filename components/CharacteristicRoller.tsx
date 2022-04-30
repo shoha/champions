@@ -5,7 +5,6 @@ import { Characteristic } from "../types/Character";
 import { Button } from "./Button";
 import { useMemo } from "react";
 import { Check, Cancel, HexagonDice } from "iconoir-react";
-import { CharacteristicHelper } from "../utils/character";
 
 interface Props {
   label: string;
@@ -13,50 +12,44 @@ interface Props {
 }
 
 const checkRoll = (
-  charHelper: CharacteristicHelper,
+  characteristic: Characteristic,
   results: number[]
 ): boolean => {
   const check = results.reduce((memo, r) => memo + r, 0);
-  const threshold = parseInt(charHelper.roll());
+  const threshold = parseInt(characteristic.roll);
 
   return check <= threshold;
 };
 
 export const CharacteristicRoller = ({ label, characteristic }: Props) => {
-  const charHelper = useMemo(() => {
-    return new CharacteristicHelper(characteristic);
-  }, [characteristic]);
-
   const characteristicToastRenderer: DiceToastRenderer = useMemo(() => {
     const CharacteristicToast = (results, sides) => {
       return (
         <div>
-          <>
-            <div className="flex items-center gap-2">
-              <h1 className="uppercase text-lg font-semibold m-r-2">{label}</h1>
-              <div className={`ml-auto`}>
-                {checkRoll(charHelper, results) ? (
-                  <Check
-                    className="bg-green-500 rounded-full"
-                    color="white"
-                  ></Check>
-                ) : (
-                  <Cancel
-                    className="bg-red-500 rounded-full"
-                    color="white"
-                  ></Cancel>
-                )}
-              </div>
+          <div className="flex items-center">
+            <h1 className="uppercase text-lg font-semibold">{label}</h1>
+            <div className={`ml-auto`}>
+              {checkRoll(characteristic, results) ? (
+                <Check
+                  className="bg-green-500 rounded-full"
+                  color="white"
+                ></Check>
+              ) : (
+                <Cancel
+                  className="bg-red-500 rounded-full"
+                  color="white"
+                ></Cancel>
+              )}
             </div>
             <hr className="border-t-2 border-black mb-2"></hr>
             {basicToastRender(results, sides)}
-          </>
+          </div>
         </div>
       );
     };
 
     return CharacteristicToast;
-  }, [label, charHelper]);
+  }, [label, characteristic]);
 
   const roll = useDice({ renderToast: characteristicToastRenderer });
 
@@ -68,7 +61,7 @@ export const CharacteristicRoller = ({ label, characteristic }: Props) => {
         }}
         className="bg-transparent hover:bg-transparent flex items-center text-black font-normal gap-x-2 px-0"
       >
-        {charHelper.roll()}
+        {characteristic.val}
         <HexagonDice color="black"></HexagonDice>
       </Button>
     </div>

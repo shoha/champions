@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
+import type { Character } from "../types/Character";
 import type { Dispatch } from "react";
 import { DocumentReference } from "firebase/firestore";
-import { Character } from "../types/Character";
 
 interface CharacterState {
   data?: Character;

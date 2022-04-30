@@ -10,25 +10,25 @@ export const Appearance = ({ character }: Props) => {
       <tbody>
         <tr>
           <td className="font-bold">Hair Color</td>
-          <td>{character.CHARACTER_INFO.HAIR_COLOR}</td>
+          <td>{character.hair_color}</td>
         </tr>
         <tr>
           <td className="font-bold">Eye Color</td>
-          <td>{character.CHARACTER_INFO.EYE_COLOR}</td>
+          <td>{character.eye_color}</td>
         </tr>
         <tr>
           <td className="font-bold">Height</td>
-          <td>{Math.round(character.CHARACTER_INFO.HEIGHT)}in</td>
+          <td>{character.height}</td>
         </tr>
         <tr>
           <td className="font-bold">Weight</td>
-          <td>{Math.round(character.CHARACTER_INFO.WEIGHT)}lb</td>
+          <td>{character.weight}</td>
         </tr>
         <tr>
           <td className="font-bold">Description</td>
           <td>
-            {character.CHARACTER_INFO.APPEARANCE ? (
-              character.CHARACTER_INFO.APPEARANCE
+            {character.appearance ? (
+              character.appearance
             ) : (
               <span className="italic">None provided</span>
             )}

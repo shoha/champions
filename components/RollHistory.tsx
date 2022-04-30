@@ -1,5 +1,5 @@
 import { resolveValue } from "react-hot-toast";
-import { useToastHistory } from "../hooks/useToastHistory";
+import { useRollHistory } from "../hooks/useRollHistory";
 import { useSpring, useTransition, animated, config } from "react-spring";
 import { useMemo } from "react";
 
@@ -51,7 +51,7 @@ interface Props {
 
 export const RollHistory = ({ shown }: Props) => {
   const refMap = useMemo(() => new WeakMap(), []);
-  const toasts = useToastHistory();
+  const toasts = useRollHistory();
   const toastsReversed = useMemo(() => {
     return [...toasts].reverse();
   }, [toasts]);

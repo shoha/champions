@@ -1,45 +1,27 @@
 import { useMemo } from "react";
 import type { Character } from "../types/Character";
-import { SkillHelper } from "../utils/character";
-import { coalesceArray } from "../utils/misc";
-import { SkillRoller } from "../components/SkillRoller";
 
 interface Props {
   character: Character;
 }
 
-// TODO: Fix cost computation for ADDERs
-
 export const Skills = ({ character }: Props) => {
-  const skills = coalesceArray(character.SKILLS.SKILL);
-
   const skillRows = useMemo(() => {
-    return skills.map((skill, i) => {
-      const skillHelper = new SkillHelper(character, skill);
-      const isRollable = !!skillHelper.roll();
-
+    return character.skills.skill.map((skill, i) => {
       return (
         <tr key={i}>
-          <td>{skillHelper.totalCost()}</td>
-          <td>{skillHelper.displayText()}</td>
-          <td>
-            {isRollable ? (
-              <SkillRoller skillHelper={skillHelper}></SkillRoller>
-            ) : (
-              skillHelper.roll()
-            )}
-          </td>
+          <td>{skill.cost}</td>
+          <td>{skill.text}</td>
         </tr>
       );
     });
-  }, [skills, character]);
+  }, [character]);
 
   const totalCost = useMemo(() => {
-    return skills.reduce((memo, skill) => {
-      const skillHelper = new SkillHelper(character, skill);
-      return memo + skillHelper.totalCost();
+    return character.skills.skill.reduce((memo, skill) => {
+      return memo + parseInt(skill.cost);
     }, 0);
-  }, [skills, character]);
+  }, [character]);
 
   return (
     <table className="table-auto w-full text-left">
@@ -47,7 +29,6 @@ export const Skills = ({ character }: Props) => {
         <tr>
           <th>Cost</th>
           <th>Skill</th>
-          <th>Roll</th>
         </tr>
       </thead>
       <tbody>
