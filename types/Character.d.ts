@@ -120,6 +120,11 @@ export interface CombatLevel {
   active_cost: string;
   text: string;
   roll: string;
+  val: string;
+  base: string;
+  total: number;
+  notes: string;
+  current: number;
 }
 
 export interface Disads {
