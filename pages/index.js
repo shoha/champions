@@ -5,9 +5,9 @@ import { useCurrentCharacter } from "../hooks/useCurrentCharacter";
 import { CharacterSheet } from "../components/CharacterSheet";
 import { FileUploader } from "../components/FileUploader";
 import { useCurrentUser } from "../hooks/useCurrentUser";
-import { DiceRoller } from "../components/DiceRoller";
 import { RollHistory } from "../components/RollHistory";
 import { useState } from "react";
+import { Button } from "../components/Button";
 
 export default function Home() {
   const [currentCharInfo] = useCurrentCharacter();
@@ -52,10 +52,15 @@ export default function Home() {
         {head}
         {nav}
         <div className="mt-4">
-          <DiceRoller
-            setShowHistory={setShowHistory}
-            showHistory={showHistory}
-          ></DiceRoller>
+          <Button
+            className="mt-2"
+            color="blue"
+            onClick={() => {
+              setShowHistory(!showHistory);
+            }}
+          >
+            Toggle Roll History
+          </Button>
         </div>
         {body}
       </div>

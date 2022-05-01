@@ -2,6 +2,7 @@ import { resolveValue } from "react-hot-toast";
 import { useRollHistory } from "../hooks/useRollHistory";
 import { useSpring, useTransition, animated, config } from "react-spring";
 import { useMemo } from "react";
+import { DiceRoller } from "./DiceRoller";
 
 const MAX_Z = 99999;
 
@@ -81,16 +82,21 @@ export const RollHistory = ({ shown }: Props) => {
       className="fixed top-0 p-4 h-full bg-gray-50 border-l-2 shadow-lg"
       style={{ ...drawerSpringProps, zIndex: MAX_Z, width: "400px" }}
     >
-      <div className="mt-2 text-lg font-bold">History</div>
-      <hr className="border-t-2 border-black"></hr>
-      <div className="mt-2 flex gap-2 flex-col">
-        {transitions((style, item) => (
-          <animated.div style={{ ...style }}>
-            <div ref={(ref: HTMLDivElement) => ref && refMap.set(item, ref)}>
-              <HistoryItem toast={item}></HistoryItem>
-            </div>
-          </animated.div>
-        ))}
+      <div className="flex flex-col gap-2 h-full">
+        <DiceRoller></DiceRoller>
+        <div className="flex-none">
+          <div className="text-lg font-bold">History</div>
+          <hr className="border-t-2 border-black"></hr>
+        </div>
+        <div className="flex gap-2 flex-col p-2 overflow-y-auto h-full no-scroll scroll-smooth">
+          {transitions((style, item) => (
+            <animated.div style={{ ...style }}>
+              <div ref={(ref: HTMLDivElement) => ref && refMap.set(item, ref)}>
+                <HistoryItem toast={item}></HistoryItem>
+              </div>
+            </animated.div>
+          ))}
+        </div>
       </div>
     </animated.div>
   );

@@ -36,7 +36,7 @@ export const BasicRoller = ({ numSides, count }: Props) => {
           roll({ count: count, numSides: numSides });
         }}
       >
-        Roll
+        Roll {count}d{numSides}
       </Button>
     </div>
   );
