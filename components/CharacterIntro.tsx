@@ -9,7 +9,7 @@ export const CharacterIntro = ({ character }: Props) => {
     <>
       <h2 className="text-3xl italic my-2">{character.name}</h2>
       <h2 className="text-2xl italic my-2">
-        {character.campaign_name} by {character.gm}
+        {character.campaign_name} by {character.gm || "Anonymous"}
       </h2>
     </>
   );
