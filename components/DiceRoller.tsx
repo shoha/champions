@@ -1,6 +1,7 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { Button } from "./Button";
 import { useDice } from "../hooks/useDice";
+import { BasicRoller } from "./BasicRoller";
 
 interface Props {
   showHistory: boolean;
@@ -11,16 +12,10 @@ export const DiceRoller = ({ setShowHistory, showHistory }: Props) => {
   const [numDice, setNumDice] = useState<number>(3);
   const roll = useDice();
 
-  const triggerRoll = useCallback(() => {
-    const result = roll({ count: numDice });
-  }, [numDice, roll]);
-
   return (
     <div>
       <div className="flex gap-2 ">
-        <Button color="blue" onClick={triggerRoll}>
-          Roll
-        </Button>
+        <BasicRoller numSides={6} count={numDice}></BasicRoller>
         <Button
           color="red"
           onClick={() => {
