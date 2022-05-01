@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import type { Character } from "../types/Character";
+import { EmptyState } from "./EmptyState";
 
 interface Props {
   character: Character;
@@ -7,7 +8,7 @@ interface Props {
 
 export const Disadvantages = ({ character }: Props) => {
   const disadvantageRows = useMemo(() => {
-    return character.disads.disad.map((disad, i) => {
+    return character?.disads?.disad?.map((disad, i) => {
       return (
         <tr key={i}>
           <td>{disad.cost}</td>
@@ -18,10 +19,14 @@ export const Disadvantages = ({ character }: Props) => {
   }, [character]);
 
   const totalCost = useMemo(() => {
-    return character.disads.disad.reduce((memo, disad) => {
+    return character?.disads?.disad?.reduce((memo, disad) => {
       return memo + parseInt(disad.cost);
     }, 0);
   }, [character]);
+
+  if (!character?.disads?.disad) {
+    return <EmptyState></EmptyState>;
+  }
 
   return (
     <table className="table-auto w-full text-left">

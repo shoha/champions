@@ -17,7 +17,9 @@ const Message = ({ toast }) => {
         whiteSpace: "pre-line",
       }}
     >
-      {resolveValue(toast.message, toast)}
+      <div className="flex-grow-0 flex-shrink-0 basis-full">
+        {resolveValue(toast.message, toast)}
+      </div>
     </div>
   );
 };
@@ -57,7 +59,7 @@ export const RollHistory = ({ shown }: Props) => {
   }, [toasts]);
 
   const drawerSpringProps = useSpring({
-    right: shown ? 0 : -200,
+    right: shown ? 0 : -400,
     config: config.stiff,
   });
 
@@ -76,8 +78,8 @@ export const RollHistory = ({ shown }: Props) => {
 
   return (
     <animated.div
-      className="fixed top-0 p-4 h-full bg-gray-50 w-52 border-l-2 shadow-lg"
-      style={{ ...drawerSpringProps, zIndex: MAX_Z }}
+      className="fixed top-0 p-4 h-full bg-gray-50 border-l-2 shadow-lg"
+      style={{ ...drawerSpringProps, zIndex: MAX_Z, width: "400px" }}
     >
       <div className="mt-2 text-lg font-bold">History</div>
       <hr className="border-t-2 border-black"></hr>

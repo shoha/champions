@@ -10,7 +10,6 @@ const attrs = [
   "str",
   "dex",
   "con",
-  "body",
   "int",
   "ego",
   "pre",
@@ -18,6 +17,7 @@ const attrs = [
   "ed",
   "spd",
   "rec",
+  "body",
   "end",
   "stun",
 ];
@@ -33,21 +33,19 @@ export const Characteristics = ({ character }: Props) => {
 
       return (
         <tr className="table-row" key={attr}>
+          <td className="uppercase">{attr}</td>
           <td>
-            {rollable.includes(attr) ? (
+            {rollable.includes(attr) && (
               <CharacteristicRoller
                 label={attr}
                 characteristic={attrData}
               ></CharacteristicRoller>
-            ) : (
-              attrData.val
             )}
           </td>
-          <td className="uppercase">{attr}</td>
+          <td>{attrData.val}</td>
           <td>{attrData.base}</td>
           <td>{attrData.cost}</td>
           <td>{attrData.total}</td>
-          <td>{attrData.roll}</td>
           <td>{attrData.notes}</td>
         </tr>
       );
@@ -60,8 +58,8 @@ export const Characteristics = ({ character }: Props) => {
 
       return (
         <tr className="table-row" key={movement}>
-          <td>{movementData.val}</td>
           <td className="uppercase">{movement}</td>
+          <td>{movementData.val}</td>
           <td>{movementData.base}</td>
           <td>{movementData.cost}</td>
           <td>{movementData.total}</td>
@@ -76,12 +74,12 @@ export const Characteristics = ({ character }: Props) => {
     <table className="table-auto w-full text-left">
       <thead>
         <tr>
-          <th>Val</th>
           <th>Char</th>
+          <th>Roll</th>
+          <th>Val</th>
           <th>Base</th>
           <th>Points</th>
           <th>Total</th>
-          <th>Roll</th>
           <th>Notes</th>
         </tr>
       </thead>

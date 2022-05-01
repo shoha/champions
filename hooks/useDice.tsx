@@ -1,11 +1,9 @@
 import toast from "react-hot-toast";
 import { basicToastRender } from "../utils/diceToasts";
 
-type DiceFaceCount = 6;
-
 interface RollProps {
   count?: number;
-  numSides?: DiceFaceCount;
+  numSides?: number;
 }
 
 type RollFn = (props?: RollProps) => number[];
@@ -37,5 +35,23 @@ export const useDice = (useProps: UseDiceProps = {}) => {
     }
 
     return results;
+  };
+};
+
+export const diceStringToRoll = (diceString: string): RollProps | null => {
+  const diceRegex = /(?<count>\d*)d(?<numSides>\d*)/;
+  const match = diceRegex.exec(diceString);
+
+  if (!match) {
+    return null;
+  }
+
+  const {
+    groups: { count, numSides },
+  } = match;
+
+  return {
+    count: parseInt(count),
+    numSides: parseInt(numSides),
   };
 };

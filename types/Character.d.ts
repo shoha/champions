@@ -170,6 +170,7 @@ export interface Power {
   end: string;
   list_prefix?: string;
   notes?: string;
+  dmg?: string;
 }
 
 export interface Skills {

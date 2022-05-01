@@ -16,26 +16,6 @@ export const Defenses = ({ character }: Props) => {
       </thead>
       <tbody>
         <tr>
-          <td>Physical Defense</td>
-          <td>??</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Res. Phys. Defense</td>
-          <td>??</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Energy Defense</td>
-          <td>??</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Res. Energy Defense</td>
-          <td>??</td>
-          <td></td>
-        </tr>
-        <tr>
           <td>Mental Defense</td>
           <td>{character.mental_defense_total}</td>
           <td></td>

@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import type { Character } from "../types/Character";
+import { EmptyState } from "./EmptyState";
 
 interface Props {
   character: Character;
@@ -7,8 +8,8 @@ interface Props {
 
 export const Talents = ({ character }: Props) => {
   const talentRows = useMemo(() => {
-    if (Array.isArray(character.talents.talent)) {
-      return character.talents.talent.map((talent, i) => {
+    if (Array.isArray(character?.talents?.talent)) {
+      return character?.talents?.talent?.map((talent, i) => {
         return (
           <tr key={i}>
             <td>{talent.cost}</td>
@@ -19,22 +20,26 @@ export const Talents = ({ character }: Props) => {
     } else {
       return [
         <tr key={0}>
-          <td>{character.talents.talent.cost}</td>
-          <td>{character.talents.talent.text}</td>
+          <td>{character?.talents?.talent?.cost}</td>
+          <td>{character?.talents?.talent?.text}</td>
         </tr>,
       ];
     }
   }, [character]);
 
   const totalCost = useMemo(() => {
-    if (Array.isArray(character.talents.talent)) {
-      return character.talents.talent.reduce((memo, talent) => {
+    if (Array.isArray(character?.talents?.talent)) {
+      return character?.talents?.talent?.reduce((memo, talent) => {
         return memo + parseInt(talent.cost);
       }, 0);
     } else {
-      return parseInt(character.talents.talent.cost);
+      return parseInt(character?.talents?.talent?.cost);
     }
   }, [character]);
+
+  if (!character?.talents?.talent) {
+    return <EmptyState></EmptyState>;
+  }
 
   return (
     <table className="table-auto w-full text-left">

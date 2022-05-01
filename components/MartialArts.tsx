@@ -1,10 +1,15 @@
 import type { Character } from "../types/Character";
+import { EmptyState } from "./EmptyState";
 
 interface Props {
   character: Character;
 }
 
 export const MartialArts = ({ character }: Props) => {
+  if (!character?.martial_arts?.maneuvers?.maneuver) {
+    return <EmptyState></EmptyState>;
+  }
+
   const maneuverRows = character.martial_arts?.maneuvers?.maneuver?.map(
     (maneuver) => {
       return (

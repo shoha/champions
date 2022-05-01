@@ -61,7 +61,7 @@ export const CharacteristicRoller = ({ label, characteristic }: Props) => {
         }}
         className="bg-transparent hover:bg-transparent flex items-center text-black font-normal gap-x-2 px-0"
       >
-        {characteristic.val}
+        {characteristic.roll}
         <HexagonDice color="black"></HexagonDice>
       </Button>
     </div>

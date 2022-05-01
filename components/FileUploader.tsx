@@ -58,7 +58,6 @@ export const FileUploader = () => {
 
     const parser = new XMLParser();
     let parsedXML = parser.parse(exportedChar);
-    console.log(parsedXML);
     return { ...parsedXML.character, author_uid: currentUser.uid };
   }, [, currentUser?.uid, exportedChar]);
 
