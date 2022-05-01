@@ -151,8 +151,8 @@ export interface Maneuver {
   active_cost: string;
   name: string;
   phase: string;
-  ocv: string;
-  dcv: string;
+  ocv: string | number;
+  dcv: string | number;
   effect: string;
   text: string;
 }

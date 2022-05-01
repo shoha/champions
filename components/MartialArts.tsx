@@ -14,8 +14,17 @@ export const MartialArts = ({ character }: Props) => {
     (maneuver) => {
       return (
         <tr key={maneuver.name}>
-          <td>{maneuver.cost}</td>
-          <td>{maneuver.text}</td>
+          <td>{maneuver.name}</td>
+          <td>{maneuver.phase}</td>
+          <td>
+            {maneuver.ocv > 0 && "+"}
+            {maneuver.ocv}
+          </td>
+          <td>
+            {maneuver.dcv > 0 && "+"}
+            {maneuver.dcv}
+          </td>
+          <td>{maneuver.effect}</td>
         </tr>
       );
     }
@@ -25,8 +34,11 @@ export const MartialArts = ({ character }: Props) => {
     <table className="table-auto w-full text-left">
       <thead>
         <tr>
-          <th>Cost</th>
           <th>Maneuver</th>
+          <th>Phase</th>
+          <th>OCV</th>
+          <th>DCV</th>
+          <th>Effect</th>
         </tr>
       </thead>
       <tbody>{maneuverRows}</tbody>

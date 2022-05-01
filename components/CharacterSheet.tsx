@@ -71,10 +71,6 @@ export const CharacterSheet = ({ character, characterRef }: Props) => {
         <CombatInfo character={character}></CombatInfo>
       </Section>
 
-      <Section className="mb-4 mt-4" title="Combat Maneuvers">
-        <CombatManeuvers character={character}></CombatManeuvers>
-      </Section>
-
       <Section className="mb-4 mt-4" title="Combat Modifiers">
         <CombatModifiers character={character}></CombatModifiers>
       </Section>
