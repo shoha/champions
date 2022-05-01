@@ -1,4 +1,3 @@
-import { errorMonitor } from "events";
 import { useMemo } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
@@ -10,7 +9,7 @@ interface Props {
 
 export const Section = ({ title, children, className }: Props) => {
   const fallbackRender = useMemo(() => {
-    return ({ error }) => (
+    const FallbackRender = ({ error }) => (
       <div className={className}>
         <h3 className="text-xl uppercase">{title}</h3>
         <hr className="border-t-2 border-gray-400 my-2"></hr>
@@ -23,7 +22,9 @@ export const Section = ({ title, children, className }: Props) => {
         </div>
       </div>
     );
-  }, [title]);
+
+    return FallbackRender;
+  }, [title, className]);
 
   return (
     <ErrorBoundary fallbackRender={fallbackRender}>
