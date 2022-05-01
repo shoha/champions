@@ -1,4 +1,5 @@
 import type { Character } from "../types/Character";
+import { Table } from "./Table";
 
 interface Props {
   character: Character;
@@ -6,7 +7,7 @@ interface Props {
 
 export const CombatInfo = ({ character }: Props) => {
   return (
-    <table className="table-auto w-full text-left">
+    <Table className="table-auto w-full text-left table-alternate">
       <tbody>
         <tr>
           <td>OCV</td>
@@ -17,6 +18,6 @@ export const CombatInfo = ({ character }: Props) => {
           <td>{character.dcv}</td>
         </tr>
       </tbody>
-    </table>
+    </Table>
   );
 };

@@ -1,5 +1,6 @@
 import type { Character } from "../types/Character";
 import { EmptyState } from "./EmptyState";
+import { Table } from "./Table";
 
 interface Props {
   character: Character;
@@ -31,7 +32,7 @@ export const MartialArts = ({ character }: Props) => {
   );
 
   return (
-    <table className="table-auto w-full text-left">
+    <Table className="table-auto w-full text-left table-alternate">
       <thead>
         <tr>
           <th>Maneuver</th>
@@ -42,6 +43,6 @@ export const MartialArts = ({ character }: Props) => {
         </tr>
       </thead>
       <tbody>{maneuverRows}</tbody>
-    </table>
+    </Table>
   );
 };

@@ -1,0 +1,16 @@
+.alternate {
+  
+}
+
+  .alternate thead {
+    @apply border-b-2;
+  }
+
+  .alternate tr:nth-child(even) {
+    @apply bg-gray-100;
+  }
+
+  .alternate tr:nth-child(odd) {
+    
+  }
+  

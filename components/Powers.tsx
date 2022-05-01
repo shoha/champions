@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import type { Character } from "../types/Character";
 import { PowerRoller } from "./PowerRoller";
 import { EmptyState } from "./EmptyState";
+import { Table } from "./Table";
 
 interface Props {
   character: Character;
@@ -44,7 +45,7 @@ export const Powers = ({ character }: Props) => {
   }
 
   return (
-    <table className="table-auto w-full text-left">
+    <Table className="table-auto w-full text-left table-alternate">
       <thead>
         <tr>
           <th>Cost</th>
@@ -60,6 +61,6 @@ export const Powers = ({ character }: Props) => {
           <td colSpan={2}>Total Powers Cost</td>
         </tr>
       </tbody>
-    </table>
+    </Table>
   );
 };

@@ -1,4 +1,5 @@
 import type { Character } from "../types/Character";
+import { Table } from "./Table";
 
 interface Props {
   character: Character;
@@ -6,7 +7,7 @@ interface Props {
 
 export const Experience = ({ character }: Props) => {
   return (
-    <table className="table-auto w-full text-left">
+    <Table className="table-auto w-full text-left table-alternate">
       <tbody>
         <tr>
           <td className="font-bold">Total Earned:</td>
@@ -33,6 +34,6 @@ export const Experience = ({ character }: Props) => {
           <td>{character.total_points}</td>
         </tr>
       </tbody>
-    </table>
+    </Table>
   );
 };

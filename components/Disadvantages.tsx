@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import type { Character } from "../types/Character";
 import { EmptyState } from "./EmptyState";
+import { Table } from "./Table";
 
 interface Props {
   character: Character;
@@ -29,7 +30,7 @@ export const Disadvantages = ({ character }: Props) => {
   }
 
   return (
-    <table className="table-auto w-full text-left">
+    <Table className="table-auto w-full text-left table-alternate">
       <thead>
         <tr>
           <th>Cost</th>
@@ -43,6 +44,6 @@ export const Disadvantages = ({ character }: Props) => {
           <td>Total Disadvantages Cost</td>
         </tr>
       </tbody>
-    </table>
+    </Table>
   );
 };

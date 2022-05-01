@@ -1,3 +1,4 @@
+import { Table } from "./Table";
 import { useMemo } from "react";
 import type { Character, Characteristic } from "../types/Character";
 import { CharacteristicRoller } from "./CharacteristicRoller";
@@ -71,7 +72,7 @@ export const Characteristics = ({ character }: Props) => {
   }, [characteristics]);
 
   return (
-    <table className="table-auto w-full text-left">
+    <Table className="table-auto w-full text-left table-alternate">
       <thead>
         <tr>
           <th>Char</th>
@@ -87,6 +88,6 @@ export const Characteristics = ({ character }: Props) => {
         {attrRows}
         {movementRows}
       </tbody>
-    </table>
+    </Table>
   );
 };
