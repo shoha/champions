@@ -14,7 +14,6 @@ export default function Home() {
   const character = currentCharInfo?.data;
   const characterRef = currentCharInfo?.ref;
   const currentUser = useCurrentUser();
-  const [showHistory, setShowHistory] = useState(false);
 
   const head = (
     <Head>
@@ -51,21 +50,10 @@ export default function Home() {
       <div className="container mx-auto px-4 my-4">
         {head}
         {nav}
-        <div className="mt-4">
-          <Button
-            className="mt-2"
-            color="blue"
-            onClick={() => {
-              setShowHistory(!showHistory);
-            }}
-          >
-            Toggle Roll History
-          </Button>
-        </div>
         {body}
       </div>
 
-      <RollHistory shown={showHistory}></RollHistory>
+      <RollHistory></RollHistory>
     </>
   );
 }

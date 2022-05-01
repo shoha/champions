@@ -1,8 +1,9 @@
 import { resolveValue } from "react-hot-toast";
 import { useRollHistory } from "../hooks/useRollHistory";
 import { useSpring, useTransition, animated, config } from "react-spring";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { DiceRoller } from "./DiceRoller";
+import { HexagonDice, NavArrowLeft } from "iconoir-react";
 
 const MAX_Z = 99999;
 
@@ -48,11 +49,10 @@ const HistoryItem = ({ toast }) => {
   );
 };
 
-interface Props {
-  shown: boolean;
-}
+interface Props {}
 
-export const RollHistory = ({ shown }: Props) => {
+export const RollHistory = ({}: Props) => {
+  const [shown, setShown] = useState(false);
   const refMap = useMemo(() => new WeakMap(), []);
   const toasts = useRollHistory();
   const toastsReversed = useMemo(() => {
@@ -78,26 +78,49 @@ export const RollHistory = ({ shown }: Props) => {
   });
 
   return (
-    <animated.div
-      className="fixed top-0 p-4 h-full bg-gray-50 border-l-2 shadow-lg"
-      style={{ ...drawerSpringProps, zIndex: MAX_Z, width: "400px" }}
-    >
-      <div className="flex flex-col gap-2 h-full">
-        <DiceRoller></DiceRoller>
-        <div className="flex-none">
-          <div className="text-lg font-bold">History</div>
-          <hr className="border-t-2 border-black"></hr>
+    <>
+      <animated.div
+        className="fixed top-0 p-4 h-full bg-gray-50 border-l-2 shadow-lg"
+        style={{ ...drawerSpringProps, zIndex: MAX_Z, width: "400px" }}
+      >
+        <div className="flex flex-col gap-2 h-full">
+          <DiceRoller></DiceRoller>
+          <div className="flex-none">
+            <div className="text-lg font-bold">History</div>
+            <hr className="border-t-2 border-black"></hr>
+          </div>
+          <div className="flex gap-2 flex-col p-2 overflow-y-auto h-full no-scroll scroll-smooth">
+            {transitions((style, item) => (
+              <animated.div style={{ ...style }}>
+                <div
+                  ref={(ref: HTMLDivElement) => ref && refMap.set(item, ref)}
+                >
+                  <HistoryItem toast={item}></HistoryItem>
+                </div>
+              </animated.div>
+            ))}
+          </div>
         </div>
-        <div className="flex gap-2 flex-col p-2 overflow-y-auto h-full no-scroll scroll-smooth">
-          {transitions((style, item) => (
-            <animated.div style={{ ...style }}>
-              <div ref={(ref: HTMLDivElement) => ref && refMap.set(item, ref)}>
-                <HistoryItem toast={item}></HistoryItem>
-              </div>
-            </animated.div>
-          ))}
-        </div>
-      </div>
-    </animated.div>
+      </animated.div>
+      <animated.div
+        className="fixed top-4 flex cursor-pointer bg-white shadow rounded p-2"
+        style={{
+          right: drawerSpringProps.right.to((n) => 416 + n),
+          zIndex: MAX_Z,
+        }}
+        onClick={() => setShown(!shown)}
+      >
+        <animated.div
+          style={{
+            transform: drawerSpringProps.right.to((n) => {
+              return `rotate(${(1 - n / 400) * 180}deg)`;
+            }),
+          }}
+        >
+          <NavArrowLeft width={32} height={32}></NavArrowLeft>
+        </animated.div>
+        <HexagonDice width={32} height={32}></HexagonDice>
+      </animated.div>
+    </>
   );
 };
