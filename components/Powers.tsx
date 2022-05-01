@@ -7,9 +7,9 @@ interface Props {
 
 export const Powers = ({ character }: Props) => {
   const powerRows = useMemo(() => {
-    return character.powers.power.map((power) => {
+    return character.powers.power.map((power, i) => {
       return (
-        <tr key={power.name}>
+        <tr key={i}>
           <td>{power.cost}</td>
           <td className={power.list_prefix ? "pl-8" : ""}>
             <span className="italic font-semibold">

@@ -119,6 +119,7 @@ export interface CombatLevel {
   base_cost: string;
   active_cost: string;
   text: string;
+  roll: string;
 }
 
 export interface Disads {

@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import type { Character } from "../types/Character";
+import { CharacteristicRoller } from "./CharacteristicRoller";
 
 interface Props {
   character: Character;
@@ -8,10 +9,21 @@ interface Props {
 export const Skills = ({ character }: Props) => {
   const skillRows = useMemo(() => {
     return character.skills.skill.map((skill, i) => {
+      const skillTextWithoutRoll = skill.text.replace(skill.roll, "").trim();
       return (
         <tr key={i}>
           <td>{skill.cost}</td>
-          <td>{skill.text}</td>
+          <td>
+            <div className="flex items-center gap-2">
+              {skillTextWithoutRoll}
+              {skill.roll && (
+                <CharacteristicRoller
+                  label={skillTextWithoutRoll}
+                  characteristic={skill}
+                ></CharacteristicRoller>
+              )}
+            </div>
+          </td>
         </tr>
       );
     });

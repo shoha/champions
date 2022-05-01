@@ -26,7 +26,7 @@ export const CharacteristicRoller = ({ label, characteristic }: Props) => {
     const CharacteristicToast = (results, sides) => {
       return (
         <div>
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
             <h1 className="uppercase text-lg font-semibold">{label}</h1>
             <div className={`ml-auto`}>
               {checkRoll(characteristic, results) ? (
@@ -41,9 +41,9 @@ export const CharacteristicRoller = ({ label, characteristic }: Props) => {
                 ></Cancel>
               )}
             </div>
-            <hr className="border-t-2 border-black mb-2"></hr>
-            {basicToastRender(results, sides)}
           </div>
+          <hr className="border-t-2 border-black mb-2"></hr>
+          {basicToastRender(results, sides)}
         </div>
       );
     };

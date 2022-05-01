@@ -5,7 +5,7 @@ interface Props {
 }
 
 export const MartialArts = ({ character }: Props) => {
-  const maneuverRows = character.martial_arts.maneuvers.maneuver.map(
+  const maneuverRows = character.martial_arts?.maneuvers?.maneuver?.map(
     (maneuver) => {
       return (
         <tr key={maneuver.name}>
