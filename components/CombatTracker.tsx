@@ -16,33 +16,45 @@ const ActiveStat = ({ character, characterRef, name }: ActiveStatProps) => {
   const defaultValue = character.current?.[name]?.value || statBlock.total;
   const [current, updateCurrent] = useState<number>(defaultValue);
 
+  const updateStat = useMemo(() => {
+    return (value: number) => {
+      if (!characterRef) {
+        return;
+      }
+
+      setDoc(
+        characterRef,
+        {
+          current: {
+            [name]: {
+              value: value,
+            },
+          },
+        } as Character,
+        { merge: true }
+      );
+    };
+  }, [characterRef, name]);
+
   const increment = useCallback(() => {
     updateCurrent(current + 1);
-  }, [current, updateCurrent]);
+    updateStat(current + 1);
+  }, [current, updateCurrent, updateStat]);
 
   const decrement = useCallback(() => {
     updateCurrent(current - 1);
-  }, [current, updateCurrent]);
+    updateStat(current - 1);
+  }, [current, updateCurrent, updateStat]);
 
   useEffect(() => {
-    if (!characterRef) {
+    if (!statBlock) {
       return;
     }
 
-    setDoc(
-      characterRef,
-      {
-        current: {
-          [name]: {
-            value: current,
-          },
-        },
-      } as Character,
-      { merge: true }
-    );
+    updateCurrent(defaultValue);
 
     return;
-  }, [current, characterRef, name]);
+  }, [statBlock, defaultValue]);
 
   return (
     <div className="text-center">
