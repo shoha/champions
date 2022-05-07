@@ -10,7 +10,7 @@ module.exports = {
       backgroundColor: ["even"],
     },
   },
-  plugins: [require("@tailwindcss/forms"), require("tailwind-group-even-odd")],
+  plugins: [require("@tailwindcss/forms")],
   safelist: [
     {
       pattern: /bg-.*-/,

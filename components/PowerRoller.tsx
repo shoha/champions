@@ -4,7 +4,8 @@ import type { DiceToastRenderer } from "../utils/diceToasts";
 import { Power } from "../types/Character";
 import { Button } from "./Button";
 import { useMemo } from "react";
-import { HexagonDice } from "iconoir-react";
+import { Check, Cancel, HexagonDice } from "iconoir-react";
+import { RollButton } from "./RollButton";
 
 const pipsAndBody = (results: number[]) => {
   const counts = results.reduce(
@@ -20,13 +21,15 @@ const pipsAndBody = (results: number[]) => {
   return counts;
 };
 
+const requiresRollRegex = /Requires A Roll \((?<roll>\d*-)/;
+
 interface Props {
   label: string;
   power: Power;
 }
 
 export const PowerRoller = ({ label, power }: Props) => {
-  const powerToastRenderer: DiceToastRenderer = useMemo(() => {
+  const powerDamageToastRenderer: DiceToastRenderer = useMemo(() => {
     const powerToast = (results, sides) => {
       const counts = pipsAndBody(results);
 
@@ -54,24 +57,94 @@ export const PowerRoller = ({ label, power }: Props) => {
     return powerToast;
   }, [label]);
 
-  const roll = useDice({ renderToast: powerToastRenderer });
-  const rollProps = diceStringToRoll(power.dmg);
+  const checkRoll = requiresRollRegex.exec(power.text)?.groups?.roll;
+  console.log(checkRoll);
 
-  if (!rollProps?.count || !rollProps?.numSides) {
+  const powerCheckToastRenderer: DiceToastRenderer = useMemo(() => {
+    const powerToast = (results, sides) => {
+      const counts = pipsAndBody(results);
+      const passed = counts.pips <= parseInt(checkRoll);
+
+      return (
+        <div>
+          <div className="flex items-center gap-2">
+            <h1 className="uppercase text-lg font-semibold">
+              Power Check: {power.name}
+            </h1>
+            <div className={`ml-auto`}>
+              {passed ? (
+                <Check
+                  className="bg-green-500 rounded-full"
+                  color="white"
+                ></Check>
+              ) : (
+                <Cancel
+                  className="bg-red-500 rounded-full"
+                  color="white"
+                ></Cancel>
+              )}
+            </div>
+          </div>
+          <hr className="border-t-2 border-black mb-2"></hr>
+          {basicToastRender(results, sides)}
+        </div>
+      );
+    };
+
+    return powerToast;
+  }, [power.name, checkRoll]);
+
+  const rollDamage = useDice({ renderToast: powerDamageToastRenderer });
+  const rollDamageProps = diceStringToRoll(power.dmg);
+
+  const rollSkill = useDice({ renderToast: powerCheckToastRenderer });
+
+  if (!rollDamageProps?.count || !rollDamageProps?.numSides) {
     return <></>;
   }
 
   return (
-    <div>
-      <Button
-        onClick={() => {
-          roll(rollProps);
-        }}
-        className="bg-transparent hover:bg-transparent flex items-center text-black font-normal gap-x-2 px-0 py-0"
-      >
-        {power.dmg}
-        <HexagonDice color="black" width={"24px"} height={"24px"}></HexagonDice>
-      </Button>
+    <div className="flex flex-col gap-2">
+      {checkRoll && (
+        <div className="whitespace-nowrap">
+          <RollButton
+            onClick={() => {
+              rollSkill({ count: 3, numSides: 6 });
+            }}
+            className="bg-white hover:bg-white flex items-center text-black font-normal gap-x-2 rounded border-gray-100 hover:border-gray-300 border-2"
+          >
+            Check:
+            <span className="whitespace-nowrap flex gap-2">
+              {checkRoll}
+              <HexagonDice
+                color="black"
+                width={"24px"}
+                height={"24px"}
+              ></HexagonDice>
+            </span>
+          </RollButton>
+        </div>
+      )}
+      {power.dmg && (
+        <div className="whitespace-nowrap">
+          <RollButton
+            onClick={() => {
+              rollDamage(rollDamageProps);
+            }}
+            className="bg-white hover:bg-white flex items-center text-black font-normal gap-x-2 rounded border-gray-100 hover:border-gray-300 border-2"
+          >
+            Damage:{" "}
+            <span className="whitespace-nowrap flex gap-2">
+              {power.dmg}
+              <HexagonDice
+                color="black"
+                width={"24px"}
+                height={"24px"}
+              ></HexagonDice>
+            </span>
+          </RollButton>
+        </div>
+      )}
     </div>
   );
 };

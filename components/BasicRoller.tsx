@@ -1,8 +1,8 @@
 import { useDice } from "../hooks/useDice";
 import { basicToastRender } from "../utils/diceToasts";
 import type { DiceToastRenderer } from "../utils/diceToasts";
-import { Button } from "./Button";
 import { useMemo } from "react";
+import { RollButton } from "./RollButton";
 
 interface Props {
   numSides: number;
@@ -31,13 +31,13 @@ export const BasicRoller = ({ numSides, count }: Props) => {
 
   return (
     <div>
-      <Button
+      <RollButton
         onClick={() => {
           roll({ count: count, numSides: numSides });
         }}
       >
         Roll {count}d{numSides}
-      </Button>
+      </RollButton>
     </div>
   );
 };

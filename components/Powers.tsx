@@ -15,9 +15,7 @@ export const Powers = ({ character }: Props) => {
         <tr key={i}>
           <td className="align-top">{power.cost}</td>
           <td className="align-top text-left">
-            {power.dmg && (
-              <PowerRoller power={power} label={power.name}></PowerRoller>
-            )}
+            <PowerRoller power={power} label={power.name}></PowerRoller>
           </td>
           <td
             className={`${power.list_prefix ? "pl-8" : ""} align-top text-left`}

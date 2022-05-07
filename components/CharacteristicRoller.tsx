@@ -5,6 +5,7 @@ import { Characteristic } from "../types/Character";
 import { Button } from "./Button";
 import { useMemo } from "react";
 import { Check, Cancel, HexagonDice } from "iconoir-react";
+import { RollButton } from "./RollButton";
 
 interface Props {
   label: string;
@@ -55,15 +56,14 @@ export const CharacteristicRoller = ({ label, characteristic }: Props) => {
 
   return (
     <div>
-      <Button
+      <RollButton
         onClick={() => {
           roll({ count: 3, numSides: 6 });
         }}
-        className="bg-transparent hover:bg-transparent flex items-center text-black font-normal gap-x-2 px-0"
       >
         {characteristic.roll}
         <HexagonDice color="black"></HexagonDice>
-      </Button>
+      </RollButton>
     </div>
   );
 };

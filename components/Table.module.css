@@ -14,3 +14,9 @@
     
   }
   
+.table {
+}
+
+  .table td {
+    @apply p-2;
+  }

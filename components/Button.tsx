@@ -1,7 +1,7 @@
 import type { DetailedHTMLProps, ButtonHTMLAttributes } from "react";
 import { useMemo } from "react";
 
-interface Props
+export interface ButtonProps
   extends DetailedHTMLProps<
     ButtonHTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
@@ -9,9 +9,13 @@ interface Props
   color?: string;
 }
 
-export const Button = ({ color = "blue", className = "", ...rest }: Props) => {
+export const Button = ({
+  color = "blue",
+  className = "",
+  ...rest
+}: ButtonProps) => {
   const computedClassName = useMemo(() => {
-    return `bg-${color}-500 hover:bg-${color}-700 text-white font-bold py-2 px-4 ${className}`;
+    return `bg-${color}-500 hover:bg-${color}-700 text-white font-bold py-2 px-4 transition-all ${className} active:shadow-inner active:scale-95`;
   }, [color, className]);
 
   return <button className={computedClassName} {...rest}></button>;
