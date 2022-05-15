@@ -3,10 +3,15 @@ import type { Campaign } from "../types/Campaign";
 import type { Dispatch } from "react";
 import {
   DocumentReference,
-  DocumentSnapshot,
+  CollectionReference,
   onSnapshot,
+  addDoc,
+  getFirestore,
+  collection,
+  updateDoc,
 } from "firebase/firestore";
 import { useCurrentCharacter } from "./useCurrentCharacter";
+import { useFirebaseApp } from "../hooks/useFirebaseApp";
 
 interface CampaignState {
   data?: Campaign;
@@ -23,9 +28,14 @@ export const useCurrentCampaign = (): [
     [CampaignState, Dispatch<CampaignState>]
   >(CurrentCampaignContext);
 
-  const [currentCharacter] = useCurrentCharacter();
+  const [currentCharacter, setCurrentCharacter] = useCurrentCharacter();
+  const firebaseApp = useFirebaseApp();
 
   useEffect(() => {
+    if (!currentCharacter) {
+      return;
+    }
+
     let unsub;
     if (currentCharacter?.data?.campaign) {
       unsub = onSnapshot(currentCharacter.data.campaign, (doc) => {
@@ -36,10 +46,23 @@ export const useCurrentCampaign = (): [
       });
     } else {
       setCurrentCampaign({ data: undefined, ref: undefined });
+      const persistNewCampaign = async () => {
+        const col = collection(
+          getFirestore(firebaseApp),
+          "campaigns"
+        ) as CollectionReference<Campaign>;
+        const newDocRef = await addDoc<Campaign>(col, {
+          name: currentCharacter.data.name,
+        });
+
+        updateDoc(currentCharacter.ref, { campaign: newDocRef });
+      };
+
+      persistNewCampaign();
     }
 
     return unsub;
-  }, [currentCharacter]);
+  }, [currentCharacter, firebaseApp]);
 
   return [currentCampaign, setCurrentCampaign];
 };

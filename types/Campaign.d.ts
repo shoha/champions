@@ -9,4 +9,5 @@ export interface Campaign {
 export interface CampaignRoll {
   character?: DocumentReference<Character>;
   toastMarkup?: string;
+  id: string;
 }

@@ -1,7 +1,8 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import type { Character } from "../types/Character";
 import type { Dispatch } from "react";
-import { DocumentReference } from "firebase/firestore";
+import { DocumentReference, onSnapshot } from "firebase/firestore";
+import { useFirebaseApp } from "../hooks/useFirebaseApp";
 
 interface CharacterState {
   data?: Character;
@@ -17,6 +18,21 @@ export const useCurrentCharacter = (): [
   const [currentCharacter, setCurrentCharacter] = useContext<
     [CharacterState, Dispatch<CharacterState>]
   >(CurrentCharacterContext);
+  const firebaseApp = useFirebaseApp();
+
+  useEffect(() => {
+    let unsub;
+
+    if (currentCharacter?.ref) {
+      unsub = onSnapshot(currentCharacter.ref, (doc) => {
+        setCurrentCharacter({
+          data: doc.data(),
+          ref: currentCharacter.ref,
+        });
+      });
+    }
+  }, [currentCharacter?.ref]);
+
   return [currentCharacter, setCurrentCharacter];
 };
 

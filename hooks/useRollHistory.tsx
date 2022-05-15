@@ -34,6 +34,9 @@ export const useRollHistoryInit = () => {
         rollHistory: arrayUnion({
           character: currentCharacter.ref,
           toastMarkup: allToastsHTML[allToastsHTML.length - 1],
+          id: `${allToasts[allToasts.length - 1].createdAt}-${
+            currentCharacter.data.name
+          }`,
         }),
       });
     }

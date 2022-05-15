@@ -82,7 +82,7 @@ export const RollHistory = ({}: Props) => {
     update: { opacity: 1 },
     config: config.stiff,
     keys: (item) => {
-      return item.toastMarkup;
+      return item.id;
     },
   });
 
