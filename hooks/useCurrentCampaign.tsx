@@ -9,6 +9,7 @@ import {
   getFirestore,
   collection,
   updateDoc,
+  Unsubscribe,
 } from "firebase/firestore";
 import { useCurrentCharacter } from "./useCurrentCharacter";
 import { useFirebaseApp } from "../hooks/useFirebaseApp";
@@ -36,18 +37,20 @@ export const useCurrentCampaign = (): [
   const firebaseApp = useFirebaseApp();
 
   useEffect(() => {
-    if (!currentCharacter) {
+    if (!currentCharacter || currentCampaign) {
       return;
     }
-
-    let unsub;
-    if (currentCharacter?.data?.campaign) {
-      unsub = onSnapshot(currentCharacter.data.campaign, (doc) => {
-        setCurrentCampaign({
-          data: doc.data(),
-          ref: currentCharacter.data.campaign,
-        });
+    const snapback = (doc) => {
+      setCurrentCampaign({
+        data: doc.data(),
+        ref: currentCharacter.data.campaign,
       });
+    };
+
+    let unsub: Unsubscribe;
+
+    if (currentCharacter?.data?.campaign) {
+      unsub = onSnapshot(currentCharacter.data.campaign, snapback);
     } else {
       if (createPromise) {
         return;
@@ -71,6 +74,9 @@ export const useCurrentCampaign = (): [
 
         const newDocRef = await createPromise;
         await updateDoc(currentCharacter.ref, { campaign: newDocRef });
+
+        unsub = onSnapshot(newDocRef, snapback);
+
         createPromise = null;
       };
 

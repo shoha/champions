@@ -51,10 +51,14 @@ export interface Character {
   campaign?: DocumentReference<Campaign>;
 }
 
+export interface CurrentCharacteristic extends Characteristic {
+  value: number;
+}
+
 export interface Current {
-  end: Characteristic;
-  body: Characteristic;
-  stun: Characteristic;
+  end: CurrentCharacteristic;
+  body: CurrentCharacteristic;
+  stun: CurrentCharacteristic;
   [key: string]: any;
 }
 
