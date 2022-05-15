@@ -8,6 +8,7 @@ import { useCurrentCampaign } from "./useCurrentCampaign";
 
 const allToasts: Toast[] = [];
 const allToastsHTML: string[] = [];
+const persistedIds: Set<number> = new Set<number>();
 
 export const useRollHistoryInit = () => {
   const { toasts } = useToasterStore();
@@ -28,15 +29,16 @@ export const useRollHistoryInit = () => {
       currentCampaign?.ref &&
       currentCharacter?.ref &&
       toasts.length > 0 &&
-      allToastsHTML.length > 0
+      allToastsHTML.length > 0 &&
+      !persistedIds.has(allToasts.at(-1).createdAt)
     ) {
+      persistedIds.add(allToasts.at(-1).createdAt);
       updateDoc(currentCampaign.ref, {
         rollHistory: arrayUnion({
           character: currentCharacter.ref,
-          toastMarkup: allToastsHTML[allToastsHTML.length - 1],
-          id: `${allToasts[allToasts.length - 1].createdAt}-${
-            currentCharacter.data.name
-          }`,
+          characterName: currentCharacter.data.name,
+          toastMarkup: allToastsHTML.at(-1),
+          id: `${allToasts.at(-1).createdAt}-${currentCharacter.data.name}`,
         }),
       });
     }

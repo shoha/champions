@@ -11,9 +11,21 @@ const MAX_Z = 99999;
 interface HistoryItemProps {
   toast?: any;
   html?: string;
+  name?: string;
 }
 
-const Message = ({ toast, html }: HistoryItemProps) => {
+const Badge = ({ name }: HistoryItemProps) => {
+  return (
+    <div
+      className="flex justify-end italic uppercase"
+      style={{ top: -16, left: -16 }}
+    >
+      {name}
+    </div>
+  );
+};
+
+const Message = ({ toast, html, name }: HistoryItemProps) => {
   return (
     <div
       style={{
@@ -35,26 +47,31 @@ const Message = ({ toast, html }: HistoryItemProps) => {
   );
 };
 
-const HistoryItem = ({ toast, html }: HistoryItemProps) => {
+const HistoryItem = ({ toast, html, name }: HistoryItemProps) => {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        background: "#fff",
-        color: "#363636",
-        lineHeight: "1.3",
-        willChange: "transform",
-        boxShadow:
-          "0 3px 10px rgba(0, 0, 0, 0.1), 0 3px 3px rgba(0, 0, 0, 0.05)",
-        maxWidth: "350px",
-        pointerEvents: "auto",
-        padding: "8px 10px",
-        borderRadius: "8px",
-      }}
-    >
-      <Message toast={toast} html={html}></Message>
-    </div>
+    <>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          background: "#fff",
+          color: "#363636",
+          lineHeight: "1.3",
+          willChange: "transform",
+          boxShadow:
+            "0 3px 10px rgba(0, 0, 0, 0.1), 0 3px 3px rgba(0, 0, 0, 0.05)",
+          maxWidth: "350px",
+          pointerEvents: "auto",
+          padding: "8px 10px",
+          borderRadius: "8px",
+        }}
+      >
+        <div className="flex flex-col w-full">
+          <Message toast={toast} html={html} name={name}></Message>
+          <Badge name={name}></Badge>
+        </div>
+      </div>
+    </>
   );
 };
 
@@ -81,6 +98,10 @@ export const RollHistory = ({}: Props) => {
     },
   });
 
+  const showName = useMemo(() => {
+    return currentCampaign?.data?.characters?.length > 1;
+  }, [currentCampaign]);
+
   const handle = <HexagonDice width={32} height={32}></HexagonDice>;
 
   return (
@@ -91,11 +112,14 @@ export const RollHistory = ({}: Props) => {
           <div className="text-lg font-bold">History</div>
           <hr className="border-t-2 border-black"></hr>
         </div>
-        <div className="flex gap-2 flex-col p-2 overflow-y-auto h-full no-scroll scroll-smooth">
+        <div className="flex gap-4 flex-col p-2 overflow-y-auto h-full no-scroll scroll-smooth">
           {transitions((style, item, _, i) => (
             <animated.div style={{ ...style }}>
               <div ref={(ref: HTMLDivElement) => ref && refMap.set(item, ref)}>
-                <HistoryItem html={item.toastMarkup}></HistoryItem>
+                <HistoryItem
+                  html={item.toastMarkup}
+                  name={showName ? item.characterName : undefined}
+                ></HistoryItem>
               </div>
             </animated.div>
           ))}
