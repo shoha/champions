@@ -58,7 +58,6 @@ export const PowerRoller = ({ label, power }: Props) => {
   }, [label]);
 
   const checkRoll = requiresRollRegex.exec(power.text)?.groups?.roll;
-  console.log(checkRoll);
 
   const powerCheckToastRenderer: DiceToastRenderer = useMemo(() => {
     const powerToast = (results, sides) => {

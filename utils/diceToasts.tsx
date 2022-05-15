@@ -7,12 +7,12 @@ interface DiceProps {
 
 const Dice = ({ number, sides = 6 }: DiceProps) => {
   return (
-    <Image
+    <img
       src={`/dice/d${sides}-${number}.svg`}
       width={25}
       height={25}
       alt={`A ${sides}-sided die showing ${number}`}
-    ></Image>
+    ></img>
   );
 };
 
@@ -29,5 +29,5 @@ export const basicToastRender: DiceToastRenderer = (results, sides) => {
     <Dice number={r} sides={sides} key={i}></Dice>
   ));
 
-  return <div>{dice}</div>;
+  return <div className="flex gap-2">{dice}</div>;
 };

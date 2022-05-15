@@ -1,13 +1,18 @@
 import { resolveValue } from "react-hot-toast";
-import { useRollHistory } from "../hooks/useRollHistory";
 import { useSpring, useTransition, animated, config } from "react-spring";
 import { useMemo, useState } from "react";
 import { DiceRoller } from "./DiceRoller";
 import { HexagonDice, NavArrowLeft } from "iconoir-react";
+import { useCurrentCampaign } from "../hooks/useCurrentCampaign";
 
 const MAX_Z = 99999;
 
-const Message = ({ toast }) => {
+interface HistoryItemProps {
+  toast?: any;
+  html?: string;
+}
+
+const Message = ({ toast, html }: HistoryItemProps) => {
   return (
     <div
       style={{
@@ -19,14 +24,17 @@ const Message = ({ toast }) => {
         whiteSpace: "pre-line",
       }}
     >
-      <div className="flex-grow-0 flex-shrink-0 basis-full">
-        {resolveValue(toast.message, toast)}
+      <div
+        className="flex-grow-0 flex-shrink-0 basis-full"
+        dangerouslySetInnerHTML={html && { __html: html }}
+      >
+        {toast && resolveValue(toast.message, toast)}
       </div>
     </div>
   );
 };
 
-const HistoryItem = ({ toast }) => {
+const HistoryItem = ({ toast, html }: HistoryItemProps) => {
   return (
     <div
       style={{
@@ -44,7 +52,7 @@ const HistoryItem = ({ toast }) => {
         borderRadius: "8px",
       }}
     >
-      <Message toast={toast}></Message>
+      <Message toast={toast} html={html}></Message>
     </div>
   );
 };
@@ -54,10 +62,11 @@ interface Props {}
 export const RollHistory = ({}: Props) => {
   const [shown, setShown] = useState(false);
   const refMap = useMemo(() => new WeakMap(), []);
-  const toasts = useRollHistory();
+  const [currentCampaign] = useCurrentCampaign();
+
   const toastsReversed = useMemo(() => {
-    return [...toasts].reverse();
-  }, [toasts]);
+    return currentCampaign?.data?.rollHistory?.reverse() || [];
+  }, [currentCampaign?.data?.rollHistory]);
 
   const drawerSpringProps = useSpring({
     right: shown ? 0 : -400,
@@ -73,7 +82,7 @@ export const RollHistory = ({}: Props) => {
     update: { opacity: 1 },
     config: config.stiff,
     keys: (item) => {
-      return item.id;
+      return item.toastMarkup;
     },
   });
 
@@ -90,12 +99,12 @@ export const RollHistory = ({}: Props) => {
             <hr className="border-t-2 border-black"></hr>
           </div>
           <div className="flex gap-2 flex-col p-2 overflow-y-auto h-full no-scroll scroll-smooth">
-            {transitions((style, item) => (
+            {transitions((style, item, _, i) => (
               <animated.div style={{ ...style }}>
                 <div
                   ref={(ref: HTMLDivElement) => ref && refMap.set(item, ref)}
                 >
-                  <HistoryItem toast={item}></HistoryItem>
+                  <HistoryItem html={item.toastMarkup}></HistoryItem>
                 </div>
               </animated.div>
             ))}

@@ -1,4 +1,6 @@
 import type { DocumentData } from "firebase/firestore";
+import type { DocumentReference } from "firebase/firestore";
+import type { Campaign } from "./Campaign";
 
 export interface Character {
   application: Application;
@@ -46,6 +48,7 @@ export interface Character {
   disads: Disads;
   uid: string;
   current?: Current;
+  campaign?: DocumentReference<Campaign>;
 }
 
 export interface Current {

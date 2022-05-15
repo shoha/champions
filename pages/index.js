@@ -6,14 +6,15 @@ import { CharacterSheet } from "../components/CharacterSheet";
 import { FileUploader } from "../components/FileUploader";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import { RollHistory } from "../components/RollHistory";
-import { useState } from "react";
-import { Button } from "../components/Button";
+import { useRollHistoryInit } from "../hooks/useRollHistory";
 
 export default function Home() {
   const [currentCharInfo] = useCurrentCharacter();
   const character = currentCharInfo?.data;
   const characterRef = currentCharInfo?.ref;
   const currentUser = useCurrentUser();
+
+  useRollHistoryInit();
 
   const head = (
     <Head>
