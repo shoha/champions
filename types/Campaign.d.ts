@@ -3,7 +3,9 @@ import type { Character } from "./Character";
 export interface Campaign {
   rollHistory?: CampaignRoll[];
   name?: string;
-  characters?: string[];
+  characters?: DocumentReference<Character>[];
+  users?: string[];
+  admin?: string;
 }
 
 export interface CampaignRoll {

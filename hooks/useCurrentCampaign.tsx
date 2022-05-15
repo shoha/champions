@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore";
 import { useCurrentCharacter } from "./useCurrentCharacter";
 import { useFirebaseApp } from "../hooks/useFirebaseApp";
+import { useCurrentUser } from "./useCurrentUser";
 
 interface CampaignState {
   data?: Campaign;
@@ -19,6 +20,8 @@ interface CampaignState {
 }
 export const CurrentCampaignContext =
   createContext<[CampaignState, Dispatch<CampaignState>]>(null);
+
+let createPromise = null;
 
 export const useCurrentCampaign = (): [
   CampaignState,
@@ -28,7 +31,8 @@ export const useCurrentCampaign = (): [
     [CampaignState, Dispatch<CampaignState>]
   >(CurrentCampaignContext);
 
-  const [currentCharacter, setCurrentCharacter] = useCurrentCharacter();
+  const [currentCharacter] = useCurrentCharacter();
+  const currentUser = useCurrentUser();
   const firebaseApp = useFirebaseApp();
 
   useEffect(() => {
@@ -45,17 +49,28 @@ export const useCurrentCampaign = (): [
         });
       });
     } else {
+      if (createPromise) {
+        return;
+      }
+
       setCurrentCampaign({ data: undefined, ref: undefined });
+
       const persistNewCampaign = async () => {
         const col = collection(
           getFirestore(firebaseApp),
           "campaigns"
         ) as CollectionReference<Campaign>;
-        const newDocRef = await addDoc<Campaign>(col, {
+
+        createPromise = addDoc<Campaign>(col, {
           name: currentCharacter.data.name,
+          characters: [currentCharacter.ref],
+          users: [currentUser.uid],
+          admin: currentUser.uid,
         });
 
-        updateDoc(currentCharacter.ref, { campaign: newDocRef });
+        const newDocRef = await createPromise;
+        await updateDoc(currentCharacter.ref, { campaign: newDocRef });
+        createPromise = null;
       };
 
       persistNewCampaign();
