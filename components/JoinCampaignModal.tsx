@@ -67,8 +67,6 @@ export const JoinCampaignModal = ({ setShown }: CreateCampaignModalProps) => {
         campaignInfo.id
       );
 
-      console.log(campaignRef);
-
       await updateDoc(currentCharacter.ref, { campaign: campaignRef });
       await updateDoc(campaignRef, {
         characters: arrayUnion(currentCharacter.ref),

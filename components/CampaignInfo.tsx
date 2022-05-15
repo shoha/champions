@@ -5,6 +5,7 @@ import { Button } from "./Button";
 import { SidePanel } from "./SidePanel";
 import { CreateCampaignModal } from "./CreateCampaignModal";
 import { JoinCampaignModal } from "./JoinCampaignModal";
+import { CampaignCharacters } from "./CampaignCharacters";
 
 export const CampaignInfo = () => {
   const [currentCampaign] = useCurrentCampaign();
@@ -47,17 +48,22 @@ export const CampaignInfo = () => {
                 Campaign: {currentCampaign?.data?.name}
               </div>
               <hr className="border-t-2 border-black"></hr>
-              <div
-                onClick={(evt) => {
-                  navigator.clipboard.writeText(currentCampaign?.ref?.id);
-                }}
-              >
+              <div className="flex flex-col gap-2">
                 <input
                   type="text"
                   className="block w-full"
                   disabled
                   value={currentCampaign?.ref?.id || ""}
                 />
+                <Button
+                  onClick={(evt) => {
+                    navigator.clipboard.writeText(currentCampaign?.ref?.id);
+                  }}
+                  color="blue"
+                >
+                  Copy invite code
+                </Button>
+                <CampaignCharacters></CampaignCharacters>
               </div>
             </>
           ) : (
