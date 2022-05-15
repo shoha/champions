@@ -6,6 +6,7 @@ export interface Campaign {
   characters?: DocumentReference<Character>[];
   users?: string[];
   admin?: string;
+  public?: boolean;
 }
 
 export interface CampaignRoll {

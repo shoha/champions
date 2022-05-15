@@ -66,6 +66,7 @@ export const useCurrentCampaign = (): [
           characters: [currentCharacter.ref],
           users: [currentUser.uid],
           admin: currentUser.uid,
+          public: false,
         });
 
         const newDocRef = await createPromise;

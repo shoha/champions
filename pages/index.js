@@ -7,6 +7,7 @@ import { FileUploader } from "../components/FileUploader";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import { RollHistory } from "../components/RollHistory";
 import { useRollHistoryInit } from "../hooks/useRollHistory";
+import { CampaignInfo } from "../components/CampaignInfo";
 
 export default function Home() {
   const [currentCharInfo] = useCurrentCharacter();
@@ -55,6 +56,7 @@ export default function Home() {
       </div>
 
       <RollHistory></RollHistory>
+      <CampaignInfo></CampaignInfo>
     </>
   );
 }

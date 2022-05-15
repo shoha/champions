@@ -1,20 +1,35 @@
 import { Button } from "./Button";
 
+const MAX_Z = 999999;
+
 interface Props {
   title: string;
   children?: any;
   onConfirm?: any;
+  canConfirm?: boolean;
   onCancel?: any;
+  canCancel?: boolean;
 }
 
-export const Modal = ({ title, children, onConfirm, onCancel }: Props) => {
+export const Modal = ({
+  title,
+  children,
+  onConfirm,
+  canConfirm = true,
+  onCancel,
+  canCancel = true,
+}: Props) => {
   return (
     <>
-      <div className="fixed top-0 bottom-0 left-0 right-0 bg-gray-500 opacity-50"></div>
+      <div
+        className="fixed top-0 bottom-0 left-0 right-0 bg-gray-500 opacity-50"
+        style={{ zIndex: MAX_Z }}
+      ></div>
 
       <div
         tabIndex={-1}
-        className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full"
+        className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full"
+        style={{ zIndex: MAX_Z }}
       >
         <div className="relative p-4 w-full max-w-2xl h-full md:h-auto mx-auto">
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -25,7 +40,11 @@ export const Modal = ({ title, children, onConfirm, onCancel }: Props) => {
             </div>
             <div className="p-6 space-y-6">{children}</div>
             <div className="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
-              {onConfirm && <Button onClick={onConfirm}>Go for it</Button>}
+              {onConfirm && (
+                <Button onClick={onConfirm} disabled={!canConfirm}>
+                  Go for it
+                </Button>
+              )}
               {onCancel && (
                 <Button onClick={onCancel} color="red">
                   Never mind
