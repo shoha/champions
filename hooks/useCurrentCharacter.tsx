@@ -31,7 +31,9 @@ export const useCurrentCharacter = (): [
         });
       });
     }
-  }, [currentCharacter?.ref]);
+
+    return unsub;
+  }, [currentCharacter?.ref?.path]);
 
   return [currentCharacter, setCurrentCharacter];
 };

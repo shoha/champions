@@ -11,8 +11,8 @@ import { useCurrentCharacter } from "../hooks/useCurrentCharacter";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import { Button } from "./Button";
 
-// const EXPORTER_ENDPOINT = process.env.NEXT_PUBLIC_EXPORTER_ENDPOINT;
-const EXPORTER_ENDPOINT = "https://hannahsho.re/api/hd";
+const EXPORTER_ENDPOINT = process.env.NEXT_PUBLIC_EXPORTER_ENDPOINT;
+// const EXPORTER_ENDPOINT = "https://hannahsho.re/api/hd";
 
 export const FileUploader = () => {
   const firebaseApp = useFirebaseApp();

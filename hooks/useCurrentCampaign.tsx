@@ -37,13 +37,13 @@ export const useCurrentCampaign = (): [
   const firebaseApp = useFirebaseApp();
 
   useEffect(() => {
-    if (!currentCharacter || currentCampaign) {
+    if (!currentCharacter) {
       return;
     }
     const snapback = (doc) => {
       setCurrentCampaign({
         data: doc.data(),
-        ref: currentCharacter.data.campaign,
+        ref: doc.ref,
       });
     };
 
@@ -66,7 +66,7 @@ export const useCurrentCampaign = (): [
 
         createPromise = addDoc<Campaign>(col, {
           name: currentCharacter.data.name,
-          characters: [currentCharacter.ref],
+          characters: [currentCharacter.ref.path],
           users: [currentUser.uid],
           admin: currentUser.uid,
           public: false,
@@ -84,7 +84,7 @@ export const useCurrentCampaign = (): [
     }
 
     return unsub;
-  }, [currentCharacter, firebaseApp]);
+  }, [currentCharacter?.ref?.path, currentCharacter?.data?.campaign?.path]);
 
   return [currentCampaign, setCurrentCampaign];
 };
