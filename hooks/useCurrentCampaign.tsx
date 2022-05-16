@@ -37,7 +37,7 @@ export const useCurrentCampaign = (): [
   const firebaseApp = useFirebaseApp();
 
   useEffect(() => {
-    if (!currentCharacter) {
+    if (!currentCharacter || !currentCharacter?.data) {
       return;
     }
     const snapback = (doc) => {

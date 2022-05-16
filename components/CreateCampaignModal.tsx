@@ -6,6 +6,7 @@ import {
   getFirestore,
   collection,
   updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { useCurrentCharacter } from "../hooks/useCurrentCharacter";
 import { useFirebaseApp } from "../hooks/useFirebaseApp";
@@ -73,8 +74,16 @@ export const CreateCampaignModal = ({ setShown }: CreateCampaignModalProps) => {
         public: true,
       });
 
-      const newDocRef = await createPromise;
-      await updateDoc(currentCharacter.ref, { campaign: newDocRef });
+      const newCampaignRef = await createPromise;
+
+      const oldCampaignRef = currentCharacter?.data?.campaign;
+
+      await updateDoc(currentCharacter.ref, { campaign: newCampaignRef });
+
+      if (oldCampaignRef) {
+        await deleteDoc(oldCampaignRef);
+      }
+
       createPromise = null;
       setLoading(false);
     };
@@ -86,6 +95,7 @@ export const CreateCampaignModal = ({ setShown }: CreateCampaignModalProps) => {
     setShown,
     campaignInfo,
     currentCharacter?.ref,
+    currentCharacter?.data?.campaign,
     currentUser?.uid,
     firebaseApp,
     canConfirm,

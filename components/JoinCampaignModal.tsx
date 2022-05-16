@@ -1,18 +1,15 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { Modal } from "./Modal";
 import {
-  CollectionReference,
-  addDoc,
   getFirestore,
-  collection,
   updateDoc,
   doc,
   arrayUnion,
+  deleteDoc,
 } from "firebase/firestore";
 import { useCurrentCharacter } from "../hooks/useCurrentCharacter";
 import { useFirebaseApp } from "../hooks/useFirebaseApp";
 import { useCurrentUser } from "../hooks/useCurrentUser";
-import type { Campaign } from "../types/Campaign";
 
 interface CreateCampaignModalProps {
   setShown: (state: boolean) => void;
@@ -61,17 +58,25 @@ export const JoinCampaignModal = ({ setShown }: CreateCampaignModalProps) => {
     setLoading(true);
 
     const persistNewCampaign = async () => {
-      const campaignRef = doc(
+      const newCampaignRef = doc(
         getFirestore(firebaseApp),
         "campaigns",
         campaignInfo.id
       );
 
-      await updateDoc(currentCharacter.ref, { campaign: campaignRef });
-      await updateDoc(campaignRef, {
+      const oldCampaignRef = currentCharacter?.data?.campaign;
+
+      await updateDoc(newCampaignRef, {
         characters: arrayUnion(currentCharacter.ref),
         users: arrayUnion(currentUser.uid),
       });
+
+      await updateDoc(currentCharacter.ref, { campaign: newCampaignRef });
+
+      if (oldCampaignRef) {
+        await deleteDoc(oldCampaignRef);
+      }
+
       createPromise = null;
       setLoading(false);
     };
@@ -83,6 +88,7 @@ export const JoinCampaignModal = ({ setShown }: CreateCampaignModalProps) => {
     setShown,
     campaignInfo,
     currentCharacter?.ref,
+    currentCharacter?.data?.campaign,
     currentUser?.uid,
     firebaseApp,
     canConfirm,

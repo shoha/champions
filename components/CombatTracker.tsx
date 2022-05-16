@@ -13,7 +13,10 @@ interface ActiveStatProps {
 
 const ActiveStat = ({ character, characterRef, name }: ActiveStatProps) => {
   const statBlock = character.characteristics[name];
-  const defaultValue = character.current?.[name]?.value || statBlock.total;
+  const defaultValue = useMemo(
+    () => character.current?.[name]?.value || statBlock.total,
+    [name, character, statBlock.total]
+  );
   const [current, updateCurrent] = useState<number>(defaultValue);
 
   const updateStat = useMemo(() => {
@@ -35,6 +38,12 @@ const ActiveStat = ({ character, characterRef, name }: ActiveStatProps) => {
       );
     };
   }, [characterRef, name]);
+
+  useEffect(() => {
+    if (!character?.current?.[name]?.value) {
+      updateStat(defaultValue);
+    }
+  }, [character, defaultValue, name, updateStat]);
 
   const increment = useCallback(() => {
     updateCurrent(current + 1);
