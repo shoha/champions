@@ -24,7 +24,7 @@ export const FileUploader = () => {
   const [openFileSelector, { filesContent, loading, clear }] = useFilePicker({
     accept: ".hdc",
   });
-  const [_, setCurrentChar] = useCurrentCharacter();
+  const [, setCurrentChar] = useCurrentCharacter();
   const [exportedChar, setExportedChar] = useState<string>();
   const [exportLoading, setExportLoading] = useState<boolean>(false);
 
