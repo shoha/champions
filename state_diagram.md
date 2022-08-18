@@ -5,9 +5,7 @@ stateDiagram-v2
     Init: Initializing
 
     [*] --> Init
-    Init --> Login: User is not logged in
-    InitiaInitlizing --> Fetching
-    Login --> Fetching: User has logged in
+    Init --> Fetching: User has logged in
     Fetching --> Empty: No characters available
     Fetching --> Playing: At least one character available
     Empty --> Creating

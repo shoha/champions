@@ -8,14 +8,35 @@ import { useCurrentUser } from "../hooks/useCurrentUser";
 import { RollHistory } from "../components/RollHistory";
 import { useRollHistoryInit } from "../hooks/useRollHistory";
 import { CampaignInfo } from "../components/CampaignInfo";
+import { rootService } from "../hooks/useAppStateMachine";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const [currentCharInfo] = useCurrentCharacter();
   const character = currentCharInfo?.data;
   const characterRef = currentCharInfo?.ref;
   const currentUser = useCurrentUser();
+  const [currentState, setCurrentState] = useState({ ...rootService.state });
+
+  useEffect(() => {
+    const subscription = rootService.subscribe((state) => {
+      console.log(state);
+      setCurrentState({ ...state });
+    });
+
+    return subscription.unsubscribe;
+  }, []);
 
   useRollHistoryInit();
+
+  const login = (
+    <div>
+      <h1 className="text-5xl my-2 mb-4 text-">Champions Tracker</h1>
+      <div className="flex gap-4">
+        <Login></Login>
+      </div>
+    </div>
+  );
 
   const head = (
     <Head>
@@ -31,7 +52,6 @@ export default function Home() {
       <div className="flex gap-4">
         <CharacterSelect></CharacterSelect>
         {currentUser && <FileUploader></FileUploader>}
-        <Login></Login>
       </div>
     </div>
   );
@@ -51,12 +71,16 @@ export default function Home() {
     <>
       <div className="container mx-auto px-4 my-4">
         {head}
-        {nav}
+        {currentState.value === "init" ? login : nav}
         {body}
       </div>
 
-      <RollHistory></RollHistory>
-      <CampaignInfo></CampaignInfo>
+      {currentState.value === "playing" && (
+        <>
+          <RollHistory></RollHistory>
+          <CampaignInfo></CampaignInfo>
+        </>
+      )}
     </>
   );
 }
