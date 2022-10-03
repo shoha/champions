@@ -64,7 +64,11 @@ export const FileUploader = () => {
 
   const persistNewCharacter = async () => {
     const newDocRef = await addDoc<Character>(col, { ...characterToAdd });
-    setCurrentChar({ data: { ...characterToAdd }, ref: newDocRef });
+    setCurrentChar((prev) => ({
+      ...prev,
+      data: { ...characterToAdd },
+      ref: newDocRef,
+    }));
 
     clear();
   };

@@ -17,7 +17,7 @@ export const CurrentUserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
 
   auth.onAuthStateChanged((user) => {
-    if (user && rootService.state.value === "init") {
+    if (user) {
       rootService.send("LOGGED_IN");
     }
 

@@ -1,22 +1,35 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import type { Character } from "../types/Character";
 import type { Dispatch } from "react";
-import { DocumentReference, onSnapshot } from "firebase/firestore";
+import {
+  DocumentReference,
+  onSnapshot,
+  QueryDocumentSnapshot,
+} from "firebase/firestore";
 import { useFirebaseApp } from "../hooks/useFirebaseApp";
 
-interface CharacterState {
+export interface CharacterState {
   data?: Character;
   ref?: DocumentReference<Character>;
+  all?: QueryDocumentSnapshot<Character>[];
 }
 export const CurrentCharacterContext =
-  createContext<[CharacterState, Dispatch<CharacterState>]>(null);
+  createContext<[CharacterState, Dispatch<SetStateAction<CharacterState>>]>(
+    null
+  );
 
 export const useCurrentCharacter = (): [
   CharacterState,
-  Dispatch<CharacterState>
+  Dispatch<SetStateAction<CharacterState>>
 ] => {
   const [currentCharacter, setCurrentCharacter] = useContext<
-    [CharacterState, Dispatch<CharacterState>]
+    [CharacterState, Dispatch<SetStateAction<CharacterState>>]
   >(CurrentCharacterContext);
   const firebaseApp = useFirebaseApp();
 
@@ -25,10 +38,11 @@ export const useCurrentCharacter = (): [
 
     if (currentCharacter?.ref) {
       unsub = onSnapshot(currentCharacter.ref, (doc) => {
-        setCurrentCharacter({
+        setCurrentCharacter((prev) => ({
+          ...prev,
           data: doc.data(),
           ref: currentCharacter.ref,
-        });
+        }));
       });
     }
 
@@ -41,7 +55,7 @@ export const useCurrentCharacter = (): [
 export const CurrentCharacterProvider = ({ children }) => {
   const [currentCharacter, setCurrentCharacter]: [
     CharacterState,
-    Dispatch<CharacterState>
+    Dispatch<SetStateAction<CharacterState>>
   ] = useState<CharacterState>(null);
 
   return (
